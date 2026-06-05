@@ -1,16 +1,15 @@
 import { Game } from "phaser";
 
 import BootScene from './scenes/BootScene'
-import BedroomScene from './scenes/BedroomScene'
 import KitchenScene from './scenes/KitchenScene'
 import HouseScene from './scenes/HouseScene'
 import LivingRoomScene from './scenes/LivingRoomScene.js';
 import HallwayScene from './scenes/HallwayScene.js';  
 import RoomMasterScene from './scenes/RoomMasterScene.js';
 import RoomChildScene from './scenes/RoomChildScene.js'; 
-import LavaGameScene from './scenes/LavaGameScene.js';
-import PuzzyRoomScene from './scenes/PuzzyRoomScene.js';
-
+import LavaGameScene from './ScenesGame/LavaGameScene.js';
+import PuzzyRoomScene from './ScenesGame/PuzzyRoomScene.js';
+import MemoryGameScene from "./ScenesGame/MemoryGameScene.js";
 
 
 const config = {
@@ -39,7 +38,6 @@ const config = {
   },
   scene: [
     BootScene,
-    BedroomScene,
     KitchenScene, 
     HouseScene,
     LivingRoomScene,
@@ -47,7 +45,8 @@ const config = {
     RoomMasterScene,
     RoomChildScene,
     LavaGameScene,
-    PuzzyRoomScene
+    PuzzyRoomScene,
+    MemoryGameScene
   ]
 };
 

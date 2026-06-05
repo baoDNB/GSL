@@ -11,7 +11,6 @@ export default class BootScene extends Phaser.Scene {
             frameWidth: 160,
             frameHeight: 233.3
         });
-        this.load.image('bedroom_bg', 'assets/bedroom.png');
         this.load.image('kitchen_bg', 'assets/kitchen.png');
         // this.load.audio('rain', 'assets/rain.mp3');
         this.load.image('house_bg', 'assets/house.png');
@@ -21,6 +20,7 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('roomchild_bg', 'assets/roomchild.png');
         this.load.image('lavagame_bg','assets/lavagame.png');
         this.load.image('puzzy_bg','assets/puzzyroom.png');
+        this.load.image('bed_bg','assets/bed.png')
     }
 
     create() {
@@ -69,6 +69,6 @@ export default class BootScene extends Phaser.Scene {
         // rainSound.play();
 
         // Chuyển màn
-        this.scene.start('HallwayScene');
+        this.scene.start('HouseScene');
     }
 }
