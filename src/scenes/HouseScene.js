@@ -1,4 +1,6 @@
 import Player from '../objects/Player.js';
+// 1. IMPORT THÊM DIALOGUEBOX
+import DialogueBox from '../objects/DialogueBox.js';
 
 export default class HouseScene extends Phaser.Scene {
     constructor() {
@@ -9,35 +11,50 @@ export default class HouseScene extends Phaser.Scene {
         const screenWidth = this.cameras.main.width;
         const screenHeight = this.cameras.main.height;
 
-        // 1. Thêm nền sân vườn (Bản đồ từ ảnh của bạn)
+        // 1. Thêm nền sân vườn
         let bg = this.add.image(0, 0, 'house_bg').setOrigin(0);
         bg.displayWidth = screenWidth;
         bg.displayHeight = screenHeight;
 
-        // Bật cờ khóa bàn phím trong lúc đang chạy tự động đi
+        // Khởi tạo Dialogue Box để chạy thoại trước
+        this.dialogueBox = new DialogueBox(this);
+
+        // Mặc định bật cờ khóa di chuyển để Player không bị trượt vật lý
         this.isAutoWalking = true;
 
-        // 2. Tạo Player đứng đúng vị trí góc dưới bên trái vỉa hè (như trong ảnh)
-        const startX = screenWidth * 0.18; // Vị trí đứng ở vỉa hè bên trái
-        const startY = screenHeight * 0.88; // Sát cạnh dưới cùng
+        // 2. Tạo Player đứng đúng vị trí góc dưới bên trái vỉa hè
+        const startX = screenWidth * 0.18; 
+        const startY = screenHeight * 0.88; 
 
         this.player = new Player(this, startX, startY);
 
-        // 3. Tọa độ các điểm nút để nhân vật đi vào nhà
-        // Điểm 1: Đi từ vỉa hè bên trái đến chân bậc tam cấp (giữa thảm cỏ)
-        const stepsX = screenWidth * 0.6;
-        const stepsY = screenHeight * 0.72;
+        // Thiết lập trạng thái đang thoại cho Player (để đứng im)
+        this.player.isTalking = true;
 
-        // Điểm 2: Đi thẳng từ bậc tam cấp vào trong cánh cửa đen
-        const doorX = screenWidth * 0.6;
-        const doorY = screenHeight * 0.42;
+        // Tọa độ các điểm nút để nhân vật đi vào nhà
+        this.stepsX = screenWidth * 0.6;
+        this.stepsY = screenHeight * 0.72;
+        this.doorX = screenWidth * 0.6;
+        this.doorY = screenHeight * 0.42;
 
-        // 4. Tạo chuỗi di chuyển tự động (Tweens Timeline)
+        // ==========================================================
+        // KÍCH HOẠT CHUỖI THOẠI TRƯỚC KHI ĐI VÀO NHÀ
+        // ==========================================================
+        // Bạn nhớ thêm key 'introHouse' này vào file kịch bản DIALOGUES của bạn nhé
+        this.dialogueBox.startSequence('introHouse', () => {
+            // Sau khi xem xong thoại -> Tắt cờ thoại và bắt đầu cho nhân vật tự đi
+            this.player.isTalking = false;
+            this.startAutoWalk();
+        });
+    }
+
+    // Hàm xử lý chuỗi di chuyển tự động sau khi đọc thoại xong
+    startAutoWalk() {
         // Bước 1: Đi chéo từ vỉa hè đến trước bậc tam cấp
         this.tweens.add({
             targets: this.player,
-            x: stepsX,
-            y: stepsY,
+            x: this.stepsX,
+            y: this.stepsY,
             duration: 1800,
             ease: 'Linear',
             onStart: () => {
@@ -46,11 +63,11 @@ export default class HouseScene extends Phaser.Scene {
                 }
             },
             onComplete: () => {
-                // Bước 2: Đi thẳng từ bậc tam cấp khuất vào cánh cửa đen (Chạy ngay sau khi Bước 1 xong)
+                // Bước 2: Đi thẳng từ bậc tam cấp khuất vào cánh cửa đen
                 this.tweens.add({
                     targets: this.player,
-                    x: doorX,
-                    y: doorY,
+                    x: this.doorX,
+                    y: this.doorY,
                     duration: 800,
                     ease: 'Linear',
                     onComplete: () => {
@@ -67,10 +84,10 @@ export default class HouseScene extends Phaser.Scene {
     }
 
     update() {
-        // Khóa hoàn toàn quyền bấm phím của người chơi khi đang chạy tự động
-        if (this.isAutoWalking) {
+        // Khóa hoàn toàn quyền bấm phím của người chơi khi đang trong chế độ tự động đi / đang thoại
+        if (this.isAutoWalking || (this.player && this.player.isTalking)) {
             if (this.player && this.player.body) {
-                this.player.setVelocity(0); // Triệt tiêu vật lý để Tween điều khiển tọa độ chuẩn xác
+                this.player.setVelocity(0); // Triệt tiêu hoàn toàn vận tốc vật lý
             }
             return;
         }

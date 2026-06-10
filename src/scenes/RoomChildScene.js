@@ -39,7 +39,10 @@ export default class RoomChildScene extends Phaser.Scene {
             yoyo: true,
             repeat: -1
         });
-
+        this.physics.world.setBounds(20, 180, sw - 50, sh - 190);
+        if (this.player.body) {
+            this.player.setCollideWorldBounds(true);
+        }
 
 
         // 3. Vùng chạm lên Hành Lang (Giữ nguyên)
@@ -92,7 +95,7 @@ export default class RoomChildScene extends Phaser.Scene {
             if (this.registry.get('talkedToFish')) {
                 this.scene.start('PuzzyRoomScene', { fromScene: 'RoomChildScene' });
             } else {
-                this.dialogueBox.startSequence('caConLockedDoor');
+                this.dialogueBox.startSequence('childTent');
             }
         }
     }

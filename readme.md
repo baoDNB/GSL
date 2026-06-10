@@ -12,4 +12,3 @@ Your mission is to shoot the enemy ship and dodge its attacks to score as many p
 4. If you want to build the project, run `npm run build`.
 
 
-![screenshot](screenshot.png)

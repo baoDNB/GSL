@@ -1,3 +1,6 @@
+import DialogueBox from '../objects/DialogueBox.js';
+
+
 export default class MemoryGameScene extends Phaser.Scene {
     constructor() { super('MemoryGameScene'); }
 
@@ -19,6 +22,9 @@ export default class MemoryGameScene extends Phaser.Scene {
         this.canFlip = true;
         this.selected = { row: 0, col: 0 };
         this.cards = [];
+
+        // Thêm biến cờ kiểm soát trạng thái đang hội thoại
+        this.isInDialogue = false;
     }
 
     create() {
@@ -34,7 +40,7 @@ export default class MemoryGameScene extends Phaser.Scene {
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        this.add.text(sw / 2, 50, `CẤP ĐỘ ${this.currentLevel}/3`, {
+        this.add.text(sw / 2, 50, `LEVEL ${this.currentLevel}/3`, {
             fontSize: '32px', fill: '#ffffff', fontStyle: 'bold',
             stroke: '#000000', strokeThickness: 6, fontFamily: 'monospace'
         }).setOrigin(0.5);
@@ -73,14 +79,25 @@ export default class MemoryGameScene extends Phaser.Scene {
         this.selectionRect = this.add.rectangle(0, 0, 95, 120, 0xffff00, 0.2)
             .setStrokeStyle(6, 0xffff00).setDepth(100);
 
-        this.statusText = this.add.text(sw / 2, sh - 50, 'Dùng mũi tên để di chuyển, [E] hoặc [SPACE] để lật!', {
+        this.statusText = this.add.text(sw / 2, sh - 50, 'Use the arrow keys to move, [E] or [SPACE] to flip!', {
             fontSize: '20px', fill: '#ffffff', fontStyle: 'bold',
             shadow: { offsetX: 2, offsetY: 2, color: '#000000', blur: 4, fill: true },
             fontFamily: 'monospace'
         }).setOrigin(0.5);
+
+        // 5. Khởi tạo hệ thống DialogueBox có sẵn của bạn
+        this.dialogueBox = new DialogueBox(this);
     }
 
     update() {
+        // Nếu đang hiện thoại, kiểm tra phím bấm E/SPACE để tua thoại và chặn điều khiển game bài
+        if (this.isInDialogue) {
+            if (Phaser.Input.Keyboard.JustDown(this.keyE) || Phaser.Input.Keyboard.JustDown(this.keySpace)) {
+                this.dialogueBox.nextNode();
+            }
+            return;
+        }
+
         // Điều hướng
         if (Phaser.Input.Keyboard.JustDown(this.cursors.left)) this.selected.col = Math.max(0, this.selected.col - 1);
         else if (Phaser.Input.Keyboard.JustDown(this.cursors.right)) this.selected.col = Math.min(this.config.cols - 1, this.selected.col + 1);
@@ -125,11 +142,24 @@ export default class MemoryGameScene extends Phaser.Scene {
     }
 
     nextLevel() {
-        if (this.currentLevel < 3) this.scene.restart({ level: this.currentLevel + 1 });
-        else {
-            this.registry.set('masterGameWon', true);
-            this.registry.set('keysFound', (this.registry.get('keysFound') || 0) + 1);
-            this.scene.start('HallwayScene', { fromScene: 'MemoryGameScene' });
+        if (this.currentLevel < 3) {
+            this.scene.restart({ level: this.currentLevel + 1 });
+        } else {
+            // Khi thắng Level 3 hoàn toàn: Kích hoạt trạng thái hội thoại thoại trước khi đổi cảnh
+            this.isInDialogue = true;
+            this.canFlip = false;
+            this.selectionRect.setVisible(false); // Ẩn khung vàng chọn bài để nhìn thoại rõ hơn
+            
+            // Thay đổi dòng trạng thái hướng dẫn người chơi
+            this.statusText.setText('Press [E], [SPACE] or Click to continue...');
+
+            this.dialogueBox.startSequence('foundKey', () => {
+                // Hàm callback chạy sau khi kết thúc toàn bộ đoạn thoại
+                this.isInDialogue = false;
+                this.registry.set('masterGameWon', true);
+                this.registry.set('keysFound', (this.registry.get('keysFound') || 0) + 1);
+                this.scene.start('HallwayScene', { fromScene: 'MemoryGameScene' });
+            });
         }
     }
 }

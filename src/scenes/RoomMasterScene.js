@@ -96,7 +96,7 @@ export default class RoomMasterScene extends Phaser.Scene {
                 if (this.registry.get('talkedToFish')) {
                     this.scene.start('MemoryGameScene', { level: 1 });
                 } else {
-                    this.dialogueBox.startSequence('caConLockedDoor');
+                    this.dialogueBox.startSequence('roomMaster');
                 }
             }
         } else {

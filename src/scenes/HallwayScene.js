@@ -43,7 +43,7 @@ export default class HallwayScene extends Phaser.Scene {
         let keysFound = this.registry.get('keysFound') || 0;
 
         // SỬA LỖI 2: Tạo chuyển động lên xuống chính xác cho Graphics bằng cách dùng yoyo kèm thay đổi giá trị thuộc tính x/y gốc
-        if (!hasVisitedMaster ) {
+        if (!hasVisitedMaster) {
             this.arrowMaster = ArrowGraphic.createArrow(this, sw * 0.75, sh * 0.4);
             this.tweens.add({
                 targets: this.arrowMaster,
@@ -53,7 +53,7 @@ export default class HallwayScene extends Phaser.Scene {
                 repeat: -1
             });
         }
-        if (!hasVisitedChild ) {
+        if (!hasVisitedChild) {
             this.arrowChild = ArrowGraphic.createArrow(this, sw * 0.46, sh * 0.4);
             this.tweens.add({
                 targets: this.arrowChild,
@@ -64,7 +64,7 @@ export default class HallwayScene extends Phaser.Scene {
             });
         }
 
-        
+
         // mũi tên xuống phòng khách hoặc chơi lava
         this.arrowLivingRoom = ArrowGraphic.createArrow(this, sw * 0.05, sh * 0.9);
         this.tweens.add({
@@ -100,6 +100,11 @@ export default class HallwayScene extends Phaser.Scene {
             spawnY = sh * 0.35;
         }
         this.player = new Player(this, spawnX, spawnY);
+        this.obstacles = this.physics.add.staticGroup();
+
+        this.wall = this.add.zone(sw * 0.01, sh * 0.3, sw * 0.15, sh * 0.4).setOrigin(0);
+        this.obstacles.add(this.wall);
+
 
         // 4. ZONE PHÒNG KHÁCH (Lava Game)
         this.toLivingRoomZone = this.add.zone(sw * 0.04, sh * 0.8, 50, sh * 0.1).setOrigin(0.5);
@@ -140,6 +145,12 @@ export default class HallwayScene extends Phaser.Scene {
             this.registry.set('visitedChild', true);
             this.scene.start('RoomChildScene', { fromScene: 'fromHallway' });
         });
+        this.physics.world.setBounds(50, 175, sw - 200, sh - 70);
+        if (this.player.body) {
+            this.player.setCollideWorldBounds(true);
+        }
+        this.physics.add.collider(this.player, this.obstacles);
+
     }
 
     update() {
