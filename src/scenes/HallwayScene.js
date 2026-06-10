@@ -82,6 +82,19 @@ export default class HallwayScene extends Phaser.Scene {
 
             this.tweens.add({ targets: this.exclamation, y: this.bookY - 12, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
         }
+        else if (keysFound >= 3) {
+            // Gọi hàm tạo mũi tên có sẵn của bạn, truyền thêm màu xanh lá (0x00ff00) nếu thích rực rỡ
+            this.arrowExit = ArrowGraphic.createArrow(this, this.bookX, this.bookY - 40, 0x00ff00);
+
+            // Thêm hiệu ứng nhấp nhô giống các mũi tên khác của bạn
+            this.tweens.add({
+                targets: this.arrowExit,
+                y: this.arrowExit.y - 10,
+                duration: 500,
+                yoyo: true,
+                repeat: -1
+            });
+        }
 
         // 3. Vị trí xuất hiện của Player
         let spawnX = sw * 0.1;
@@ -157,6 +170,8 @@ export default class HallwayScene extends Phaser.Scene {
         if (!this.player) return;
         this.player.update();
 
+        let keysFound = this.registry.get('keysFound') || 0;
+
         // Xử lý tương tác ! tại cửa
         if (this.exclamation && this.exclamation.active) {
             let dist = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.bookX, this.bookY);
@@ -167,6 +182,14 @@ export default class HallwayScene extends Phaser.Scene {
                 }
             } else {
                 this.exclamation.setFill('#ffcc00');
+            }
+        }
+        if (keysFound >= 3) {
+            let distToExit = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.bookX, this.bookY);
+            if (distToExit < 80) {
+                if (Phaser.Input.Keyboard.JustDown(this.interactKey)) {
+                    this.handleEscape(); // Gọi hàm xử lý thắng cuộc (bạn thêm hàm này ở dưới cùng file nhé)
+                }
             }
         }
     }
@@ -182,6 +205,22 @@ export default class HallwayScene extends Phaser.Scene {
         this.dialogueBox.startSequence(msg, () => {
             this.player.isTalking = false;
             this.registry.set('talkedToFish', true);
+        });
+    }
+    handleEscape() {
+        if (this.player.isTalking) return;
+        this.player.setVelocity(0);
+        this.player.isTalking = true;
+
+        const victoryDialogue = [
+            { speaker: "You", text: "Cả 3 chiếc chìa khóa đều khớp hoàn hảo vào ổ!" },
+            { speaker: "You", text: "Cánh cửa bí mật đang từ từ mở ra... Cuối cùng mình cũng đã thoát rồi!" }
+        ];
+
+        this.dialogueBox.startSequence(victoryDialogue, () => {
+            this.player.isTalking = false;
+            // Chuyển sang cảnh kết thúc game tại đây
+            console.log("Win Game!");
         });
     }
 }
