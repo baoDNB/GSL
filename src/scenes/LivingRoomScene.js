@@ -63,7 +63,7 @@ export default class LivingRoomScene extends Phaser.Scene {
 
         if (this.spawnDirection === 'fromKitchen') {
             spawnX = screenWidth * 0.5;
-            spawnY = screenHeight * 0.9;
+            spawnY = screenHeight * 0.8;
         } else if (this.spawnDirection === 'fromHallway') {
             spawnX = screenWidth * 0.9;
             spawnY = screenHeight * 0.3;

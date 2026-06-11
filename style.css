@@ -25,30 +25,28 @@ body {
     align-items: center;
 }
 
-/* 2. Vỏ máy game: Tự động biến hình theo thiết bị */
+/* 2. Vỏ máy game: SỬA TẠI ĐÂY - Ép máy thu ngắn theo tỷ lệ dọc chuẩn */
 .retro-console-wrapper {
     background: #c4c4c4;
     background-image: linear-gradient(145deg, #e6e6e6, #a0a0a0);
 
-    /* Mặc định bung đầy màn hình cho Mobile */
-    width: 100vw;
-    height: 100dvh;
+    /* TRÊN PC HOẶC MÀN HÌNH LỚN */
+    width: 100%;
+    max-width: 440px;
+    /* Thay vì ép cứng chiều cao, dùng tỷ lệ vàng 2:3 của Gameboy để máy tự tính toán */
+    aspect-ratio: 2 / 3.1;
 
-    /* GIỚI HẠN KÍCH THƯỚC CHO MÁY TÍNH (PC) */
-    max-width: 480px;
-    max-height: 900px;
-
-    /* Thêm bo góc mô phỏng máy Gameboy thật (sẽ nhìn rất đẹp trên PC) */
+    /* Thêm bo góc mô phỏng máy Gameboy thật */
     border-radius: 12px 12px 70px 12px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), inset 0 2px 3px rgba(255, 255, 255, 0.6);
 
-    padding: 15px 15px 30px 15px;
+    padding: 20px 15px 25px 15px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
 }
 
-/* 3. Khung kính màn hình (Tự động co giãn lấy phần trống) */
+/* 3. Khung kính màn hình */
 .screen-bezel {
     background: #6b726e;
     border-radius: 8px 8px 30px 8px;
@@ -58,8 +56,11 @@ body {
     border: 3px solid #555;
     box-sizing: border-box;
 
-    flex: 1;
-    /* Phép màu giúp màn hình tự đẩy khu vực nút bấm xuống đáy */
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    flex-shrink: 0;
+    /* Giữ form không cho các thành phần khác đè ép */
+
     display: flex;
     flex-direction: column;
 }
@@ -133,17 +134,15 @@ body {
 #app canvas {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain;
+    object-fit: fill;
 }
 
+/* 5. Khu vực nút bấm: Tự co giãn thông minh trong vùng máy còn lại */
 .console-body-controls {
     width: 100%;
-    height: 190px;
-    /* Tăng thêm chiều cao để đủ chỗ cho nút to */
-    flex-shrink: 0;
+    flex: 1;
     position: relative;
-    /* Làm gốc tọa độ cho các nút con */
-    margin-top: 15px;
+    margin-top: 10px;
     box-sizing: border-box;
 }
 
@@ -151,10 +150,11 @@ body {
 .dpad-housing {
     position: absolute;
     left: 10px;
-    /* Ghim sát lề trái */
-    top: 10px;
-    width: 140px;
-    height: 140px;
+    top: 45%;
+    transform: translateY(-50%);
+    /* Căn giữa trục dọc khu vực nút bấm */
+    width: 135px;
+    height: 135px;
     background: #b5b5b5;
     border-radius: 50%;
     box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(255, 255, 255, 0.5);
@@ -165,8 +165,8 @@ body {
 
 .dpad-cross {
     position: relative;
-    width: 120px;
-    height: 120px;
+    width: 115px;
+    height: 115px;
 }
 
 .dpad-axis-horizontal,
@@ -179,17 +179,17 @@ body {
 }
 
 .dpad-axis-horizontal {
-    top: 40px;
+    top: 38px;
     left: 0;
-    width: 120px;
-    height: 40px;
+    width: 115px;
+    height: 39px;
 }
 
 .dpad-axis-vertical {
     top: 0;
-    left: 40px;
-    width: 40px;
-    height: 120px;
+    left: 38px;
+    width: 39px;
+    height: 115px;
 }
 
 .dpad-btn {
@@ -203,38 +203,38 @@ body {
 
 .dpad-btn.up {
     top: 0;
-    left: 40px;
-    width: 40px;
-    height: 40px;
+    left: 38px;
+    width: 39px;
+    height: 38px;
 }
 
 .dpad-btn.left {
-    top: 40px;
+    top: 38px;
     left: 0;
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 39px;
 }
 
 .dpad-btn.right {
-    top: 40px;
-    left: 80px;
-    width: 40px;
-    height: 40px;
+    top: 38px;
+    left: 77px;
+    width: 38px;
+    height: 39px;
 }
 
 .dpad-btn.down {
-    top: 80px;
-    left: 40px;
-    width: 40px;
-    height: 40px;
+    top: 77px;
+    left: 38px;
+    width: 39px;
+    height: 38px;
 }
 
 .dpad-center-pivot {
     position: absolute;
-    top: 45px;
-    left: 45px;
-    width: 30px;
-    height: 30px;
+    top: 42px;
+    left: 42px;
+    width: 31px;
+    height: 31px;
     background: #1f1f1f;
     border-radius: 50%;
     box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.5);
@@ -251,16 +251,16 @@ body {
 .action-housing {
     position: absolute;
     right: 10px;
-    /* Ghim sát lề phải */
-    top: 15px;
+    top: 45%;
+    transform: translateY(-50%);
 }
 
 .action-pad-recess {
     background: #b5b5b5;
-    padding: 10px 15px;
+    padding: 8px 12px;
     border-radius: 35px;
     display: flex;
-    gap: 25px;
+    gap: 20px;
     transform: rotate(-25deg);
     box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(255, 255, 255, 0.4);
 }
@@ -273,8 +273,8 @@ body {
 }
 
 .action-btn {
-    width: 55px;
-    height: 55px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     border: none;
     cursor: pointer;
@@ -290,28 +290,26 @@ body {
 }
 
 .action-label {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     color: #2f3754;
-    margin-top: 10px;
+    margin-top: 8px;
     font-style: italic;
 }
 
 /* --- LOA NGOÀI (NẰM CHÍNH GIỮA) --- */
 .speaker-grilles {
     position: absolute;
-    bottom: 40px;
+    bottom: 35px;
     left: 50%;
-    /* Căn giữa */
     transform: translateX(-50%) rotate(-25deg);
-    /* Lùi lại 50% bản thân để nằm chính giữa tâm máy */
     display: flex;
     gap: 7px;
 }
 
 .grille-bar {
-    width: 6px;
-    height: 40px;
+    width: 5px;
+    height: 35px;
     background: #a3a3a3;
     border-radius: 3px;
     box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.4), 0 1px 1px rgba(255, 255, 255, 0.3);
@@ -320,23 +318,23 @@ body {
 /* --- SELECT / START (HÀNG CUỐI CÙNG TRUNG TÂM) --- */
 .system-buttons {
     position: absolute;
-    bottom: 0px;
+    bottom: 2px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 20px;
+    gap: 15px;
 }
 
 .pill-button-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 7px;
+    gap: 5px;
 }
 
 .pill-btn {
-    width: 50px;
-    height: 12px;
+    width: 45px;
+    height: 11px;
     background: linear-gradient(180deg, #7c8285, #525659);
     border: none;
     border-radius: 6px;
@@ -359,107 +357,106 @@ body {
 
 
 /* ==========================================================================
-   MEDIA QUERIES - ĐIỀU CHỈNH RIÊNG CHO MOBILE (ÉP NÚT TO & SÁT VIỀN)
+   MEDIA QUERIES - SỬA TẠI ĐÂY: KHÓA TỶ LỆ DỌC GAMEBOY TRÊN MOBILE
    ========================================================================== */
 @media screen and (max-width: 480px) {
     .retro-console-wrapper {
-        border-radius: 0;
-        max-width: none;
+        width: 94vw;
+        /* Thu nhỏ một chút bề ngang để lộ hình nền, tạo chiều sâu */
+        height: auto;
         max-height: none;
-        padding: 10px 5px 25px 5px;
-        /* Giảm tối đa lề trái phải để máy rộng hơn */
+        /* Buộc mobile phải giữ đúng tỷ lệ béo lùn của Gameboy thật, bỏ đi dải xám dài ngoằn */
+        aspect-ratio: 2 / 3.25;
+
+        border-radius: 12px 12px 60px 12px;
+        /* Giữ lại bo góc tròn của máy thật thay vì tràn phẳng 0 */
+        padding: 12px 12px 20px 12px;
     }
 
-    .console-body-controls {
-        height: 220px;
-        /* Mở rộng thêm chiều cao để nhét nút khổng lồ */
-    }
-
-    /* --- D-PAD MOBILE --- */
+    /* --- ĐIỀU CHỈNH CỤM NÚT CHO PHÙ HỢP DIỆN TÍCH MÁY MỚI NÉN --- */
     .dpad-housing {
-        width: 160px;
-        height: 160px;
-        left: 0;
-        /* ÉP HOÀN TOÀN RA VIỀN TRÁI */
-        top: 15px;
+        width: 135px;
+        height: 135px;
+        left: 5px;
+        top: 45%;
+        transform: translateY(-50%);
     }
 
     .dpad-cross {
-        width: 140px;
-        height: 140px;
+        width: 115px;
+        height: 115px;
     }
 
     .dpad-axis-horizontal {
-        top: 45px;
-        width: 140px;
-        height: 45px;
+        top: 38px;
+        width: 115px;
+        height: 39px;
     }
 
     .dpad-axis-vertical {
-        left: 45px;
-        width: 45px;
-        height: 140px;
+        left: 38px;
+        width: 39px;
+        height: 115px;
     }
 
     .dpad-btn {
-        width: 45px;
-        height: 45px;
+        width: 39px;
+        height: 39px;
     }
 
     .dpad-btn.up {
         top: 0;
-        left: 45px;
+        left: 38px;
     }
 
     .dpad-btn.left {
-        top: 45px;
+        top: 38px;
         left: 0;
     }
 
     .dpad-btn.right {
-        top: 45px;
-        left: 95px;
+        top: 38px;
+        left: 77px;
     }
 
     .dpad-btn.down {
-        top: 95px;
-        left: 45px;
+        top: 77px;
+        left: 38px;
     }
 
     .dpad-center-pivot {
-        top: 52px;
-        left: 52px;
-        width: 35px;
-        height: 35px;
+        top: 42px;
+        left: 42px;
+        width: 31px;
+        height: 31px;
     }
 
-    /* --- A / B BUTTONS MOBILE --- */
     .action-housing {
         right: 5px;
-        /* ÉP HOÀN TOÀN RA VIỀN PHẢI */
-        top: 25px;
+        top: 45%;
+        transform: translateY(-50%);
     }
 
     .action-btn {
-        width: 65px;
-        height: 65px;
+        width: 55px;
+        height: 55px;
     }
 
     .action-pad-recess {
-        gap: 30px;
+        gap: 18px;
+        padding: 8px 10px;
     }
 
-    .action-label {
-        font-size: 18px;
-    }
-
-    /* --- LOA MOBILE --- */
     .speaker-grilles {
-        bottom: 50px;
+        bottom: 42px;
     }
 
     .grille-bar {
-        width: 7px;
-        height: 45px;
+        width: 5px;
+        height: 35px;
+    }
+
+    .system-buttons {
+        bottom: 6px;
     }
 }
