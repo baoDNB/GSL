@@ -137,10 +137,10 @@ export default class RoomMasterScene extends Phaser.Scene {
             }
         }
 
-        // LOGIC NÚT B: Quay lại sảnh
-        if (isActionB) {
-            joypad.actionB = false; 
-            this.scene.start('HallwayScene', { fromScene: 'fromMasterRoom' });
-        }
+        // // LOGIC NÚT B: Quay lại sảnh
+        // if (isActionB) {
+        //     joypad.actionB = false; 
+        //     this.scene.start('HallwayScene', { fromScene: 'fromMasterRoom' });
+        // }
     }
 }

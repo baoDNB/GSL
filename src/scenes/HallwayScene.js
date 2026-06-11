@@ -46,12 +46,17 @@ export default class HallwayScene extends Phaser.Scene {
         let isLavaWon = this.registry.get('lavaGameWon');
         let keysFound = this.registry.get('keysFound') || 0;
 
-        // SỬA LỖI 2: Tạo chuyển động lên xuống chính xác cho Graphics bằng cách dùng yoyo kèm thay đổi giá trị thuộc tính x/y gốc
+        // Nếu đã từng mở UI chìa khóa ở lần thoại trước, khi quay lại cảnh này nó vẫn hiển thị ổn định
+        if (this.registry.get('talkedToFish') && !this.scene.isActive('UIScene')) {
+            this.scene.launch('UIScene');
+        }
+
+        // Chuyển động mũi tên các phòng
         if (!hasVisitedMaster) {
             this.arrowMaster = ArrowGraphic.createArrow(this, sw * 0.75, sh * 0.4);
             this.tweens.add({
                 targets: this.arrowMaster,
-                y: this.arrowMaster.y - 10, // Di chuyển nhích lên trên 10 pixel từ vị trí gốc
+                y: this.arrowMaster.y - 10,
                 duration: 500,
                 yoyo: true,
                 repeat: -1
@@ -68,8 +73,6 @@ export default class HallwayScene extends Phaser.Scene {
             });
         }
 
-
-        // mũi tên xuống phòng khách hoặc chơi lava
         this.arrowLivingRoom = ArrowGraphic.createArrow(this, sw * 0.05, sh * 0.9);
         this.tweens.add({
             targets: this.arrowLivingRoom,
@@ -87,10 +90,7 @@ export default class HallwayScene extends Phaser.Scene {
             this.tweens.add({ targets: this.exclamation, y: this.bookY - 12, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
         }
         else if (keysFound >= 3) {
-            // Gọi hàm tạo mũi tên có sẵn của bạn, truyền thêm màu xanh lá (0x00ff00) nếu thích rực rỡ
             this.arrowExit = ArrowGraphic.createArrow(this, this.bookX, this.bookY - 40, 0x00ff00);
-
-            // Thêm hiệu ứng nhấp nhô giống các mũi tên khác của bạn
             this.tweens.add({
                 targets: this.arrowExit,
                 y: this.arrowExit.y - 10,
@@ -99,6 +99,8 @@ export default class HallwayScene extends Phaser.Scene {
                 repeat: -1
             });
         }
+
+        // [ĐÃ XÓA ĐOẠN KHỞI TẠO UI THỦ CÔNG TẠI ĐÂY]
 
         // 3. Vị trí xuất hiện của Player
         let spawnX = sw * 0.1;
@@ -121,7 +123,6 @@ export default class HallwayScene extends Phaser.Scene {
 
         this.wall = this.add.zone(sw * 0.01, sh * 0.3, sw * 0.15, sh * 0.4).setOrigin(0);
         this.obstacles.add(this.wall);
-
 
         // 4. ZONE PHÒNG KHÁCH (Lava Game)
         this.toLivingRoomZone = this.add.zone(sw * 0.04, sh * 0.8, 50, sh * 0.1).setOrigin(0.5);
@@ -149,8 +150,6 @@ export default class HallwayScene extends Phaser.Scene {
 
         this.physics.add.overlap(this.player, this.toMasterRoomZone, () => {
             if (this.toMasterRoomZone.body) this.toMasterRoomZone.body.enable = false;
-
-            // Chạm cửa sảnh là bốc thẳng người chơi vào trong phòng Master ngắm cảnh luôn
             this.scene.start('RoomMasterScene', { fromScene: 'fromHallway' });
         });
 
@@ -158,29 +157,18 @@ export default class HallwayScene extends Phaser.Scene {
         this.physics.add.existing(this.toSecretRoomZone, true);
 
         this.physics.add.overlap(this.player, this.toSecretRoomZone, () => {
-            // Kiểm tra xem đã đủ 3 chìa khóa chưa
             let keysFound = this.registry.get('keysFound') || 0;
-
-            // Nếu đủ chìa khóa (cũng là lúc dấu ! biến mất và mũi tên xanh hiện ra)
             if (keysFound >= 3) {
-                // Tắt body để hàm này không bị chạy lặp lại nhiều lần
                 if (this.toSecretRoomZone.body) this.toSecretRoomZone.body.enable = false;
-
-                // Gọi hàm chạy hội thoại chiến thắng, hàm này chạy xong sẽ tự chuyển cảnh
                 this.handleEscape();
             }
             else {
-                // Nếu CHƯA đủ chìa khóa mà cố tình lao vào cửa:
-                // 1. Đẩy Player lùi xuống một chút để không bị dính chặt vào Zone
                 this.player.y += 15;
-
-                // 2. Tự động gọi hàm báo cửa đang khóa/còn thiếu chìa
                 if (!this.player.isTalking) {
                     this.handleInteraction();
                 }
             }
         });
-
 
         // 6. ZONE PHÒNG TRẺ EM (Child Room)
         this.toChildRoomZone = this.add.zone(sw * 0.46, sh * 0.3, sw * 0.1, 50).setOrigin(0.5);
@@ -195,7 +183,6 @@ export default class HallwayScene extends Phaser.Scene {
             this.player.setCollideWorldBounds(true);
         }
         this.physics.add.collider(this.player, this.obstacles);
-
     }
 
     update() {
@@ -208,7 +195,7 @@ export default class HallwayScene extends Phaser.Scene {
         const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
             joypad.actionB;
 
-        let keysFound = this.registry.get('keysFound') || 0;
+        // [ĐÃ XÓA ĐOẠN CẬP NHẬT REALTIME TEXT CŨ TẠI ĐÂY]
 
         // Xử lý tương tác ! tại cửa
         if (this.exclamation && this.exclamation.active && !this.dialogueBox.isShowing) {
@@ -247,23 +234,19 @@ export default class HallwayScene extends Phaser.Scene {
             }
         }
 
-        // Reset nút ảo
         if (isActionA) joypad.actionA = false;
         if (isActionB) joypad.actionB = false;
-        // if (keysFound >= 3) {
-        //     let distToExit = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.bookX, this.bookY);
-        //     if (distToExit < 80) {
-        //         if (Phaser.Input.Keyboard.JustDown(this.interactKey)) {
-        //             this.handleEscape(); // Gọi hàm xử lý thắng cuộc (bạn thêm hàm này ở dưới cùng file nhé)
-        //         }
-        //     }
-        // }
     }
 
     handleInteraction() {
-        if (this.player.isTalking) return; // Tránh bấm lặp khi đang thoại
+        if (this.player.isTalking) return; 
         this.player.setVelocity(0);
         this.player.isTalking = true;
+
+        // SỬA TẠI ĐÂY: Kích hoạt bộ đếm chìa khóa xuất hiện ngay khi đoạn thoại bắt đầu!
+        if (!this.scene.isActive('UIScene')) {
+            this.scene.launch('UIScene');
+        }
 
         let keys = this.registry.get('keysFound') || 0;
         let msg = (keys === 0) ? 'caConLockedDoor' : `need_${3 - keys}_keys`;
@@ -273,6 +256,7 @@ export default class HallwayScene extends Phaser.Scene {
             this.registry.set('talkedToFish', true);
         });
     }
+
     handleEscape() {
         if (this.player.isTalking) return;
         this.player.setVelocity(0);
@@ -285,8 +269,6 @@ export default class HallwayScene extends Phaser.Scene {
 
         this.dialogueBox.startSequence(victoryDialogue, () => {
             this.player.isTalking = false;
-
-            // Chuyển sang cảnh RoomSecretScene sau khi xong hội thoại
             this.scene.start('RoomSecretScene', { fromScene: 'fromHallway' });
         });
     }

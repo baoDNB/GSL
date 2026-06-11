@@ -144,9 +144,9 @@ export default class RoomChildScene extends Phaser.Scene {
             }
         }
 
-        if (isActionB) {
-            joypad.actionB = false;
-            this.scene.start('HallwayScene', { fromScene: 'fromChildRoom' });
-        }
+        // if (isActionB) {
+        //     joypad.actionB = false;
+        //     this.scene.start('HallwayScene', { fromScene: 'fromChildRoom' });
+        // }
     }
 }

@@ -79,7 +79,7 @@ export default class MemoryGameScene extends Phaser.Scene {
         this.selectionRect = this.add.rectangle(0, 0, 95, 120, 0xffff00, 0.2)
             .setStrokeStyle(6, 0xffff00).setDepth(100);
 
-        this.statusText = this.add.text(sw / 2, sh - 50, 'Use Arrows/Joypad to move, [E], [SPACE] or Button A to flip!', {
+        this.statusText = this.add.text(sw / 2, sh - 50, '', {
             fontSize: '20px', fill: '#ffffff', fontStyle: 'bold',
             shadow: { offsetX: 2, offsetY: 2, color: '#000000', blur: 4, fill: true },
             fontFamily: 'monospace'

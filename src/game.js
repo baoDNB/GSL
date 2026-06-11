@@ -12,6 +12,7 @@ import PuzzyRoomScene from './ScenesGame/PuzzyRoomScene.js';
 import MemoryGameScene from "./ScenesGame/MemoryGameScene.js";
 import RoomSecretScene from "./scenes/RoomSecretScene.js";
 import { initVirtualJoypad } from "./assets/VirtualJoypad.js";
+import UIScene from "./assets/UIScene.js";
 
 // Khởi tạo phím ảo lắng nghe sự kiện từ HTML
 initVirtualJoypad();
@@ -51,7 +52,8 @@ const config = {
     LavaGameScene,
     PuzzyRoomScene,
     MemoryGameScene,
-    RoomSecretScene
+    RoomSecretScene,
+    UIScene
   ]
 };
 
