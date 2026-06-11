@@ -4,41 +4,45 @@ import BootScene from './scenes/BootScene'
 import KitchenScene from './scenes/KitchenScene'
 import HouseScene from './scenes/HouseScene'
 import LivingRoomScene from './scenes/LivingRoomScene.js';
-import HallwayScene from './scenes/HallwayScene.js';  
+import HallwayScene from './scenes/HallwayScene.js';
 import RoomMasterScene from './scenes/RoomMasterScene.js';
-import RoomChildScene from './scenes/RoomChildScene.js'; 
+import RoomChildScene from './scenes/RoomChildScene.js';
 import LavaGameScene from './ScenesGame/LavaGameScene.js';
 import PuzzyRoomScene from './ScenesGame/PuzzyRoomScene.js';
 import MemoryGameScene from "./ScenesGame/MemoryGameScene.js";
+import RoomSecretScene from "./scenes/RoomSecretScene.js";
+import { initVirtualJoypad } from "./assets/VirtualJoypad.js";
 
+// Khởi tạo phím ảo lắng nghe sự kiện từ HTML
+initVirtualJoypad();
 
 const config = {
-  pixelArt: true,
   type: Phaser.AUTO,
-  parent: "phaser-container",
-  width: 950,
+  parent: "app", // THAY ĐỔI QUAN TRỌNG: Trỏ đúng vào id="app" của màn hình máy game trong HTML
+  
+  // LỜI KHUYÊN: Màn hình retro console thường có tỷ lệ 4:3 (Ví dụ: 640x480 hoặc 400x300)
+  // Bạn có thể giữ 950x540 nếu game bạn bắt buộc phải rộng như vậy.
+  width: 950, 
   height: 540,
+  
   backgroundColor: "#000000",
   pixelArt: true,
   roundPixel: false,
   scale: {
-    mode: Phaser.Scale.FIT,
+    mode: Phaser.Scale.FIT, // FIT giúp game tự động thu nhỏ vừa với khung #app
     autoCenter: Phaser.Scale.CENTER_BOTH,
-    max: {
-      width: 800,
-      height: 600,
-    },
+    // Bỏ max width/height nếu bạn muốn nó tự do co giãn theo vỏ máy CSS
   },
   physics: {
     default: "arcade",
     arcade: {
       gravity: { y: 0 },
-      debug: false
+      debug: true  // Đổi thành false khi làm xong để ẩn viền đỏ vật lý
     }
   },
   scene: [
     BootScene,
-    KitchenScene, 
+    KitchenScene,
     HouseScene,
     LivingRoomScene,
     HallwayScene,
@@ -46,7 +50,8 @@ const config = {
     RoomChildScene,
     LavaGameScene,
     PuzzyRoomScene,
-    MemoryGameScene
+    MemoryGameScene,
+    RoomSecretScene
   ]
 };
 

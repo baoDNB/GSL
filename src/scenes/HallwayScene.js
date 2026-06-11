@@ -150,6 +150,34 @@ export default class HallwayScene extends Phaser.Scene {
             this.scene.start('RoomMasterScene', { fromScene: 'fromHallway' });
         });
 
+        this.toSecretRoomZone = this.add.zone(sw * 0.21, sh * 0.3, sw * 0.1, 50).setOrigin(0.5);
+        this.physics.add.existing(this.toSecretRoomZone, true);
+
+        this.physics.add.overlap(this.player, this.toSecretRoomZone, () => {
+            // Kiểm tra xem đã đủ 3 chìa khóa chưa
+            let keysFound = this.registry.get('keysFound') || 0;
+
+            // Nếu đủ chìa khóa (cũng là lúc dấu ! biến mất và mũi tên xanh hiện ra)
+            if (keysFound >= 3) {
+                // Tắt body để hàm này không bị chạy lặp lại nhiều lần
+                if (this.toSecretRoomZone.body) this.toSecretRoomZone.body.enable = false;
+
+                // Gọi hàm chạy hội thoại chiến thắng, hàm này chạy xong sẽ tự chuyển cảnh
+                this.handleEscape();
+            }
+            else {
+                // Nếu CHƯA đủ chìa khóa mà cố tình lao vào cửa:
+                // 1. Đẩy Player lùi xuống một chút để không bị dính chặt vào Zone
+                this.player.y += 15;
+
+                // 2. Tự động gọi hàm báo cửa đang khóa/còn thiếu chìa
+                if (!this.player.isTalking) {
+                    this.handleInteraction();
+                }
+            }
+        });
+
+
         // 6. ZONE PHÒNG TRẺ EM (Child Room)
         this.toChildRoomZone = this.add.zone(sw * 0.46, sh * 0.3, sw * 0.1, 50).setOrigin(0.5);
         this.physics.add.existing(this.toChildRoomZone, true);
@@ -184,14 +212,14 @@ export default class HallwayScene extends Phaser.Scene {
                 this.exclamation.setFill('#ffcc00');
             }
         }
-        if (keysFound >= 3) {
-            let distToExit = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.bookX, this.bookY);
-            if (distToExit < 80) {
-                if (Phaser.Input.Keyboard.JustDown(this.interactKey)) {
-                    this.handleEscape(); // Gọi hàm xử lý thắng cuộc (bạn thêm hàm này ở dưới cùng file nhé)
-                }
-            }
-        }
+        // if (keysFound >= 3) {
+        //     let distToExit = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.bookX, this.bookY);
+        //     if (distToExit < 80) {
+        //         if (Phaser.Input.Keyboard.JustDown(this.interactKey)) {
+        //             this.handleEscape(); // Gọi hàm xử lý thắng cuộc (bạn thêm hàm này ở dưới cùng file nhé)
+        //         }
+        //     }
+        // }
     }
 
     handleInteraction() {
@@ -219,8 +247,9 @@ export default class HallwayScene extends Phaser.Scene {
 
         this.dialogueBox.startSequence(victoryDialogue, () => {
             this.player.isTalking = false;
-            // Chuyển sang cảnh kết thúc game tại đây
-            console.log("Win Game!");
+
+            // Chuyển sang cảnh RoomSecretScene sau khi xong hội thoại
+            this.scene.start('RoomSecretScene', { fromScene: 'fromHallway' });
         });
     }
 }

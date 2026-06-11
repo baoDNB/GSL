@@ -21,6 +21,7 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('lavagame_bg','assets/lavagame.png');
         this.load.image('puzzy_bg','assets/puzzyroom.png');
         this.load.image('bed_bg','assets/bed.png')
+        this.load.image('roomsecret_bg','assets/roomsecret.png')
     }
 
     create() {
@@ -69,6 +70,6 @@ export default class BootScene extends Phaser.Scene {
         // rainSound.play();
 
         // Chuyển màn
-        this.scene.start('HouseScene');
+        this.scene.start('HallwayScene');
     }
 }
