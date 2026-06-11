@@ -1,15 +1,18 @@
+import Phaser from 'phaser';
+import { joypad } from '../assets/VirtualJoypad.js'; // Bắt buộc import phím ảo vào đây
+
 export const DIALOGUES = {
     puzzleIntro: [
-        { speaker: "You", text: "Ủa, một cuốn sách cổ cũ kỹ đặt giữa bàn? Lại còn phát sáng nữa..." },
-        { speaker: "Admin", text: "Bản đồ ma thuật đã kích hoạt! Hãy giải mã ma trận số để mở lối đi bí mật!" },
-        { speaker: "You", text: "Trông giống như một câu đố xếp hình ma trận 3x3. Thử sức xem sao!" }
+        { speaker: "You", text: "Huh, an old, ancient book left in the middle of the table? And it's glowing..." },
+        { speaker: "Admin", text: "The magic map has been activated! Decipher the number matrix to reveal the secret passage!" },
+        { speaker: "You", text: "Looks like a 3x3 matrix sliding puzzle. Let's give it a shot!" }
     ],
     foundKey: [
         { speaker: "Kid", text: "Congratulations! You have successfully deciphered the ancient matrix." },
         { speaker: "You", text: "Oh! A [Mystery Key] just fell out of the book! Let's go to the next room." }
     ],
     caConLockedDoor: [
-        { speaker: "Kid", text: "You need three keys to enter this room! Go explore the home again and be carefull...." },
+        { speaker: "Kid", text: "You need three keys to enter this room! Go explore the home again and be careful...." },
     ],
     need_2_keys: [
         { speaker: "Kid", text: "The door still won't budge. You're missing two more keys." }
@@ -20,7 +23,6 @@ export const DIALOGUES = {
     openFridge: [
         { speaker: "You", text: "Hmm it's a calendar." },
         { speaker: "You", text: "Mother's Day" }
-
     ],
     inspectTable: [
         { speaker: "You", text: "Ooh, someone left me my favorite: Flower! How awesome!" }
@@ -36,16 +38,20 @@ export const DIALOGUES = {
         { speaker: "You", text: "It's the master bedroom but I don't see anyone in here." }
     ],
     introHouse: [
-        { speaker: "Kid", text:"Looks like mom is coming. Let's go hide! " },
+        { speaker: "Kid", text: "Looks like mom is coming. Let's go hide!" },
         { speaker: "You", text: "I swear I just saw the kid!" },
-        { speaker: "You", text: "Hmm, it's looked, let me go through the back."}
+        { speaker: "You", text: "Hmm, it's locked, let me go through the back." }
     ]
-
 };
 
 export default class DialogueBox {
     constructor(scene) {
         this.scene = scene;
+        this.isShowing = false; // Biến kiểm tra xem thoại có đang mở không
+
+        // Đăng ký phím bàn phím
+        this.keyE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        this.keySpace = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // Vẽ hộp thoại thô nằm ở nửa dưới màn hình
         this.box = scene.add.rectangle(480, 500, 900, 140, 0x000000, 0.8)
@@ -58,13 +64,15 @@ export default class DialogueBox {
             fontFamily: 'monospace'
         }).setDepth(1001);
 
+        // TỰ ĐỘNG LẮNG NGHE VÒNG LẶP UPDATE CỦA SCENE
+        this.scene.events.on('update', this.update, this);
+
         this.hide();
     }
 
-    // Hàm gọi chuỗi hội thoại mới
     startSequence(key, onComplete) {
-        // Kiểm tra thông minh: Nếu truyền vào một mảng thoại tự định nghĩa thì dùng luôn, 
-        // nếu truyền vào một "key" (chuỗi dạng 'intro') thì bốc từ kho DIALOGUES ra.
+        if (this.isShowing) return; // Tránh mở chồng chéo khi bấm phím nhanh
+
         if (typeof key === 'object' && Array.isArray(key)) {
             this.dialogues = key;
         } else {
@@ -73,11 +81,12 @@ export default class DialogueBox {
 
         this.onComplete = onComplete;
         this.index = 0;
+        this.isShowing = true;
 
         this.box.setVisible(true);
         this.text.setVisible(true);
 
-        // Đăng ký click chuột để qua câu tiếp theo
+        // Vẫn giữ click chuột (cho PC/chuột)
         this.scene.input.on('pointerdown', this.nextNode, this);
         this.showNode();
     }
@@ -98,8 +107,26 @@ export default class DialogueBox {
     }
 
     hide() {
+        this.isShowing = false;
         this.scene.input.off('pointerdown', this.nextNode, this);
         this.box.setVisible(false);
         this.text.setVisible(false);
+    }
+
+    update() {
+        // Nếu hộp thoại không hiện, bỏ qua không làm gì cả
+        if (!this.isShowing) return;
+
+        // Bắt sự kiện Nút A hoặc phím E/Space
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || 
+                          Phaser.Input.Keyboard.JustDown(this.keySpace) || 
+                          joypad.actionA;
+
+        if (isActionA) {
+            this.nextNode(); // Chuyển câu
+            
+            // Ép tắt nút Joypad để không bị lặp phím liên tục
+            joypad.actionA = false;
+        }
     }
 }

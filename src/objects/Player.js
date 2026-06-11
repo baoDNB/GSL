@@ -75,14 +75,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                 this.anims.play('idle-side', true);
             }
         }
-
-        // 6. XỬ LÝ NÚT HÀNH ĐỘNG (NÚT A / SPACE)
-        if (isAction) {
-            console.log("Thực hiện thao tác A (Mở cửa, nói chuyện...)");
-
-            // Reset lại nút A của joypad để tránh việc giữ nút sẽ gọi lệnh liên tục
-            joypad.actionA = false;
-        }
     }
 
 }

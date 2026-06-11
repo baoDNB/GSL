@@ -1,7 +1,9 @@
+import Phaser from 'phaser';
 import Player from '../objects/Player.js';
 import DialogueBox from '../objects/DialogueBox.js';
 import ArrowGraphic from '../assets/ArrowGraphic.js';
 import UIHelper from '../assets/UIHelper.js';
+import { joypad } from '../assets/VirtualJoypad.js'; // Import joypad
 
 export default class RoomMasterScene extends Phaser.Scene {
     constructor() {
@@ -18,22 +20,16 @@ export default class RoomMasterScene extends Phaser.Scene {
 
         this.isPlayerAtBed = false;
 
-        // 1. Thêm nền phòng Master
         let bg = this.add.image(0, 0, 'roommaster_bg').setOrigin(0);
         bg.displayWidth = sw;
         bg.displayHeight = sh;
 
         this.dialogueBox = new DialogueBox(this);
-        // 2. Tạo nhân vật ở vị trí gần cửa đi vào (mépt dưới màn hình)
         this.player = new Player(this, sw * 0.5, sh * 0.82);
         this.player.setDepth(10);
 
-        // ==========================================================
-        // 3. TỰ TẠO VÙNG KHÔNG GIAN CẠNH GIƯỜNG (BED ZONE)
-        // ==========================================================
-        // Tạo một vùng bao quanh khu vực chiếc giường (Nằm ở góc giữa-trái màn hình)
         this.bedZone = this.add.zone(sw * 0.35, sh * 0.45, 180, 150).setOrigin(0.5);
-        this.physics.add.existing(this.bedZone, true); // Kích hoạt vật lý tĩnh
+        this.physics.add.existing(this.bedZone, true);
 
         this.ArrowHallway = ArrowGraphic.createArrowDown(this, sw * 0.49, sh * 0.9);
         this.tweens.add({
@@ -44,28 +40,16 @@ export default class RoomMasterScene extends Phaser.Scene {
             repeat: -1
         });
 
-        // 1. Khởi tạo nút "A" (Đảm bảo đã gọi UIHelper.createButtonA ở trên)
         this.interactHint = UIHelper.createButtonA(this, 0, 0);
 
-        // 2. Phím E
+        // Đăng ký các phím vật lý
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
-        // 3. Xử lý va chạm
-        this.physics.add.overlap(this.player, this.bedZone, () => {
-            // Chỉ cần đánh dấu trạng thái, việc hiển thị để update() lo
-            if (!this.registry.get('masterGameWon')) {
-                this.isPlayerAtBed = true;
-            }
-        });
-
-        // ==========================================================
-        // 4. VÙNG VA CHẠM ĐỂ ĐI RA CỬA (QUAY LẠI SẢNH HÀNH LANG)
-        // ==========================================================
         this.toHallwayZone = this.add.zone(sw * 0.5, sh - 10, sw * 0.2, 30).setOrigin(0.5);
         this.physics.add.existing(this.toHallwayZone, true);
-
         this.physics.add.overlap(this.player, this.toHallwayZone, () => {
-            if (this.toHallwayZone.body) this.toHallwayZone.body.enable = false;
             this.scene.start('HallwayScene', { fromScene: 'fromMasterRoom' });
         });
     }
@@ -73,14 +57,12 @@ export default class RoomMasterScene extends Phaser.Scene {
     update() {
         if (this.player) this.player.update();
 
-        // Cập nhật hiển thị nút A
+        // Kiểm tra va chạm giường
+        this.isPlayerAtBed = this.physics.overlap(this.player, this.bedZone) && !this.registry.get('masterGameWon');
         this.interactHint.setVisible(this.isPlayerAtBed);
 
         if (this.isPlayerAtBed) {
-            // Đặt nút A phía trên giường
             this.interactHint.setPosition(this.bedZone.x, this.bedZone.y - 80);
-
-            // Thêm hiệu ứng bay nhẹ nếu chưa có tween
             if (!this.tweens.isTweening(this.interactHint)) {
                 this.tweens.add({
                     targets: this.interactHint,
@@ -90,21 +72,34 @@ export default class RoomMasterScene extends Phaser.Scene {
                     repeat: -1
                 });
             }
+        } else {
+            this.tweens.killTweensOf(this.interactHint);
+        }
 
-            // Logic nhấn phím E
-            if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
+        // GỘP PHÍM BÀN PHÍM VÀ NÚT ẢO
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || 
+                          Phaser.Input.Keyboard.JustDown(this.keySpace) || 
+                          joypad.actionA;
+
+        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) || 
+                          joypad.actionB;
+
+        // LOGIC NÚT A: Tương tác với giường (Khi thoại đóng)
+        if (isActionA && !this.dialogueBox.isShowing) {
+            if (this.isPlayerAtBed) {
                 if (this.registry.get('talkedToFish')) {
                     this.scene.start('MemoryGameScene', { level: 1 });
                 } else {
                     this.dialogueBox.startSequence('roomMaster');
                 }
             }
-        } else {
-            // Dừng tween khi không ở gần
-            this.tweens.killTweensOf(this.interactHint);
+            joypad.actionA = false; // Reset nút A
         }
 
-        // Reset lại trạng thái
-        this.isPlayerAtBed = false;
+        // LOGIC NÚT B: Quay lại (Khi thoại đóng)
+        if (isActionB && !this.dialogueBox.isShowing) {
+            this.scene.start('HallwayScene', { fromScene: 'fromMasterRoom' });
+            joypad.actionB = false; // Reset nút B
+        }
     }
 }

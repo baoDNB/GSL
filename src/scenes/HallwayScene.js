@@ -1,6 +1,7 @@
 import Player from '../objects/Player.js';
 import DialogueBox from '../objects/DialogueBox.js';
 import ArrowGraphic from '../assets/ArrowGraphic.js';
+import { joypad } from '../assets/VirtualJoypad.js'; // 1. IMPORT JOYPAD
 
 export default class HallwayScene extends Phaser.Scene {
     constructor() { super('HallwayScene'); }
@@ -31,7 +32,10 @@ export default class HallwayScene extends Phaser.Scene {
         bg.displayHeight = sh;
 
         this.dialogueBox = new DialogueBox(this);
-        this.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
+        this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
         // 2. Dấu chấm than (Chỉ hiện nếu chưa thắng LavaGame)
         this.bookX = sw * 0.22;
@@ -197,21 +201,55 @@ export default class HallwayScene extends Phaser.Scene {
     update() {
         if (!this.player) return;
         this.player.update();
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) ||
+            Phaser.Input.Keyboard.JustDown(this.keySpace) ||
+            joypad.actionA;
+
+        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
+            joypad.actionB;
 
         let keysFound = this.registry.get('keysFound') || 0;
 
         // Xử lý tương tác ! tại cửa
-        if (this.exclamation && this.exclamation.active) {
+        if (this.exclamation && this.exclamation.active && !this.dialogueBox.isShowing) {
             let dist = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.bookX, this.bookY);
             if (dist < 80) {
                 this.exclamation.setFill('#00ff00');
-                if (Phaser.Input.Keyboard.JustDown(this.interactKey)) {
+                if (isActionA) {
                     this.handleInteraction();
                 }
             } else {
                 this.exclamation.setFill('#ffcc00');
             }
         }
+        if (!this.dialogueBox.isShowing) {
+            if (this.physics.overlap(this.player, this.toLivingRoomZone)) {
+                if (this.registry.get('lavaGameWon')) {
+                    this.scene.start('LivingRoomScene', { fromScene: 'fromHallway' });
+                } else if (this.registry.get('talkedToFish')) {
+                    this.scene.start('LavaGameScene', { fromScene: 'fromHallway' });
+                } else {
+                    this.dialogueBox.startSequence('mustTalkToFishFirst', () => {
+                        this.scene.start('LivingRoomScene', { fromScene: 'fromHallway' });
+                    });
+                }
+            }
+            if (this.physics.overlap(this.player, this.toMasterRoomZone)) {
+                this.scene.start('RoomMasterScene', { fromScene: 'fromHallway' });
+            }
+            if (this.physics.overlap(this.player, this.toChildRoomZone)) {
+                this.registry.set('visitedChild', true);
+                this.scene.start('RoomChildScene', { fromScene: 'fromHallway' });
+            }
+            if (this.physics.overlap(this.player, this.toSecretRoomZone)) {
+                if ((this.registry.get('keysFound') || 0) >= 3) this.handleEscape();
+                else this.handleInteraction();
+            }
+        }
+
+        // Reset nút ảo
+        if (isActionA) joypad.actionA = false;
+        if (isActionB) joypad.actionB = false;
         // if (keysFound >= 3) {
         //     let distToExit = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.bookX, this.bookY);
         //     if (distToExit < 80) {
