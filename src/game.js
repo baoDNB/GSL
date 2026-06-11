@@ -37,7 +37,7 @@ const config = {
     default: "arcade",
     arcade: {
       gravity: { y: 0 },
-      debug: true  // Đổi thành false khi làm xong để ẩn viền đỏ vật lý
+      debug: false  // Đổi thành false khi làm xong để ẩn viền đỏ vật lý
     }
   },
   scene: [
