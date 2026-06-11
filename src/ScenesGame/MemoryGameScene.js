@@ -1,5 +1,5 @@
 import DialogueBox from '../objects/DialogueBox.js';
-
+import { joypad } from '../assets/VirtualJoypad.js'; // 1. IMPORT JOYPAD ẢO
 
 export default class MemoryGameScene extends Phaser.Scene {
     constructor() { super('MemoryGameScene'); }
@@ -23,7 +23,7 @@ export default class MemoryGameScene extends Phaser.Scene {
         this.selected = { row: 0, col: 0 };
         this.cards = [];
 
-        // Thêm biến cờ kiểm soát trạng thái đang hội thoại
+        // Biến cờ kiểm soát trạng thái đang hội thoại
         this.isInDialogue = false;
     }
 
@@ -79,37 +79,58 @@ export default class MemoryGameScene extends Phaser.Scene {
         this.selectionRect = this.add.rectangle(0, 0, 95, 120, 0xffff00, 0.2)
             .setStrokeStyle(6, 0xffff00).setDepth(100);
 
-        this.statusText = this.add.text(sw / 2, sh - 50, 'Use the arrow keys to move, [E] or [SPACE] to flip!', {
+        this.statusText = this.add.text(sw / 2, sh - 50, 'Use Arrows/Joypad to move, [E], [SPACE] or Button A to flip!', {
             fontSize: '20px', fill: '#ffffff', fontStyle: 'bold',
             shadow: { offsetX: 2, offsetY: 2, color: '#000000', blur: 4, fill: true },
             fontFamily: 'monospace'
         }).setOrigin(0.5);
 
-        // 5. Khởi tạo hệ thống DialogueBox có sẵn của bạn
+        // 5. Khởi tạo hệ thống DialogueBox
         this.dialogueBox = new DialogueBox(this);
     }
 
     update() {
-        // Nếu đang hiện thoại, kiểm tra phím bấm E/SPACE để tua thoại và chặn điều khiển game bài
+        // --- ĐỒNG BỘ NÚT HÀNH ĐỘNG A ---
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || 
+                          Phaser.Input.Keyboard.JustDown(this.keySpace) ||
+                          joypad.actionA;
+
+        // ƯU TIÊN CHẶN ĐẦU: Nếu đang hiện thoại, bấm nút A để tua thoại và thoát xử lý game ngay
         if (this.isInDialogue) {
-            if (Phaser.Input.Keyboard.JustDown(this.keyE) || Phaser.Input.Keyboard.JustDown(this.keySpace)) {
-                this.dialogueBox.nextNode();
+            if (isActionA) {
+                joypad.actionA = false; // Xóa ngay tín hiệu joypad lặp frame
+                this.dialogueBox.next(); // Sử dụng hàm .next() đồng bộ
             }
             return;
         }
 
-        // Điều hướng
-        if (Phaser.Input.Keyboard.JustDown(this.cursors.left)) this.selected.col = Math.max(0, this.selected.col - 1);
-        else if (Phaser.Input.Keyboard.JustDown(this.cursors.right)) this.selected.col = Math.min(this.config.cols - 1, this.selected.col + 1);
-        else if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) this.selected.row = Math.max(0, this.selected.row - 1);
-        else if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) this.selected.row = Math.min(Math.ceil(this.cards.length / this.config.cols) - 1, this.selected.row + 1);
+        // --- ĐỒNG BỘ ĐIỀU HƯỚNG DI CHUYỂN KHUNG CHỌN (Phím mũi tên + Joypad ảo) ---
+        const moveLeft = Phaser.Input.Keyboard.JustDown(this.cursors.left) || joypad.left;
+        const moveRight = Phaser.Input.Keyboard.JustDown(this.cursors.right) || joypad.right;
+        const moveUp = Phaser.Input.Keyboard.JustDown(this.cursors.up) || joypad.up;
+        const moveDown = Phaser.Input.Keyboard.JustDown(this.cursors.down) || joypad.down;
 
-        // Update khung vàng
+        if (moveLeft) {
+            this.selected.col = Math.max(0, this.selected.col - 1);
+            joypad.left = false; // Reset trạng thái nút ảo
+        } else if (moveRight) {
+            this.selected.col = Math.min(this.config.cols - 1, this.selected.col + 1);
+            joypad.right = false;
+        } else if (moveUp) {
+            this.selected.row = Math.max(0, this.selected.row - 1);
+            joypad.up = false;
+        } else if (moveDown) {
+            this.selected.row = Math.min(Math.ceil(this.cards.length / this.config.cols) - 1, this.selected.row + 1);
+            joypad.down = false;
+        }
+
+        // Cập nhật vị trí khung vàng chọn bài theo ô được chọn
         const index = this.selected.row * this.config.cols + this.selected.col;
         if (this.cards[index]) this.selectionRect.setPosition(this.cards[index].x, this.cards[index].y);
 
-        // Lật bài
-        if (Phaser.Input.Keyboard.JustDown(this.keyE) || Phaser.Input.Keyboard.JustDown(this.keySpace)) {
+        // --- XỬ LÝ LẬT BÀI KHI ẤN NÚT HÀNH ĐỘNG ---
+        if (isActionA) {
+            joypad.actionA = false; // Reset trạng thái nút ảo
             if (this.cards[index]) this.handleFlip(this.cards[index]);
         }
     }
@@ -145,13 +166,17 @@ export default class MemoryGameScene extends Phaser.Scene {
         if (this.currentLevel < 3) {
             this.scene.restart({ level: this.currentLevel + 1 });
         } else {
-            // Khi thắng Level 3 hoàn toàn: Kích hoạt trạng thái hội thoại thoại trước khi đổi cảnh
+            // Khi thắng Level 3 hoàn toàn: Kích hoạt trạng thái hội thoại trước khi đổi cảnh
             this.isInDialogue = true;
             this.canFlip = false;
             this.selectionRect.setVisible(false); // Ẩn khung vàng chọn bài để nhìn thoại rõ hơn
             
             // Thay đổi dòng trạng thái hướng dẫn người chơi
-            this.statusText.setText('Press [E], [SPACE] or Click to continue...');
+            this.statusText.setText('Press [E], [SPACE] or Button A to continue...');
+
+            // Clear luôn bộ nhớ đệm bàn phím và nút ảo của frame hiện tại để tránh dính nút ngay lập tức
+            joypad.actionA = false;
+            this.input.keyboard.resetKeys();
 
             this.dialogueBox.startSequence('foundKey', () => {
                 // Hàm callback chạy sau khi kết thúc toàn bộ đoạn thoại

@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import Player from '../objects/Player.js';
 import DialogueBox from '../objects/DialogueBox.js';
-import UIHelper from '../assets/UIHelper.js';
 import ArrowGraphic from '../assets/ArrowGraphic.js';
 
 // IMPORT THÊM JOYPAD ẢO
@@ -23,7 +22,35 @@ export default class RoomChildScene extends Phaser.Scene {
         bg.displayHeight = sh;
 
         this.dialogueBox = new DialogueBox(this);
-        this.interactHint = UIHelper.createButtonA(this, 0, 0);
+
+        this.puzzyX = sw * 0.5;
+        this.puzzyY = sh * 0.5;
+
+        // --- KHỞI TẠO DẤU CHẤM THAN TƯƠNG TÁC ---
+        this.exclamation = this.add.text(this.puzzyX, this.puzzyY - 60, '!', {
+            fontSize: '35px',
+            fill: '#ffcc00', // Mặc định vào phòng sẽ là màu vàng
+            fontStyle: 'bold',
+            stroke: '#000000',
+            strokeThickness: 5
+        })
+        .setOrigin(0.5)
+        .setDepth(2000);
+
+        // 💡 KIỂM TRA: Nếu phòng này đã thắng (chơi xong), ẩn luôn dấu ! ngay khi vào phòng
+        if (this.registry.get('puzzyRoomWon')) {
+            this.exclamation.setVisible(false);
+        }
+
+        // Tạo hiệu ứng nhấp nhô liên tục cho dấu !
+        this.tweens.add({
+            targets: this.exclamation,
+            y: this.puzzyY - 75,
+            duration: 500,
+            yoyo: true,
+            repeat: -1,
+            ease: 'Sine.easeInOut'
+        });
 
         let spawnX = sw * 0.53;
         let spawnY = sh * 0.53;
@@ -51,13 +78,14 @@ export default class RoomChildScene extends Phaser.Scene {
         this.toHallwayZone = this.add.zone(sw * 0.48, sh, sw * 0.18, sh * 0.05).setOrigin(0.5);
         this.physics.add.existing(this.toHallwayZone, true);
         this.physics.add.overlap(this.player, this.toHallwayZone, () => {
+            if (this.dialogueBox && this.dialogueBox.visible) return;
             this.scene.start('HallwayScene', { fromScene: 'fromChildRoom' });
         });
 
-        this.puzzyZone = this.add.zone(sw * 0.5, sh * 0.5, 150, 150).setOrigin(0.5);
+        // Tạo vùng tương tác
+        this.puzzyZone = this.add.zone(this.puzzyX, this.puzzyY, 150, 150).setOrigin(0.5);
         this.physics.add.existing(this.puzzyZone, true);
 
-        // --- KHỞI TẠO CÁC PHÍM BẤM BÀN PHÍM TẠI SCENE NÀY ---
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
@@ -66,52 +94,59 @@ export default class RoomChildScene extends Phaser.Scene {
     update() {
         if (this.player) this.player.update();
 
-        let isNearPuzzy = this.physics.overlap(this.player, this.puzzyZone);
-        this.interactHint.setVisible(isNearPuzzy);
+        // Kiểm tra trạng thái đã thắng game chưa
+        const isWon = this.registry.get('puzzyRoomWon');
 
-        if (isNearPuzzy) {
-            this.interactHint.setPosition(this.puzzyZone.x, this.puzzyZone.y - 80);
+        // Kiểm tra xem Player có đang đứng trong vùng tương tác hay không
+        let isNearPuzzy = this.physics.overlap(this.player, this.puzzyZone) && !isWon;
 
-            if (!this.tweens.isTweening(this.interactHint)) {
-                this.tweens.add({
-                    targets: this.interactHint,
-                    y: this.puzzyZone.y - 90,
-                    duration: 500,
-                    yoyo: true,
-                    repeat: -1
-                });
-            }
-        } else {
-            this.tweens.killTweensOf(this.interactHint);
-        }
-
-        // --- GỘP SỰ KIỆN NÚT ẢO VÀ BÀN PHÍM ---
         const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) ||
-            Phaser.Input.Keyboard.JustDown(this.keySpace) ||
-            joypad.actionA;
+                          Phaser.Input.Keyboard.JustDown(this.keySpace) ||
+                          joypad.actionA;
 
         const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
-            joypad.actionB;
+                          joypad.actionB;
 
-        // XỬ LÝ NÚT A (Khi lại gần lều)
-        // XỬ LÝ NÚT A (Tương tác vật thể HOẶC Tắt thoại)
-        if (isActionA && !this.dialogueBox.isShowing) {
-            if (isNearPuzzy) {
+        // CHẶN HỘI THOẠI
+        if (this.dialogueBox && this.dialogueBox.visible) {
+            if (isActionA) {
+                joypad.actionA = false;
+                this.dialogueBox.next();
+            }
+            return;
+        }
+
+        // XỬ LÝ ĐỔI MÀU DẤU CHẤM THAN THEO KHOẢNG CÁCH (CHỈ XỬ LÝ KHI CHƯA THẮNG)
+        if (isNearPuzzy) {
+            if (this.exclamation && this.exclamation.active && !isWon) {
+                this.exclamation.setFill('#00ff00'); // Đứng gần thì chuyển sang màu xanh lá
+            }
+
+            if (isActionA) {
+                joypad.actionA = false;
+
+                if (this.player && this.player.body) {
+                    this.player.setVelocity(0, 0);
+                    if (this.player.anims) this.player.anims.stop();
+                }
+
+                this.input.keyboard.resetKeys();
+
                 if (this.registry.get('talkedToFish')) {
                     this.scene.start('PuzzyRoomScene', { fromScene: 'RoomChildScene' });
                 } else {
                     this.dialogueBox.startSequence('childTent');
                 }
             }
-
-            // Xóa sự kiện ảo
-            joypad.actionA = false;
+        } else {
+            if (this.exclamation && this.exclamation.active && !isWon) {
+                this.exclamation.setFill('#ffcc00'); // Đứng xa thì trả lại màu vàng
+            }
         }
 
-        // XỬ LÝ NÚT B (Quay lại sảnh)
-        if (isActionB && !this.dialogueBox.isShowing) {
-            this.scene.start('HallwayScene', { fromScene: 'fromChildRoom' });
+        if (isActionB) {
             joypad.actionB = false;
+            this.scene.start('HallwayScene', { fromScene: 'fromChildRoom' });
         }
     }
 }

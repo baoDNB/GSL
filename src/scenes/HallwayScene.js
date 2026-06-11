@@ -190,7 +190,7 @@ export default class HallwayScene extends Phaser.Scene {
             this.registry.set('visitedChild', true);
             this.scene.start('RoomChildScene', { fromScene: 'fromHallway' });
         });
-        this.physics.world.setBounds(50, 175, sw - 200, sh - 70);
+        this.physics.world.setBounds(50, 175, sw - 200, sh - 200);
         if (this.player.body) {
             this.player.setCollideWorldBounds(true);
         }

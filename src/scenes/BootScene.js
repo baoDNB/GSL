@@ -70,6 +70,6 @@ export default class BootScene extends Phaser.Scene {
         // rainSound.play();
 
         // Chuyển màn
-        this.scene.start('HallwayScene');
+        this.scene.start('HouseScene');
     }
 }

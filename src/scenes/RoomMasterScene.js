@@ -2,8 +2,9 @@ import Phaser from 'phaser';
 import Player from '../objects/Player.js';
 import DialogueBox from '../objects/DialogueBox.js';
 import ArrowGraphic from '../assets/ArrowGraphic.js';
-import UIHelper from '../assets/UIHelper.js';
-import { joypad } from '../assets/VirtualJoypad.js'; // Import joypad
+
+// IMPORT THÊM JOYPAD ẢO
+import { joypad } from '../assets/VirtualJoypad.js';
 
 export default class RoomMasterScene extends Phaser.Scene {
     constructor() {
@@ -28,8 +29,37 @@ export default class RoomMasterScene extends Phaser.Scene {
         this.player = new Player(this, sw * 0.5, sh * 0.82);
         this.player.setDepth(10);
 
-        this.bedZone = this.add.zone(sw * 0.35, sh * 0.45, 180, 150).setOrigin(0.5);
+        this.bedX = sw * 0.35;
+        this.bedY = sh * 0.45;
+
+        this.bedZone = this.add.zone(this.bedX, this.bedY, 180, 150).setOrigin(0.5);
         this.physics.add.existing(this.bedZone, true);
+
+        // --- KHỞI TẠO DẤU CHẤM THAN TƯƠNG TÁC (HIỆN LUỒN KHI VÀO PHÒNG) ---
+        this.exclamation = this.add.text(this.bedX, this.bedY - 60, '!', {
+            fontSize: '35px',
+            fill: '#ffcc00', // Mặc định là màu vàng
+            fontStyle: 'bold',
+            stroke: '#000000',
+            strokeThickness: 5
+        })
+        .setOrigin(0.5)
+        .setDepth(2000);
+
+        // Nếu phòng này đã thắng rồi thì ẩn dấu ! đi luôn
+        if (this.registry.get('masterGameWon')) {
+            this.exclamation.setVisible(false);
+        }
+
+        // Tạo hiệu ứng nhấp nhô liên tục cho dấu !
+        this.tweens.add({
+            targets: this.exclamation,
+            y: this.bedY - 75,
+            duration: 500,
+            yoyo: true,
+            repeat: -1,
+            ease: 'Sine.easeInOut'
+        });
 
         this.ArrowHallway = ArrowGraphic.createArrowDown(this, sw * 0.49, sh * 0.9);
         this.tweens.add({
@@ -40,8 +70,6 @@ export default class RoomMasterScene extends Phaser.Scene {
             repeat: -1
         });
 
-        this.interactHint = UIHelper.createButtonA(this, 0, 0);
-
         // Đăng ký các phím vật lý
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -50,6 +78,7 @@ export default class RoomMasterScene extends Phaser.Scene {
         this.toHallwayZone = this.add.zone(sw * 0.5, sh - 10, sw * 0.2, 30).setOrigin(0.5);
         this.physics.add.existing(this.toHallwayZone, true);
         this.physics.add.overlap(this.player, this.toHallwayZone, () => {
+            if (this.dialogueBox && this.dialogueBox.visible) return; // Không chuyển cảnh khi đang thoại
             this.scene.start('HallwayScene', { fromScene: 'fromMasterRoom' });
         });
     }
@@ -58,23 +87,8 @@ export default class RoomMasterScene extends Phaser.Scene {
         if (this.player) this.player.update();
 
         // Kiểm tra va chạm giường
-        this.isPlayerAtBed = this.physics.overlap(this.player, this.bedZone) && !this.registry.get('masterGameWon');
-        this.interactHint.setVisible(this.isPlayerAtBed);
-
-        if (this.isPlayerAtBed) {
-            this.interactHint.setPosition(this.bedZone.x, this.bedZone.y - 80);
-            if (!this.tweens.isTweening(this.interactHint)) {
-                this.tweens.add({
-                    targets: this.interactHint,
-                    y: this.bedZone.y - 90,
-                    duration: 500,
-                    yoyo: true,
-                    repeat: -1
-                });
-            }
-        } else {
-            this.tweens.killTweensOf(this.interactHint);
-        }
+        const isWon = this.registry.get('masterGameWon');
+        this.isPlayerAtBed = this.physics.overlap(this.player, this.bedZone) && !isWon;
 
         // GỘP PHÍM BÀN PHÍM VÀ NÚT ẢO
         const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || 
@@ -84,22 +98,49 @@ export default class RoomMasterScene extends Phaser.Scene {
         const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) || 
                           joypad.actionB;
 
-        // LOGIC NÚT A: Tương tác với giường (Khi thoại đóng)
-        if (isActionA && !this.dialogueBox.isShowing) {
-            if (this.isPlayerAtBed) {
+        // ƯU TIÊN CHẶN ĐẦU KHI ĐANG THOẠI: Tua đoạn thoại
+        if (this.dialogueBox && this.dialogueBox.visible) {
+            if (isActionA) {
+                joypad.actionA = false; // Giải phóng nút ảo
+                this.dialogueBox.next(); // Gọi hàm xử lý kế tiếp
+            }
+            return;
+        }
+
+        // XỬ LÝ ĐỔI MÀU DẤU CHẤM THAN THEO KHOẢNG CÁCH VA CHẠM
+        if (this.isPlayerAtBed) {
+            if (this.exclamation && this.exclamation.active) {
+                this.exclamation.setFill('#00ff00'); // Đổi sang màu xanh lá báo hiệu tương tác được
+            }
+
+            // LOGIC NÚT A: Tương tác mở thoại / vào game
+            if (isActionA) {
+                joypad.actionA = false; 
+
+                // Đóng băng nhân vật
+                if (this.player && this.player.body) {
+                    this.player.setVelocity(0, 0);
+                    if (this.player.anims) this.player.anims.stop();
+                }
+
+                this.input.keyboard.resetKeys(); // Tránh kẹt nút phím cứng vào thoại
+
                 if (this.registry.get('talkedToFish')) {
                     this.scene.start('MemoryGameScene', { level: 1 });
                 } else {
                     this.dialogueBox.startSequence('roomMaster');
                 }
             }
-            joypad.actionA = false; // Reset nút A
+        } else {
+            if (this.exclamation && this.exclamation.active && !isWon) {
+                this.exclamation.setFill('#ffcc00'); // Đứng xa trả về màu vàng
+            }
         }
 
-        // LOGIC NÚT B: Quay lại (Khi thoại đóng)
-        if (isActionB && !this.dialogueBox.isShowing) {
+        // LOGIC NÚT B: Quay lại sảnh
+        if (isActionB) {
+            joypad.actionB = false; 
             this.scene.start('HallwayScene', { fromScene: 'fromMasterRoom' });
-            joypad.actionB = false; // Reset nút B
         }
     }
 }

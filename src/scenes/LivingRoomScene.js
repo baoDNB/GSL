@@ -1,6 +1,7 @@
 import Player from '../objects/Player.js';
 import ArrowGraphic from '../assets/ArrowGraphic.js';
 import DialogueBox from '../objects/DialogueBox.js';
+import { joypad } from '../assets/VirtualJoypad.js'; // 1. IMPORT JOYPAD ẢO
 
 export default class LivingRoomScene extends Phaser.Scene {
     constructor() { super('LivingRoomScene'); }
@@ -29,7 +30,11 @@ export default class LivingRoomScene extends Phaser.Scene {
         this.obstacles.add(this.sofa2);
 
         this.dialogueBox = new DialogueBox(this);
+        
+        // --- ĐỒNG BỘ ĐẦY ĐỦ CÁC PHÍM CỨNG ---
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
         this.tableX = (screenWidth * 0.4) + (screenWidth * 0.18) / 2;
         this.tableY = (screenHeight * 0.45) + (screenHeight * 0.2) / 2 - 20; // Nhích lên trên một chút cho đẹp
@@ -51,12 +56,13 @@ export default class LivingRoomScene extends Phaser.Scene {
             repeat: -1,
             ease: 'Sine.easeInOut'
         });
+        
         // 2. Tạo Player ở giữa phòng
         let spawnX = screenWidth * 0.9;
         let spawnY = screenHeight * 0.5;
 
         if (this.spawnDirection === 'fromKitchen') {
-            spawnX = screenWidth * 0.9;
+            spawnX = screenWidth * 0.5;
             spawnY = screenHeight * 0.9;
         } else if (this.spawnDirection === 'fromHallway') {
             spawnX = screenWidth * 0.9;
@@ -64,7 +70,7 @@ export default class LivingRoomScene extends Phaser.Scene {
         }
         this.player = new Player(this, spawnX, spawnY);
 
-        this.arrowHallway = ArrowGraphic.createArrowRight(this, screenWidth * 0.9, screenHeight * 0.3)
+        this.arrowHallway = ArrowGraphic.createArrowRight(this, screenWidth * 0.9, screenHeight * 0.3);
         this.tweens.add({
             targets: this.arrowHallway,
             x: this.arrowHallway.x - 10,
@@ -74,7 +80,7 @@ export default class LivingRoomScene extends Phaser.Scene {
         });
 
 
-        this.arrowKitchen = ArrowGraphic.createArrowRight(this, screenWidth * 0.9, screenHeight * 0.9)
+        this.arrowKitchen = ArrowGraphic.createArrowDown(this, screenWidth * 0.5, screenHeight * 0.9);
         this.tweens.add({
             targets: this.arrowKitchen,
             y: this.arrowKitchen.y - 10,
@@ -84,10 +90,11 @@ export default class LivingRoomScene extends Phaser.Scene {
         });
 
         // 3. Vùng chạm đi xuống Bếp (Cạnh dưới bên phải)
-        this.toKitchenZone = this.add.zone(screenWidth * 1, screenHeight * 0.9, screenWidth * 0.1, 100).setOrigin(0.5);
+        this.toKitchenZone = this.add.zone(screenWidth * 0.5, screenHeight * 1, screenWidth * 0.1, 35).setOrigin(0.5);
         this.physics.add.existing(this.toKitchenZone, true); // True = Static Body (đứng im)
 
         this.physics.add.overlap(this.player, this.toKitchenZone, () => {
+            if (this.dialogueBox && this.dialogueBox.visible) return; // Không chuyển cảnh khi đang thoại
             this.scene.start('KitchenScene', { fromScene: 'LivingRoomScene' });
         });
 
@@ -95,9 +102,9 @@ export default class LivingRoomScene extends Phaser.Scene {
         this.toHallwayZone = this.add.zone(screenWidth * 1, screenHeight * 0.3, 100, screenHeight * 0.2).setOrigin(0.5);
         this.physics.add.existing(this.toHallwayZone, true); // True = Static Body (đứng im)
         this.physics.add.overlap(this.player, this.toHallwayZone, () => {
+            if (this.dialogueBox && this.dialogueBox.visible) return; // Không chuyển cảnh khi đang thoại
             this.scene.start('HallwayScene', { fromScene: 'LivingRoomScene' });
         });
-
 
         this.physics.world.setBounds(300, 175, screenWidth - 50, screenHeight - 190);
         if (this.player.body) {
@@ -105,29 +112,46 @@ export default class LivingRoomScene extends Phaser.Scene {
         }
         this.physics.add.collider(this.player, this.obstacles);
 
-
-
     }
 
     update() {
         if (!this.player) return;
         this.player.update();
 
-        // LOGIC KHOẢNG CÁCH TƯƠNG TÁC BÀN PHÒNG KHÁCH
-        if (this.exclamationTable && this.exclamationTable.active) {
-            // Nếu đang mở hộp thoại thì dừng đổi màu dấu ! để tránh xung đột phím
-            if (this.dialogueBox && this.dialogueBox.isDialogueActive) return;
+        // --- GỘP KHỞI TẠO ĐIỀU KIỆN NÚT HÀNH ĐỘNG ---
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) ||
+            Phaser.Input.Keyboard.JustDown(this.keySpace) ||
+            joypad.actionA;
 
-            let dist = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.tableX, this.tableY);
+        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
+            joypad.actionB;
 
-            if (dist < 80) {
-                this.exclamationTable.setFill('#00ff00'); // Đổi sang màu xanh lá khi đứng gần
+        // XỬ LÝ KHI ẤN NÚT HÀNH ĐỘNG A
+        if (isActionA) {
+            joypad.actionA = false; // Xóa ngay tín hiệu để tránh dính lặp frame
 
-                if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
+            // ƯU TIÊN 1: Nếu hộp thoại ĐANG MỞ -> Nhấn nút để tua tiếp/đóng thoại câu tiếp theo
+            if (this.dialogueBox && this.dialogueBox.visible) {
+                this.dialogueBox.next();
+                return; // Ngắt tiến trình frame ngay lập tức để không chạm xuống logic bật thoại mới bên dưới
+            }
+
+            // ƯU TIÊN 2: Nếu hộp thoại ĐANG ĐÓNG -> Xét khoảng cách tương tác vật thể xung quanh
+            if (this.exclamationTable && this.exclamationTable.active) {
+                let dist = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.tableX, this.tableY);
+                if (dist < 80) {
                     this.handleTableInteraction();
                 }
+            }
+        }
+
+        // TỰ ĐỘNG CẬP NHẬT ĐỔI MÀU DẤU CHẤM THAN THEO KHOẢNG CÁCH NHÂN VẬT
+        if (this.exclamationTable && this.exclamationTable.active) {
+            let dist = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.tableX, this.tableY);
+            if (dist < 80) {
+                this.exclamationTable.setFill('#00ff00'); // Đổi sang màu xanh lá khi đứng gần
             } else {
-                this.exclamationTable.setFill('#ffcc00'); // Trả lại màu vàng khi đi xa
+                this.exclamationTable.setFill('#ffcc00'); // Giữ màu vàng khi đi xa
             }
         }
     }
@@ -143,12 +167,6 @@ export default class LivingRoomScene extends Phaser.Scene {
         // Gọi thoại tương tác bàn phòng khách
         this.dialogueBox.startSequence('livingRoomTable', () => {
             this.player.isTalking = false;
-
-            // ĐỔI SANG NÚT A: Đổi phím lật chữ của DialogueBox sang phím A cho lần tương tác sau
-            if (this.dialogueBox.keyE) {
-                this.dialogueBox.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-            }
-
             // Xóa sạch bộ nhớ đệm phím kẹt để tránh nhân vật bị tự động di chuyển sau khi xem xong
             this.input.keyboard.resetKeys();
         });

@@ -1,6 +1,7 @@
 import DialogueBox from '../objects/DialogueBox.js';
 import Player from '../objects/Player.js';
 import ArrowGraphic from '../assets/ArrowGraphic.js';
+import { joypad } from '../assets/VirtualJoypad.js'; // 1. IMPORT JOYPAD
 
 export default class KitchenScene extends Phaser.Scene {
     constructor() {
@@ -42,10 +43,11 @@ export default class KitchenScene extends Phaser.Scene {
         this.tableZone = this.add.zone(screenWidth * 0.36, screenHeight * 0.5, screenWidth * 0.25, screenHeight * 0.2).setOrigin(0);
         this.obstacles.add(this.tableZone);
 
-
-        // Khởi tạo Dialogue Box và phím tương tác E
+        // Khởi tạo Dialogue Box và phím tương tác
         this.dialogueBox = new DialogueBox(this);
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
         // ==========================================
         // TẠO DẤU CHẤM THAN (!) CHO TỦ LẠNH
@@ -73,7 +75,6 @@ export default class KitchenScene extends Phaser.Scene {
         // ==========================================
         // TẠO DẤU CHẤM THAN (!) CHO BÀN ĂN
         // ==========================================
-        // Lấy vị trí trung tâm phía trên mặt bàn ăn một chút để đặt dấu !
         this.tableX = screenWidth * 0.485;
         this.tableY = screenHeight * 0.52;
 
@@ -94,9 +95,8 @@ export default class KitchenScene extends Phaser.Scene {
             ease: 'Sine.easeInOut'
         });
 
-
         // Mũi tên hướng xuống đi ra phòng khách
-        this.arrowLivingRoom = ArrowGraphic.createArrowDown(this, screenWidth * 0.5, screenHeight * 0.8)
+        this.arrowLivingRoom = ArrowGraphic.createArrowDown(this, screenWidth * 0.5, screenHeight * 0.8);
         this.tweens.add({
             targets: this.arrowLivingRoom,
             y: '+=10',
@@ -122,7 +122,7 @@ export default class KitchenScene extends Phaser.Scene {
 
         // Xử lý dẫm chân vào vùng cửa phụ -> Chuyển Scene sang LivingRoomScene
         this.physics.add.overlap(this.player, this.toLivingroomZone, () => {
-            if (this.dialogueBox && this.dialogueBox.isDialogueActive) return; // Không chuyển cảnh khi đang thoại
+            if (this.dialogueBox && this.dialogueBox.visible) return; // Không chuyển cảnh khi đang thoại
             this.scene.start('LivingRoomScene', { fromScene: 'fromKitchen' });
         });
 
@@ -140,39 +140,64 @@ export default class KitchenScene extends Phaser.Scene {
         if (!this.player) return;
         this.player.update();
 
-        // 1. XỬ LÝ LOGIC KHOẢNG CÁCH TẠI TỦ LẠNH
-        if (this.exclamationFridge && this.exclamationFridge.active) {
-            let distFridge = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.fridgeX, this.fridgeY);
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) ||
+            Phaser.Input.Keyboard.JustDown(this.keySpace) ||
+            joypad.actionA;
 
-            if (distFridge < 80) {
-                this.exclamationFridge.setFill('#00ff00'); // Màu xanh lá báo hiệu bấm được
+        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
+            joypad.actionB;
 
-                if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
+        // XỬ LÝ KHI ẤN NÚT HÀNH ĐỘNG A
+        if (isActionA) {
+            joypad.actionA = false; // Xóa ngay tín hiệu để không dính nút
+
+            // ƯU TIÊN 1: Nếu hộp thoại ĐANG MỞ -> Nhấn để xem câu thoại tiếp theo
+            if (this.dialogueBox && this.dialogueBox.visible) {
+                this.dialogueBox.next(); // Hoặc hàm tương ứng chuyển thoại của bạn
+                return; // Thoát hàm luôn, chặn hoàn toàn việc chạy tiếp xuống logic kích hoạt thoại mới bên dưới
+            }
+
+            // ƯU TIÊN 2: Nếu hộp thoại ĐANG ĐÓNG -> Kiểm tra khoảng cách vật thể để kích hoạt thoại mới
+            // Kiểm tra tủ lạnh
+            if (this.exclamationFridge && this.exclamationFridge.active) {
+                let distFridge = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.fridgeX, this.fridgeY);
+                if (distFridge < 80) {
                     this.handleInteraction('openFridge');
+                    return;
                 }
-            } else {
-                this.exclamationFridge.setFill('#ffcc00'); // Trả lại màu vàng
+            }
+
+            // Kiểm tra bàn ăn
+            if (this.exclamationTable && this.exclamationTable.active) {
+                let distTable = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.tableX, this.tableY);
+                if (distTable < 95) {
+                    this.handleInteraction('inspectTable');
+                    return;
+                }
             }
         }
 
-        // 2. XỬ LÝ LOGIC KHOẢNG CÁCH TẠI BÀN ĂN
+        // ĐỔI MÀU DẤU CHẤM THAN DỰA TRÊN KHOẢNG CÁCH (Không phụ thuộc vào việc nhấn nút)
+        if (this.exclamationFridge && this.exclamationFridge.active) {
+            let distFridge = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.fridgeX, this.fridgeY);
+            if (distFridge < 80) {
+                this.exclamationFridge.setFill('#00ff00');
+            } else {
+                this.exclamationFridge.setFill('#ffcc00');
+            }
+        }
+
         if (this.exclamationTable && this.exclamationTable.active) {
             let distTable = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.tableX, this.tableY);
-
-            // Bàn ăn có kích thước to hơn tủ lạnh nên ta tăng khoảng cách kích hoạt lên 95px cho dễ bấm
             if (distTable < 95) {
-                this.exclamationTable.setFill('#00ff00'); // Màu xanh lá báo hiệu bấm được
-
-                if (Phaser.Input.Keyboard.JustDown(this.keyE)) {
-                    this.handleInteraction('inspectTable');
-                }
+                this.exclamationTable.setFill('#00ff00');
             } else {
-                this.exclamationTable.setFill('#ffcc00'); // Trả lại màu vàng
+                this.exclamationTable.setFill('#ffcc00');
             }
         }
     }
 
-    // Viết gọn lại hàm tương tác dùng chung cho cả 2 vật thể
+    // Hàm tương tác dùng chung cho cả các vật thể
     handleInteraction(dialogueKey) {
         if (this.player.isTalking) return;
 

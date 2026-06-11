@@ -22,7 +22,7 @@ export const DIALOGUES = {
     ],
     openFridge: [
         { speaker: "You", text: "Hmm it's a calendar." },
-        { speaker: "You", text: "Mother's Day" }
+        { speaker: "You", text: "Father's Day" }
     ],
     inspectTable: [
         { speaker: "You", text: "Ooh, someone left me my favorite: Flower! How awesome!" }

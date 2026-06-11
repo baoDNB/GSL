@@ -1,5 +1,6 @@
 import Player from '../objects/Player.js';
 import DialogueBox from '../objects/DialogueBox.js';
+import { joypad } from '../assets/VirtualJoypad.js'; // 1. IMPORT JOYPAD ẢO
 
 export default class PuzzyRoomScene extends Phaser.Scene {
     constructor() {
@@ -48,11 +49,11 @@ export default class PuzzyRoomScene extends Phaser.Scene {
             ease: 'Sine.easeInOut'
         });
 
-        // 5. Đăng ký phím SPACE để kích hoạt hội thoại ban đầu
+        // 5. Đăng ký phím cứng hành động
         this.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.hasInteracted = false;
 
-        // 🚨 KHAI BÁO CÁC PHÍM ĐIỀU KHIỂN CHO GAME XẾP HÌNH (WASD & Mũi tên)
+        // KHAI BÁO CÁC PHÍM ĐIỀU KHIỂN CHO GAME XẾP HÌNH
         this.cursors = this.input.keyboard.createCursorKeys();
         this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -68,21 +69,17 @@ export default class PuzzyRoomScene extends Phaser.Scene {
             this.player.setVelocity(0, 0);
         }
 
-        // 🚨 LẤY ĐÚNG TÂM CAMERA THỰC TẾ (Bỏ qua việc fix cứng số 400, 300)
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;
 
-        // Tạo container đặt ở gốc (0,0) để quản lý vị trí tuyệt đối
+        // Tạo container quản lý vị trí tuyệt đối
         this.puzzleContainer = this.add.container(0, 0).setDepth(2000);
 
-        // Nền đen phủ toàn bộ màn hình camera
         let puzzleBg = this.add.rectangle(centerX, centerY, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.85);
-
-        // Bảng nền xanh đen nằm chính giữa vùng nhìn thấy của người chơi
         let puzzleBoard = this.add.rectangle(centerX, centerY, 310, 310, 0x2c3e50).setStrokeStyle(4, 0xf1c40f);
 
         let puzzleTitle = this.add.text(centerX, centerY - 220, '🧩 SẮP XẾP MA TRẬN SỐ 🧩', { fontSize: '22px', color: '#f1c40f', fontWeight: 'bold' }).setOrigin(0.5);
-        let puzzleGuide = this.add.text(centerX, centerY + 220, 'Dùng Chuột hoặc WASD / Phím mũi tên để xếp hình!', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5);
+        let puzzleGuide = this.add.text(centerX, centerY + 220, 'Dùng Chuột, WASD, Mũi tên hoặc Joypad để xếp hình!', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5);
 
         this.puzzleContainer.add([puzzleBg, puzzleBoard, puzzleTitle, puzzleGuide]);
 
@@ -99,7 +96,6 @@ export default class PuzzyRoomScene extends Phaser.Scene {
             let val = i;
             let tile = this.add.container(0, 0);
 
-            // Vẽ rect chuẩn vuông từ gốc tâm (0,0) của tile
             let bgRect = this.add.rectangle(0, 0, tileSize - 6, tileSize - 6, 0xd35400);
             let textNum = this.add.text(0, 0, (val + 1).toString(), { fontSize: '24px', color: '#ffffff', fontWeight: 'bold' }).setOrigin(0.5);
 
@@ -142,7 +138,6 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         }
     }
 
-    // 🚨 SỬA LỖI: Nhận trực tiếp đối tượng tile được click
     onTileClicked(gameObject) {
         if (!this.gameActive || gameObject.tileValue === undefined || gameObject.tileValue === 8) return;
 
@@ -153,7 +148,6 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         let eRow = Math.floor(this.emptyIndex / 3);
         let eCol = this.emptyIndex % 3;
 
-        // Nếu ô bấm nằm cạnh ô trống (khoảng cách Manhattan bằng 1) thì cho phép đổi chỗ
         if ((Math.abs(cRow - eRow) + Math.abs(cCol - eCol)) === 1) {
             this.moveTile(clickedIndex);
         }
@@ -166,17 +160,27 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         let eCol = this.emptyIndex % 3;
         let targetIndex = -1;
 
-        if (Phaser.Input.Keyboard.JustDown(this.cursors.up) || Phaser.Input.Keyboard.JustDown(this.keyW)) {
+        // --- ĐỒNG BỘ ĐIỀU HƯỚNG MA TRẬN SỐ (Bàn phím + Joypad ảo) ---
+        const moveUp = Phaser.Input.Keyboard.JustDown(this.cursors.up) || Phaser.Input.Keyboard.JustDown(this.keyW) || joypad.up;
+        const moveDown = Phaser.Input.Keyboard.JustDown(this.cursors.down) || Phaser.Input.Keyboard.JustDown(this.keyS) || joypad.down;
+        const moveLeft = Phaser.Input.Keyboard.JustDown(this.cursors.left) || Phaser.Input.Keyboard.JustDown(this.keyA) || joypad.left;
+        const moveRight = Phaser.Input.Keyboard.JustDown(this.cursors.right) || Phaser.Input.Keyboard.JustDown(this.keyD) || joypad.right;
+
+        if (moveUp) {
             if (eRow < 2) targetIndex = this.emptyIndex + 3;
+            joypad.up = false; // Reset trạng thái nút ảo
         }
-        else if (Phaser.Input.Keyboard.JustDown(this.cursors.down) || Phaser.Input.Keyboard.JustDown(this.keyS)) {
+        else if (moveDown) {
             if (eRow > 0) targetIndex = this.emptyIndex - 3;
+            joypad.down = false;
         }
-        else if (Phaser.Input.Keyboard.JustDown(this.cursors.left) || Phaser.Input.Keyboard.JustDown(this.keyA)) {
+        else if (moveLeft) {
             if (eCol < 2) targetIndex = this.emptyIndex + 1;
+            joypad.left = false;
         }
-        else if (Phaser.Input.Keyboard.JustDown(this.cursors.right) || Phaser.Input.Keyboard.JustDown(this.keyD)) {
+        else if (moveRight) {
             if (eCol > 0) targetIndex = this.emptyIndex - 1;
+            joypad.right = false;
         }
 
         if (targetIndex !== -1) {
@@ -195,7 +199,6 @@ export default class PuzzyRoomScene extends Phaser.Scene {
 
     updateTilePositionsImmediately() {
         const tileSize = 96;
-
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;
 
@@ -227,24 +230,24 @@ export default class PuzzyRoomScene extends Phaser.Scene {
             this.gameActive = false;
 
             this.time.delayedCall(400, () => {
-                // 1. Tắt UI game
                 this.destroyPuzzleUI();
 
-                // 2. CẬP NHẬT CHÌA KHÓA VÀO REGISTRY (Trước khi chuyển cảnh)
+                // CẬP NHẬT CHÌA KHÓA VÀO REGISTRY
                 let currentKeys = this.registry.get('keysFound') || 0;
-                // Chỉ cộng nếu chưa từng thắng phòng này (tránh cộng nhiều lần)
                 if (!this.registry.get('puzzyRoomWon')) {
                     this.registry.set('keysFound', currentKeys + 1);
                     this.registry.set('puzzyRoomWon', true);
                 }
 
-                // 3. Hiện hộp thoại nhận chìa khóa
+                // Hiện hộp thoại nhận chìa khóa
                 if (this.player) this.player.isTalking = true;
+
+                // Xóa bộ đệm nút ảo và phím kẹt trước khi vào thoại win để tránh trôi chữ
+                joypad.actionA = false;
+                this.input.keyboard.resetKeys();
 
                 this.dialogueBox.startSequence('foundKey', () => {
                     if (this.player) this.player.isTalking = false;
-
-                    // 4. Chuyển cảnh về phòng trẻ em
                     this.scene.start('RoomChildScene', { fromScene: 'PuzzyRoomScene' });
                 });
             });
@@ -257,44 +260,60 @@ export default class PuzzyRoomScene extends Phaser.Scene {
     }
 
     update() {
-        // 1. Nếu đang chơi game xếp hình, quét phím điều khiển ô vuông và chặn di chuyển nhân vật
+        // --- ĐỒNG BỘ NÚT HÀNH ĐỘNG A ---
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.interactKey) || joypad.actionA;
+
+        // 1. Nếu đang chơi game xếp hình, quét phím ma trận và chặn di chuyển nhân vật
         if (this.gameActive) {
             this.handleKeyboardInputs();
             return;
         }
 
-        // 2. Nếu đang mở hộp thoại thông thường, đóng băng nhân vật
+        // 2. ƯU TIÊN CHẶN ĐẦU KHI ĐANG THOẠI: Bấm nút A/SPACE để tua thoại câu tiếp theo
         if (this.player && this.player.isTalking) {
+            if (isActionA) {
+                joypad.actionA = false; // Xóa tín hiệu lặp frame ảo
+                if (this.dialogueBox && this.dialogueBox.visible) {
+                    this.dialogueBox.next(); // Đồng bộ sử dụng hàm .next()
+                }
+            }
             return;
         }
 
-        // 3. Logic đi bộ tự do bên ngoài phòng và check khoảng cách tương tác phím SPACE
+        // 3. Logic đi bộ tự do và quét khoảng cách tương tác vật thể
         if (this.player) {
             this.player.update();
 
             let distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.bookX, this.bookY);
 
             if (distance < 80 && !this.hasInteracted) {
-                this.exclamation.setFill('#00ff00'); // Chuyển màu báo hiệu bấm được
+                if (this.exclamation && this.exclamation.active) {
+                    this.exclamation.setFill('#00ff00'); // Đổi màu xanh báo hiệu
+                }
 
-                if (Phaser.Input.Keyboard.JustDown(this.interactKey)) {
+                // Nhấn nút hành động để bắt đầu kích hoạt mở màn
+                if (isActionA) {
+                    joypad.actionA = false; // Xóa tín hiệu nút ảo
                     this.hasInteracted = true;
-                    this.exclamation.destroy();
+                    if (this.exclamation) this.exclamation.destroy();
 
                     if (this.player.body) {
                         this.player.setVelocity(0);
                         this.player.isTalking = true;
                     }
 
+                    // Xóa phím kẹt tránh đè lệnh vào thoại
+                    this.input.keyboard.resetKeys();
+
                     // Gọi hội thoại mở đầu từ file DialogueBox.js
                     this.dialogueBox.startSequence('puzzleIntro', () => {
-                        // Đóng hội thoại xong thì chính thức bật game xếp hình lên luôn!
+                        // Đóng hội thoại xong thì bật mini game xếp hình luôn
                         this.startPuzzleGame();
                     });
                 }
             } else {
                 if (this.exclamation && this.exclamation.active) {
-                    this.exclamation.setFill('#ffcc00');
+                    this.exclamation.setFill('#ffcc00'); // Trở lại màu vàng
                 }
             }
         }
