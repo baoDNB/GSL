@@ -25,18 +25,16 @@ body {
     align-items: center;
 }
 
-/* 2. Vỏ máy game: SỬA TẠI ĐÂY - Ép máy thu ngắn theo tỷ lệ dọc chuẩn */
+/* 2. Vỏ máy game: Mặc định cấu hình chuẩn, gọn gàng cho PC */
 .retro-console-wrapper {
     background: #c4c4c4;
     background-image: linear-gradient(145deg, #e6e6e6, #a0a0a0);
 
-    /* TRÊN PC HOẶC MÀN HÌNH LỚN */
+    /* TRÊN PC HOẶC MÀN HÌNH LỚN: Nằm gọn gàng giữa màn hình */
     width: 100%;
     max-width: 440px;
-    /* Thay vì ép cứng chiều cao, dùng tỷ lệ vàng 2:3 của Gameboy để máy tự tính toán */
     aspect-ratio: 2 / 3.1;
 
-    /* Thêm bo góc mô phỏng máy Gameboy thật */
     border-radius: 12px 12px 70px 12px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), inset 0 2px 3px rgba(255, 255, 255, 0.6);
 
@@ -357,106 +355,124 @@ body {
 
 
 /* ==========================================================================
-   MEDIA QUERIES - SỬA TẠI ĐÂY: KHÓA TỶ LỆ DỌC GAMEBOY TRÊN MOBILE
+   MEDIA QUERIES - ĐÃ SỬA: ÉP TRÀN TOÀN MÀN HÌNH TRÊN DI ĐỘNG (100% WIDTH + HEIGHT)
    ========================================================================== */
 @media screen and (max-width: 480px) {
     .retro-console-wrapper {
-        width: 94vw;
-        /* Thu nhỏ một chút bề ngang để lộ hình nền, tạo chiều sâu */
-        height: auto;
-        max-height: none;
-        /* Buộc mobile phải giữ đúng tỷ lệ béo lùn của Gameboy thật, bỏ đi dải xám dài ngoằn */
-        aspect-ratio: 2 / 3.25;
+        /* Phá vỡ kích thước cố định, ép bung lụa hết màn hình điện thoại */
+        width: 100vw !important;
+        height: 100dvh !important;
+        max-height: none !important;
 
-        border-radius: 12px 12px 60px 12px;
-        /* Giữ lại bo góc tròn của máy thật thay vì tràn phẳng 0 */
-        padding: 12px 12px 20px 12px;
+        /* Bỏ aspect-ratio cũ để máy kéo dài tự nhiên lấp hết khoảng trống nền tối */
+        aspect-ratio: auto !important;
+
+        /* Chuyển thành phẳng hoàn toàn, bỏ viền lửng lơ */
+        border-radius: 0px !important;
+        box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.6);
+
+        /* Đẩy nhẹ padding lề để màn hình và nút không dính sát viền kính điện thoại */
+        padding: 15px 12px 25px 12px;
     }
 
-    /* --- ĐIỀU CHỈNH CỤM NÚT CHO PHÙ HỢP DIỆN TÍCH MÁY MỚI NÉN --- */
+    /* Khung màn hình game co giãn linh hoạt hơn */
+    .screen-bezel {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        /* Giữ tỷ lệ hiển thị game chuẩn */
+        border-radius: 8px;
+    }
+
+    /* Đẩy cụm nút bấm linh hoạt chiếm trọn vùng trống dài phía dưới trên mobile */
+    .console-body-controls {
+        margin-top: 15px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* --- PHÂN BỔ LẠI CỤM NÚT TRÊN MOBILE ĐÃ TRÀN MÀN HÌNH --- */
     .dpad-housing {
-        width: 135px;
-        height: 135px;
+        width: 145px;
+        height: 145px;
         left: 5px;
-        top: 45%;
+        top: 40%;
+        /* Đẩy lên cao một chút cho ngón cái dễ chạm bấm */
         transform: translateY(-50%);
     }
 
     .dpad-cross {
-        width: 115px;
-        height: 115px;
+        width: 125px;
+        height: 125px;
     }
 
     .dpad-axis-horizontal {
-        top: 38px;
-        width: 115px;
-        height: 39px;
+        top: 42px;
+        width: 125px;
+        height: 41px;
     }
 
     .dpad-axis-vertical {
-        left: 38px;
-        width: 39px;
-        height: 115px;
+        left: 42px;
+        width: 41px;
+        height: 125px;
     }
 
     .dpad-btn {
-        width: 39px;
-        height: 39px;
+        width: 41px;
+        height: 41px;
     }
 
     .dpad-btn.up {
         top: 0;
-        left: 38px;
+        left: 42px;
     }
 
     .dpad-btn.left {
-        top: 38px;
+        top: 42px;
         left: 0;
     }
 
     .dpad-btn.right {
-        top: 38px;
-        left: 77px;
+        top: 42px;
+        left: 84px;
     }
 
     .dpad-btn.down {
-        top: 77px;
-        left: 38px;
+        top: 84px;
+        left: 42px;
     }
 
     .dpad-center-pivot {
-        top: 42px;
-        left: 42px;
+        top: 47px;
+        left: 47px;
         width: 31px;
         height: 31px;
     }
 
     .action-housing {
         right: 5px;
-        top: 45%;
+        top: 40%;
+        /* Đồng bộ độ cao với D-pad */
         transform: translateY(-50%);
     }
 
     .action-btn {
-        width: 55px;
-        height: 55px;
+        width: 58px;
+        height: 58px;
     }
 
     .action-pad-recess {
-        gap: 18px;
-        padding: 8px 10px;
+        gap: 20px;
+        padding: 10px 12px;
     }
 
+    /* Đẩy loa và nút chức năng xuống sát đáy màn hình điện thoại thực tế */
     .speaker-grilles {
-        bottom: 42px;
-    }
-
-    .grille-bar {
-        width: 5px;
-        height: 35px;
+        bottom: 75px;
     }
 
     .system-buttons {
-        bottom: 6px;
+        bottom: 20px;
     }
 }
