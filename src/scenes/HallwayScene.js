@@ -263,10 +263,9 @@ export default class HallwayScene extends Phaser.Scene {
         if (this.player.isTalking) return;
         this.player.setVelocity(0);
         this.player.isTalking = true;
-
         const victoryDialogue = [
-            { speaker: "You", text: "Cả 3 chiếc chìa khóa đều khớp hoàn hảo vào ổ!" },
-            { speaker: "You", text: "Cánh cửa bí mật đang từ từ mở ra... Cuối cùng mình cũng đã thoát rồi!" }
+            { speaker: "You", text: "All three keys fit perfectly into the lock!" },
+            { speaker: "You", text: "The secret door is slowly opening... I'm finally free!" }
         ];
 
         this.dialogueBox.startSequence(victoryDialogue, () => {
