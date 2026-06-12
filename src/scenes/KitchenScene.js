@@ -123,8 +123,9 @@ export default class KitchenScene extends Phaser.Scene {
         this.player = new Player(this, spawnX, spawnY);
         if (this.spawnDirection === 'LivingRoomScene') {
             if (this.player.anims) {
-                this.player.anims.play('walk_up', true);
-                this.player.anims.stop(); // Giữ nguyên frame đứng im hướng lên
+                this.player.lastDirection = 'up';
+                this.player.anims.play('walk-up', true);
+                this.player.anims.stop();
             }
         }
 
@@ -145,7 +146,7 @@ export default class KitchenScene extends Phaser.Scene {
         if (this.player.body) {
             this.player.setCollideWorldBounds(true);
         }
-        this.cameras.main.fadeIn(1500, 0, 0, 0);
+        this.cameras.main.fadeIn(2000, 0, 0, 0);
 
     }
 

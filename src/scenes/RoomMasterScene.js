@@ -26,8 +26,25 @@ export default class RoomMasterScene extends Phaser.Scene {
         bg.displayHeight = sh;
 
         this.dialogueBox = new DialogueBox(this);
-        this.player = new Player(this, sw * 0.5, sh * 0.82);
+
+        // Spawn mặc định
+        let spawnX = sw * 0.5;
+        let spawnY = sh * 0.82;
+
+        // Nếu đi từ Hallway vào
+        if (this.fromScene === 'fromHallway') {
+            spawnX = sw * 0.5;
+            spawnY = sh * 0.82;
+        }
+
+        this.player = new Player(this, spawnX, spawnY);
         this.player.setDepth(10);
+
+        // Quay mặt lên khi vừa vào phòng
+        if (this.fromScene === 'fromHallway') {
+            this.player.lastDirection = 'up';
+            this.player.anims.play('idle-up', true);
+        }
 
         this.bedX = sw * 0.35;
         this.bedY = sh * 0.45;

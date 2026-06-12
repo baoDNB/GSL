@@ -87,15 +87,13 @@ export default class MemoryGameScene extends Phaser.Scene {
 
         // 5. Khởi tạo hệ thống DialogueBox
         this.dialogueBox = new DialogueBox(this);
-        this.cameras.main.fadeIn(1200, 0, 0, 0);
-
     }
 
     update() {
         // --- ĐỒNG BỘ NÚT HÀNH ĐỘNG A ---
-        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) ||
-            Phaser.Input.Keyboard.JustDown(this.keySpace) ||
-            joypad.actionA;
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || 
+                          Phaser.Input.Keyboard.JustDown(this.keySpace) ||
+                          joypad.actionA;
 
         // ƯU TIÊN CHẶN ĐẦU: Nếu đang hiện thoại, bấm nút A để tua thoại và thoát xử lý game ngay
         if (this.isInDialogue) {
@@ -172,7 +170,7 @@ export default class MemoryGameScene extends Phaser.Scene {
             this.isInDialogue = true;
             this.canFlip = false;
             this.selectionRect.setVisible(false); // Ẩn khung vàng chọn bài để nhìn thoại rõ hơn
-
+            
             // Thay đổi dòng trạng thái hướng dẫn người chơi
             this.statusText.setText('Press [E], [SPACE] or Button A to continue...');
 

@@ -31,7 +31,7 @@ export const DIALOGUES = {
         { speaker: "You", text: "Someone left a note on the table. It says:" },
         { speaker: "You", text: "We're playing hide and seek. You have to come find us!" }
     ],
-    childTent: [        
+    childTent: [
         { speaker: "You", text: "Looks cozy, I don't see anyone in there" }
     ],
     roomMaster: [
@@ -41,6 +41,10 @@ export const DIALOGUES = {
         { speaker: "Kid", text: "Looks like mom is coming. Let's go hide!" },
         { speaker: "You", text: "I swear I just saw the kid!" },
         { speaker: "You", text: "Hmm, it's locked, let me go through the back." }
+    ],
+    victoryDialogue: [
+        { speaker: "You", text: "All three keys fit perfectly into the lock!" },
+        { speaker: "You", text: "The secret door is slowly opening... I'm finally free!" }
     ]
 };
 
@@ -58,7 +62,7 @@ export default class DialogueBox {
             .setOrigin(0.5).setStrokeStyle(2, 0xffffff).setDepth(1000);
 
         this.text = scene.add.text(60, 450, '', {
-            fontSize: '20px',
+            fontSize: '30px',
             color: '#ffffff',
             wordWrap: { width: 680 },
             fontFamily: 'monospace'
@@ -118,13 +122,13 @@ export default class DialogueBox {
         if (!this.isShowing) return;
 
         // Bắt sự kiện Nút A hoặc phím E/Space
-        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || 
-                          Phaser.Input.Keyboard.JustDown(this.keySpace) || 
-                          joypad.actionA;
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) ||
+            Phaser.Input.Keyboard.JustDown(this.keySpace) ||
+            joypad.actionA;
 
         if (isActionA) {
             this.nextNode(); // Chuyển câu
-            
+
             // Ép tắt nút Joypad để không bị lặp phím liên tục
             joypad.actionA = false;
         }

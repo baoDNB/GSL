@@ -121,8 +121,6 @@ export default class LavaGameScene extends Phaser.Scene {
                 }
             }
         }
-        this.cameras.main.fadeIn(1200, 0, 0, 0);
-
     }
 
     /**

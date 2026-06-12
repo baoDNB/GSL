@@ -60,6 +60,13 @@ export default class RoomChildScene extends Phaser.Scene {
             spawnY = sh * 0.9;
         }
         this.player = new Player(this, spawnX, spawnY);
+        if (this.spawnDirection === 'fromHallway') {
+            if (this.player.anims) {
+                this.player.lastDirection = 'up';
+                this.player.anims.play('walk-up', true);
+                this.player.anims.stop();
+            }
+        }
 
         this.ArrowHallway = ArrowGraphic.createArrowDown(this, sw * 0.49, sh * 0.9);
         this.tweens.add({

@@ -71,8 +71,16 @@ export default class LivingRoomScene extends Phaser.Scene {
         this.player = new Player(this, spawnX, spawnY);
         if (this.spawnDirection === 'fromKitchen') {
             if (this.player.anims) {
-                this.player.anims.play('walk_down', true);
-                this.player.anims.stop(); // Giữ nguyên frame đứng im hướng xuống
+                this.player.lastDirection = 'up';
+                this.player.anims.play('walk-up', true);
+                this.player.anims.stop();
+            }
+        } else if (this.spawnDirection === 'fromHallway') {
+            if (this.player.anims) {
+                this.player.lastDirection = 'up';
+                this.player.anims.play('walk-side', true)
+                this.player.lastDirection = 'left';
+                this.player.anims.stop();
             }
         }
 
@@ -117,7 +125,7 @@ export default class LivingRoomScene extends Phaser.Scene {
         }
         this.physics.add.collider(this.player, this.obstacles);
         // Thao tác này giúp màn hình sáng dần lên từ nền đen khi vừa vào phòng mới
-        this.cameras.main.fadeIn(1500, 0, 0, 0);
+        this.cameras.main.fadeIn(2000, 0, 0, 0);
     }
 
     update() {

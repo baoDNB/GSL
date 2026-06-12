@@ -119,6 +119,17 @@ export default class HallwayScene extends Phaser.Scene {
             spawnY = sh * 0.35;
         }
         this.player = new Player(this, spawnX, spawnY);
+        if (this.spawnDirection === 'LivingRoomScene') {
+            if (this.player.anims) {
+                this.player.lastDirection = 'up';
+                this.player.anims.play('walk-side', true);
+                this.player.lastDirection = 'right';
+                this.player.anims.stop();
+            }
+        }
+
+
+
         this.obstacles = this.physics.add.staticGroup();
 
         this.wall = this.add.zone(sw * 0.01, sh * 0.3, sw * 0.15, sh * 0.4).setOrigin(0);
@@ -183,7 +194,7 @@ export default class HallwayScene extends Phaser.Scene {
             this.player.setCollideWorldBounds(true);
         }
         this.physics.add.collider(this.player, this.obstacles);
-        this.cameras.main.fadeIn(1200, 0, 0, 0);
+        this.cameras.main.fadeIn(2000, 0, 0, 0);
 
     }
 
@@ -263,12 +274,7 @@ export default class HallwayScene extends Phaser.Scene {
         if (this.player.isTalking) return;
         this.player.setVelocity(0);
         this.player.isTalking = true;
-        const victoryDialogue = [
-            { speaker: "You", text: "All three keys fit perfectly into the lock!" },
-            { speaker: "You", text: "The secret door is slowly opening... I'm finally free!" }
-        ];
-
-        this.dialogueBox.startSequence(victoryDialogue, () => {
+        this.dialogueBox.startSequence('victoryDialogue', () => {
             this.player.isTalking = false;
             this.scene.start('RoomSecretScene', { fromScene: 'fromHallway' });
         });
