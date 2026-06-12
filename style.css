@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CSS RETRO CONSOLE - BẢN ĐA NỀN TẢNG (MOBILE + PC) - NÚT LỚN + LOA TRUNG TÂM
+   CSS RETRO CONSOLE - BẢN ĐA NỀN TẢNG - MÀN HÌNH TRAN KHÍT BIÊN (KHÔNG KHUNG HAI BÊN)
    ========================================================================== */
 
 /* 1. Nền trang chung: Khóa chết cuộn trang, căn giữa mọi thứ */
@@ -14,9 +14,7 @@ body {
     background-size: 20px 20px;
     font-family: 'Courier New', Courier, monospace;
     overflow: hidden;
-    /* Cấm cuộn */
     touch-action: none;
-    /* Cấm mọi thao tác vuốt/zoom của trình duyệt */
     user-select: none;
     -webkit-user-select: none;
 
@@ -25,12 +23,11 @@ body {
     align-items: center;
 }
 
-/* 2. Vỏ máy game: Mặc định cấu hình chuẩn, gọn gàng cho PC */
+/* 2. Vỏ máy game: Mặc định cấu hình trên PC */
 .retro-console-wrapper {
     background: #c4c4c4;
     background-image: linear-gradient(145deg, #e6e6e6, #a0a0a0);
 
-    /* TRÊN PC HOẶC MÀN HÌNH LỚN: Nằm gọn gàng giữa màn hình */
     width: 100%;
     max-width: 440px;
     aspect-ratio: 2 / 3.1;
@@ -38,26 +35,35 @@ body {
     border-radius: 12px 12px 70px 12px;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), inset 0 2px 3px rgba(255, 255, 255, 0.6);
 
-    padding: 20px 15px 25px 15px;
+    /* Chú ý: padding-top và padding-bottom giữ lại để giãn nút, padding-left/right đặt bằng 0 để màn hình tràn biên */
+    padding: 20px 0px 25px 0px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
 }
 
-/* 3. Khung kính màn hình */
+/* 3. Khung kính màn hình: ĐÃ SỬA ĐỂ BỎ VIỀN 2 BÊN */
 .screen-bezel {
     background: #6b726e;
-    border-radius: 8px 8px 30px 8px;
-    padding: 35px 20px 15px 20px;
+
+    /* Chỉ bo góc phía trên, phần dưới nối phẳng với vỏ máy */
+    border-radius: 12px 12px 0 0;
+
+    /* Padding trên dưới giữ nguyên, padding hai bên bằng 0 để màn tràn ra mép */
+    padding: 35px 0px 15px 0px;
     box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.4), 0 2px 3px rgba(255, 255, 255, 0.4);
     position: relative;
-    border: 3px solid #555;
-    box-sizing: border-box;
 
+    /* Bỏ border bên trái và bên phải để không lộ vách ngăn */
+    border-top: 3px solid #555;
+    border-bottom: 3px solid #555;
+    border-left: none;
+    border-right: none;
+
+    box-sizing: border-box;
     width: 100%;
     aspect-ratio: 4 / 3;
     flex-shrink: 0;
-    /* Giữ form không cho các thành phần khác đè ép */
 
     display: flex;
     flex-direction: column;
@@ -90,7 +96,8 @@ body {
 
 .battery-indicator {
     position: absolute;
-    left: 10px;
+    left: 15px;
+    /* Dịch vào một chút vì viền máy đã biến mất */
     top: 50%;
     transform: translateY(-50%);
     display: flex;
@@ -116,41 +123,45 @@ body {
 /* 4. Khung nhét Game Phaser */
 #app {
     background-color: #000;
-    border: 4px solid #222;
-    border-radius: 5px;
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 1);
+    border-top: 4px solid #222;
+    border-bottom: 4px solid #222;
+    border-left: none;
+    /* Bỏ viền trái canvas */
+    border-right: none;
+    /* Bỏ viền phải canvas */
     overflow: hidden;
 
     flex: 1;
-    /* Lấp đầy khung kính */
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Ép game Phaser luôn giữ đúng tỷ lệ và nằm gọn trong màn hình */
+/* Ép game Phaser bung hết cỡ theo chiều ngang của khung kính mới */
 #app canvas {
     width: 100% !important;
     height: 100% !important;
     object-fit: fill;
 }
 
-/* 5. Khu vực nút bấm: Tự co giãn thông minh trong vùng máy còn lại */
+/* 5. Khu vực nút bấm (Có thêm padding bên trong để các nút không bị sát lề ngoài của máy) */
 .console-body-controls {
     width: 100%;
     flex: 1;
     position: relative;
     margin-top: 10px;
+    padding: 0 15px;
+    /* Bù lại khoảng trống cho các nút bấm bên dưới */
     box-sizing: border-box;
 }
 
-/* --- D-PAD (Phím chữ thập - Ghim sát lề TRÁI) --- */
+/* --- D-PAD (Phím chữ thập) --- */
 .dpad-housing {
     position: absolute;
-    left: 10px;
+    left: 15px;
+    /* Cân đối lại vị trí đặt nút */
     top: 45%;
     transform: translateY(-50%);
-    /* Căn giữa trục dọc khu vực nút bấm */
     width: 135px;
     height: 135px;
     background: #b5b5b5;
@@ -245,10 +256,11 @@ body {
     background: #111;
 }
 
-/* --- A / B BUTTONS (Ghim sát lề PHẢI) --- */
+/* --- A / B BUTTONS --- */
 .action-housing {
     position: absolute;
-    right: 10px;
+    right: 15px;
+    /* Cân đối lại vị trí đặt nút */
     top: 45%;
     transform: translateY(-50%);
 }
@@ -295,7 +307,7 @@ body {
     font-style: italic;
 }
 
-/* --- LOA NGOÀI (NẰM CHÍNH GIỮA) --- */
+/* --- LOA NGOÀI --- */
 .speaker-grilles {
     position: absolute;
     bottom: 35px;
@@ -313,7 +325,7 @@ body {
     box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.4), 0 1px 1px rgba(255, 255, 255, 0.3);
 }
 
-/* --- SELECT / START (HÀNG CUỐI CÙNG TRUNG TÂM) --- */
+/* --- SELECT / START --- */
 .system-buttons {
     position: absolute;
     bottom: 2px;
@@ -355,49 +367,42 @@ body {
 
 
 /* ==========================================================================
-   MEDIA QUERIES - ĐÃ SỬA: ÉP TRÀN TOÀN MÀN HÌNH TRÊN DI ĐỘNG (100% WIDTH + HEIGHT)
+   MEDIA QUERIES - ÉP TRÀN TOÀN MÀN HÌNH TRÊN DI ĐỘNG (100% WIDTH + HEIGHT)
    ========================================================================== */
 @media screen and (max-width: 480px) {
     .retro-console-wrapper {
-        /* Phá vỡ kích thước cố định, ép bung lụa hết màn hình điện thoại */
         width: 100vw !important;
         height: 100dvh !important;
         max-height: none !important;
-
-        /* Bỏ aspect-ratio cũ để máy kéo dài tự nhiên lấp hết khoảng trống nền tối */
         aspect-ratio: auto !important;
-
-        /* Chuyển thành phẳng hoàn toàn, bỏ viền lửng lơ */
         border-radius: 0px !important;
         box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.6);
-
-        /* Đẩy nhẹ padding lề để màn hình và nút không dính sát viền kính điện thoại */
-        padding: 15px 12px 25px 12px;
+        padding: 15px 0px 25px 0px;
+        /* Di động cũng bỏ padding 2 bên vỏ máy */
     }
 
-    /* Khung màn hình game co giãn linh hoạt hơn */
     .screen-bezel {
         width: 100%;
         aspect-ratio: 4 / 3;
-        /* Giữ tỷ lệ hiển thị game chuẩn */
-        border-radius: 8px;
+        border-radius: 0px;
+        /* Phẳng hoàn toàn khớp viền điện thoại */
     }
 
-    /* Đẩy cụm nút bấm linh hoạt chiếm trọn vùng trống dài phía dưới trên mobile */
     .console-body-controls {
         margin-top: 15px;
         flex: 1;
         display: flex;
         flex-direction: column;
+        padding: 0 10px;
+        /* Nút trên mobile co vào 10px để không bị sát cạnh cảm ứng */
     }
 
-    /* --- PHÂN BỔ LẠI CỤM NÚT TRÊN MOBILE ĐÃ TRÀN MÀN HÌNH --- */
+    /* --- PHÂN BỔ LẠI CỤM NÚT TRÊN MOBILE --- */
     .dpad-housing {
         width: 145px;
         height: 145px;
-        left: 5px;
+        left: 10px;
         top: 40%;
-        /* Đẩy lên cao một chút cho ngón cái dễ chạm bấm */
         transform: translateY(-50%);
     }
 
@@ -451,9 +456,8 @@ body {
     }
 
     .action-housing {
-        right: 5px;
+        right: 10px;
         top: 40%;
-        /* Đồng bộ độ cao với D-pad */
         transform: translateY(-50%);
     }
 
@@ -467,7 +471,6 @@ body {
         padding: 10px 12px;
     }
 
-    /* Đẩy loa và nút chức năng xuống sát đáy màn hình điện thoại thực tế */
     .speaker-grilles {
         bottom: 75px;
     }
