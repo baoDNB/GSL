@@ -80,9 +80,8 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         let puzzleBg = this.add.rectangle(centerX, centerY, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.85);
         let puzzleBoard = this.add.rectangle(centerX, centerY, 310, 310, 0x2c3e50).setStrokeStyle(4, 0xf1c40f);
 
-        let puzzleTitle = this.add.text(centerX, centerY - 220, '🧩 SẮP XẾP MA TRẬN SỐ 🧩', { fontSize: '22px', color: '#f1c40f', fontWeight: 'bold' }).setOrigin(0.5);
-        let puzzleGuide = this.add.text(centerX, centerY + 220, 'Dùng Chuột, WASD, Mũi tên hoặc Joypad để xếp hình!', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5);
-
+        let puzzleTitle = this.add.text(centerX, centerY - 220, '🧩 NUMBER MATRIX PUZZLE 🧩', { fontSize: '22px', color: '#f1c40f', fontWeight: 'bold' }).setOrigin(0.5);
+        let puzzleGuide = this.add.text(centerX, centerY + 220, 'Use Mouse, WASD, Arrow Keys, or Joypad to move!', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5);
         this.puzzleContainer.add([puzzleBg, puzzleBoard, puzzleTitle, puzzleGuide]);
 
         this.correctOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
