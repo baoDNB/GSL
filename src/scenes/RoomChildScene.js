@@ -34,8 +34,8 @@ export default class RoomChildScene extends Phaser.Scene {
             stroke: '#000000',
             strokeThickness: 5
         })
-        .setOrigin(0.5)
-        .setDepth(2000);
+            .setOrigin(0.5)
+            .setDepth(2000);
 
         // 💡 KIỂM TRA: Nếu phòng này đã thắng (chơi xong), ẩn luôn dấu ! ngay khi vào phòng
         if (this.registry.get('puzzyRoomWon')) {
@@ -89,6 +89,8 @@ export default class RoomChildScene extends Phaser.Scene {
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        this.cameras.main.fadeIn(1200, 0, 0, 0);
+
     }
 
     update() {
@@ -101,11 +103,11 @@ export default class RoomChildScene extends Phaser.Scene {
         let isNearPuzzy = this.physics.overlap(this.player, this.puzzyZone) && !isWon;
 
         const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) ||
-                          Phaser.Input.Keyboard.JustDown(this.keySpace) ||
-                          joypad.actionA;
+            Phaser.Input.Keyboard.JustDown(this.keySpace) ||
+            joypad.actionA;
 
         const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
-                          joypad.actionB;
+            joypad.actionB;
 
         // CHẶN HỘI THOẠI
         if (this.dialogueBox && this.dialogueBox.visible) {

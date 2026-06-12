@@ -59,6 +59,8 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.cameras.main.fadeIn(1200, 0, 0, 0);
+
     }
 
     startPuzzleGame() {

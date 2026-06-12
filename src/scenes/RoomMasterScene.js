@@ -43,8 +43,8 @@ export default class RoomMasterScene extends Phaser.Scene {
             stroke: '#000000',
             strokeThickness: 5
         })
-        .setOrigin(0.5)
-        .setDepth(2000);
+            .setOrigin(0.5)
+            .setDepth(2000);
 
         // Nếu phòng này đã thắng rồi thì ẩn dấu ! đi luôn
         if (this.registry.get('masterGameWon')) {
@@ -81,6 +81,8 @@ export default class RoomMasterScene extends Phaser.Scene {
             if (this.dialogueBox && this.dialogueBox.visible) return; // Không chuyển cảnh khi đang thoại
             this.scene.start('HallwayScene', { fromScene: 'fromMasterRoom' });
         });
+        this.cameras.main.fadeIn(1200, 0, 0, 0);
+
     }
 
     update() {
@@ -91,12 +93,12 @@ export default class RoomMasterScene extends Phaser.Scene {
         this.isPlayerAtBed = this.physics.overlap(this.player, this.bedZone) && !isWon;
 
         // GỘP PHÍM BÀN PHÍM VÀ NÚT ẢO
-        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || 
-                          Phaser.Input.Keyboard.JustDown(this.keySpace) || 
-                          joypad.actionA;
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) ||
+            Phaser.Input.Keyboard.JustDown(this.keySpace) ||
+            joypad.actionA;
 
-        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) || 
-                          joypad.actionB;
+        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
+            joypad.actionB;
 
         // ƯU TIÊN CHẶN ĐẦU KHI ĐANG THOẠI: Tua đoạn thoại
         if (this.dialogueBox && this.dialogueBox.visible) {
@@ -115,7 +117,7 @@ export default class RoomMasterScene extends Phaser.Scene {
 
             // LOGIC NÚT A: Tương tác mở thoại / vào game
             if (isActionA) {
-                joypad.actionA = false; 
+                joypad.actionA = false;
 
                 // Đóng băng nhân vật
                 if (this.player && this.player.body) {

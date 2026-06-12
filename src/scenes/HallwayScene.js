@@ -183,6 +183,8 @@ export default class HallwayScene extends Phaser.Scene {
             this.player.setCollideWorldBounds(true);
         }
         this.physics.add.collider(this.player, this.obstacles);
+        this.cameras.main.fadeIn(1200, 0, 0, 0);
+
     }
 
     update() {
@@ -239,7 +241,7 @@ export default class HallwayScene extends Phaser.Scene {
     }
 
     handleInteraction() {
-        if (this.player.isTalking) return; 
+        if (this.player.isTalking) return;
         this.player.setVelocity(0);
         this.player.isTalking = true;
 

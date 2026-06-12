@@ -43,6 +43,11 @@ export default class KitchenScene extends Phaser.Scene {
         this.tableZone = this.add.zone(screenWidth * 0.36, screenHeight * 0.5, screenWidth * 0.25, screenHeight * 0.2).setOrigin(0);
         this.obstacles.add(this.tableZone);
 
+        this.wall1 = this.add.zone(screenWidth * 0.1, screenHeight * 0.85, screenWidth * 0.34, screenHeight * 0.5).setOrigin(0);
+        this.obstacles.add(this.wall1);
+        this.wall2 = this.add.zone(screenWidth * 0.56, screenHeight * 0.85, screenWidth * 0.34, screenHeight * 0.5).setOrigin(0);
+        this.obstacles.add(this.wall2);
+
         // Khởi tạo Dialogue Box và phím tương tác
         this.dialogueBox = new DialogueBox(this);
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
@@ -116,8 +121,14 @@ export default class KitchenScene extends Phaser.Scene {
             spawnY = screenHeight * 0.75;
         }
         this.player = new Player(this, spawnX, spawnY);
+        if (this.spawnDirection === 'LivingRoomScene') {
+            if (this.player.anims) {
+                this.player.anims.play('walk_up', true);
+                this.player.anims.stop(); // Giữ nguyên frame đứng im hướng lên
+            }
+        }
 
-        this.toLivingroomZone = this.add.zone(screenWidth * 0.5, screenHeight * 0.87, screenWidth * 0.1, 40).setOrigin(0.5);
+        this.toLivingroomZone = this.add.zone(screenWidth * 0.5, screenHeight * 0.95, screenWidth * 0.1, 40).setOrigin(0.5);
         this.physics.add.existing(this.toLivingroomZone, true);
 
         // Xử lý dẫm chân vào vùng cửa phụ -> Chuyển Scene sang LivingRoomScene
@@ -130,10 +141,12 @@ export default class KitchenScene extends Phaser.Scene {
         this.physics.add.collider(this.player, this.obstacles);
 
         // Giới hạn di chuyển của nhân vật trong khung bản đồ
-        this.physics.world.setBounds(100, 45, screenWidth - 200, screenHeight - 130);
+        this.physics.world.setBounds(100, 45, screenWidth - 200, screenHeight - 10);
         if (this.player.body) {
             this.player.setCollideWorldBounds(true);
         }
+        this.cameras.main.fadeIn(1500, 0, 0, 0);
+
     }
 
     update() {

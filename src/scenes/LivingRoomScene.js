@@ -30,7 +30,7 @@ export default class LivingRoomScene extends Phaser.Scene {
         this.obstacles.add(this.sofa2);
 
         this.dialogueBox = new DialogueBox(this);
-        
+
         // --- ĐỒNG BỘ ĐẦY ĐỦ CÁC PHÍM CỨNG ---
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -56,10 +56,10 @@ export default class LivingRoomScene extends Phaser.Scene {
             repeat: -1,
             ease: 'Sine.easeInOut'
         });
-        
+
         // 2. Tạo Player ở giữa phòng
-        let spawnX = screenWidth * 0.9;
-        let spawnY = screenHeight * 0.5;
+        let spawnX = screenWidth * 0.5;
+        let spawnY = screenHeight * 0.8;
 
         if (this.spawnDirection === 'fromKitchen') {
             spawnX = screenWidth * 0.5;
@@ -69,6 +69,12 @@ export default class LivingRoomScene extends Phaser.Scene {
             spawnY = screenHeight * 0.3;
         }
         this.player = new Player(this, spawnX, spawnY);
+        if (this.spawnDirection === 'fromKitchen') {
+            if (this.player.anims) {
+                this.player.anims.play('walk_down', true);
+                this.player.anims.stop(); // Giữ nguyên frame đứng im hướng xuống
+            }
+        }
 
         this.arrowHallway = ArrowGraphic.createArrowRight(this, screenWidth * 0.9, screenHeight * 0.3);
         this.tweens.add({
@@ -89,8 +95,7 @@ export default class LivingRoomScene extends Phaser.Scene {
             repeat: -1
         });
 
-        // 3. Vùng chạm đi xuống Bếp (Cạnh dưới bên phải)
-        this.toKitchenZone = this.add.zone(screenWidth * 0.5, screenHeight * 1, screenWidth * 0.1, 35).setOrigin(0.5);
+        this.toKitchenZone = this.add.zone(screenWidth * 0.5, screenHeight * 1, screenWidth * 0.1, 10).setOrigin(0.5);
         this.physics.add.existing(this.toKitchenZone, true); // True = Static Body (đứng im)
 
         this.physics.add.overlap(this.player, this.toKitchenZone, () => {
@@ -106,12 +111,13 @@ export default class LivingRoomScene extends Phaser.Scene {
             this.scene.start('HallwayScene', { fromScene: 'LivingRoomScene' });
         });
 
-        this.physics.world.setBounds(300, 175, screenWidth - 50, screenHeight - 190);
+        this.physics.world.setBounds(300, 175, screenWidth - 50, screenHeight - 160);
         if (this.player.body) {
             this.player.setCollideWorldBounds(true);
         }
         this.physics.add.collider(this.player, this.obstacles);
-
+        // Thao tác này giúp màn hình sáng dần lên từ nền đen khi vừa vào phòng mới
+        this.cameras.main.fadeIn(1500, 0, 0, 0);
     }
 
     update() {

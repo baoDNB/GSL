@@ -32,6 +32,9 @@ export default class RoomSecretScene extends Phaser.Scene {
         this.doorX = screenWidth * 0.6;
         this.doorY = screenHeight * 0.42;
 
+        this.cameras.main.fadeIn(1200, 0, 0, 0);
+
+
     }
 
     // Hàm xử lý chuỗi di chuyển tự động sau khi đọc thoại xong
