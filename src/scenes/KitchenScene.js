@@ -135,6 +135,7 @@ export default class KitchenScene extends Phaser.Scene {
         // Xử lý dẫm chân vào vùng cửa phụ -> Chuyển Scene sang LivingRoomScene
         this.physics.add.overlap(this.player, this.toLivingroomZone, () => {
             if (this.dialogueBox && this.dialogueBox.visible) return; // Không chuyển cảnh khi đang thoại
+            this.sound.play('doorOpenSfx'); // <--- THÊM VÀO ĐÂY
             this.scene.start('LivingRoomScene', { fromScene: 'fromKitchen' });
         });
 

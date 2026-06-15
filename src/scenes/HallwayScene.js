@@ -143,14 +143,17 @@ export default class HallwayScene extends Phaser.Scene {
             if (this.toLivingRoomZone.body) this.toLivingRoomZone.body.enable = false;
 
             if (this.registry.get('lavaGameWon')) {
+                this.sound.play('doorOpenSfx'); // <--- THÊM VÀO ĐÂY
                 this.scene.start('LivingRoomScene', { fromScene: 'fromHallway' });
                 return;
             }
 
             if (this.registry.get('talkedToFish')) {
+                this.sound.play('doorOpenSfx'); // <--- THÊM VÀO ĐÂY
                 this.scene.start('LavaGameScene', { fromScene: 'fromHallway' });
             } else {
                 this.dialogueBox.startSequence('mustTalkToFishFirst', () => {
+                    this.sound.play('doorOpenSfx'); // <--- THÊM VÀO ĐÂY
                     this.scene.start('LivingRoomScene', { fromScene: 'fromHallway' });
                 });
             }
@@ -160,6 +163,7 @@ export default class HallwayScene extends Phaser.Scene {
         this.physics.add.existing(this.toMasterRoomZone, true);
 
         this.physics.add.overlap(this.player, this.toMasterRoomZone, () => {
+            this.sound.play('doorOpenSfx'); // <--- THÊM VÀO ĐÂY
             if (this.toMasterRoomZone.body) this.toMasterRoomZone.body.enable = false;
             this.scene.start('RoomMasterScene', { fromScene: 'fromHallway' });
         });
@@ -185,6 +189,7 @@ export default class HallwayScene extends Phaser.Scene {
         this.toChildRoomZone = this.add.zone(sw * 0.46, sh * 0.3, sw * 0.1, 50).setOrigin(0.5);
         this.physics.add.existing(this.toChildRoomZone, true);
         this.physics.add.overlap(this.player, this.toChildRoomZone, () => {
+            this.sound.play('doorOpenSfx'); // <--- THÊM VÀO ĐÂY
             if (this.toChildRoomZone.body) this.toChildRoomZone.body.enable = false;
             this.registry.set('visitedChild', true);
             this.scene.start('RoomChildScene', { fromScene: 'fromHallway' });

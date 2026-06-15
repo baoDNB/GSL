@@ -22,6 +22,7 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('puzzy_bg','assets/puzzyroom.png');
         this.load.image('bed_bg','assets/bed.png')
         this.load.image('roomsecret_bg','assets/roomsecret.png')
+        this.load.audio('doorOpenSfx', 'soundEffects/open_door.mp3');
     }
 
     create() {

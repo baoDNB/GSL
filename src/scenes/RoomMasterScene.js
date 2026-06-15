@@ -96,6 +96,7 @@ export default class RoomMasterScene extends Phaser.Scene {
         this.physics.add.existing(this.toHallwayZone, true);
         this.physics.add.overlap(this.player, this.toHallwayZone, () => {
             if (this.dialogueBox && this.dialogueBox.visible) return; // Không chuyển cảnh khi đang thoại
+            this.sound.play('doorOpenSfx'); // <--- THÊM VÀO ĐÂY
             this.scene.start('HallwayScene', { fromScene: 'fromMasterRoom' });
         });
         this.cameras.main.fadeIn(1200, 0, 0, 0);
