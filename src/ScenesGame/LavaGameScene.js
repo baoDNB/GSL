@@ -52,7 +52,7 @@ export default class LavaGameScene extends Phaser.Scene {
         // 🚨 4. TẠO ĐỐI TƯỢNG CHÌA KHÓA THẬT (Đặt chính giữa ô gỗ giả)
         const keyX = lastZoneX + (lastZoneW / 2);
         const keyY = lastZoneY + (lastZoneH / 2);
-        this.keyItem = this.add.image(keyX, keyY, 'key_sprite').setScale(1).setDepth(10);
+        this.keyItem = this.add.image(keyX, keyY, 'key_icon_bg').setScale(0.05).setDepth(10);
 
         this.tweens.add({
             targets: this.keyItem,
@@ -182,8 +182,7 @@ export default class LavaGameScene extends Phaser.Scene {
                 this.dialogueBox.startSequence('foundKey', () => {
                     if (this.player) this.player.isTalking = false;
 
-                    // Chuyển sang Hallway thay vì LivingRoom
-                    // Vì bạn muốn về Hallway trước để logic check "đã thắng" ở Hallway hoạt động
+                   
                     this.scene.start('LivingRoomScene', { fromScene: 'fromLavaGame' });
                 });
             } else {
