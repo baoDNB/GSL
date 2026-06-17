@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { joypad } from '../assets/VirtualJoypad.js'; // Bắt buộc import phím ảo vào đây
 
-export const DIALOGUES = {
+export const DIALOGUES = window.customGameDialogues || {
     puzzleIntro: [
         { speaker: "You", text: "Huh, an old, ancient book left in the middle of the table? And it's glowing..." },
         { speaker: "Admin", text: "The magic map has been activated! Decipher the number matrix to reveal the secret passage!" },

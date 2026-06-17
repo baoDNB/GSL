@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phaser - Template</title>
+    <link rel="stylesheet" href="/style.css">
+
+    <script>
+        (function () {
+            try {
+                const savedData = localStorage.getItem('external_game_dialogues');
+                if (savedData) {
+                    const customDialogues = JSON.parse(savedData);
+                    window.customGameDialogues = customDialogues;
+                }
+            } catch (e) { }
+        })();
+    </script>
+    <script>
+        (function () {
+            const savedUrl = localStorage.getItem('external_puzzle_url');
+            if (savedUrl) {
+                window.customPuzzleImageUrl = savedUrl;
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="retro-console-wrapper">
+        <div class="screen-bezel">
+            <div id="app"></div>
+        </div>
+
+        <div class="console-body-controls">
+            <div class="dpad-housing">
+                <div class="dpad-cross">
+                    <div class="dpad-axis-horizontal"></div>
+                    <div class="dpad-axis-vertical"></div>
+                    <button id="btn-up" class="dpad-btn up" aria-label="Up"></button>
+                    <button id="btn-left" class="dpad-btn left" aria-label="Left"></button>
+                    <button id="btn-right" class="dpad-btn right" aria-label="Right"></button>
+                    <button id="btn-down" class="dpad-btn down" aria-label="Down"></button>
+                    <div class="dpad-center-pivot"></div>
+                </div>
+            </div>
+
+            <div class="system-buttons">
+                <div class="pill-button-container">
+                    <button id="btn-select" class="pill-btn"></button>
+                    <span class="pill-label">SELECT</span>
+                </div>
+                <div class="pill-button-container">
+                    <button id="btn-start" class="pill-btn"></button>
+                    <span class="pill-label">START</span>
+                </div>
+            </div>
+
+            <div class="action-housing">
+                <div class="action-pad-recess">
+                    <div class="action-btn-wrapper">
+                        <button id="btn-b" class="action-btn b-button"></button>
+                        <span class="action-label">B</span>
+                    </div>
+                    <div class="action-btn-wrapper">
+                        <button id="btn-a" class="action-btn a-button"></button>
+                        <span class="action-label">A</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
