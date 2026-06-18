@@ -6,72 +6,161 @@ export default class BootScene extends Phaser.Scene {
     }
 
     preload() {
-        // Khai báo nạp spritesheet đúng kích thước khung hình bạn cung cấp
-        this.load.spritesheet('player', 'assets/player.png', {
-            frameWidth: 160,
-            frameHeight: 233.3
+
+        this.load.spritesheet('player', 'assets/character.png', {
+            frameWidth: 16,
+            frameHeight: 32
         });
+
         this.load.image('kitchen_bg', 'assets/kitchen.png');
-        // this.load.audio('rain', 'assets/rain.mp3');
         this.load.image('house_bg', 'assets/house.png');
         this.load.image('livingroom_bg', 'assets/livingroom.png');
         this.load.image('hallway_bg', 'assets/hallway.png');
         this.load.image('roommaster_bg', 'assets/roommaster.png');
         this.load.image('roomchild_bg', 'assets/roomchild.png');
-        this.load.image('lavagame_bg','assets/lavagame.png');
-        this.load.image('puzzy_bg','assets/puzzyroom.png');
-        this.load.image('bed_bg','assets/bed.png')
-        this.load.image('roomsecret_bg','assets/roomsecret.png')
-        this.load.audio('doorOpenSfx', 'soundEffects/open_door.mp3');
-        this.load.image('key_icon_bg', 'assets/key_icon.png')
+        this.load.image('lavagame_bg', 'assets/lavagame.png');
+        this.load.image('puzzy_bg', 'assets/puzzyroom.png');
+        this.load.image('bed_bg', 'assets/bed.png');
+        this.load.image('roomsecret_bg', 'assets/roomsecret.png');
+        this.load.image('key_icon_bg', 'assets/key_icon.png');
+
+        this.load.audio(
+            'doorOpenSfx',
+            'soundEffects/open_door.mp3'
+        );
     }
 
     create() {
-        // TẠO ANIMATIONS TRƯỚC KHI ĐỔI MÀN CHƠI
-        this.anims.create({
-            key: 'walk-down',
-            frames: this.anims.generateFrameNumbers('player', { frames: [0, 2] }),
-            frameRate: 8,
-            repeat: -1
-        });
+
+        // =========================
+        // IDLE
+        // =========================
 
         this.anims.create({
-            key: 'idle-down',
-            frames: [{ key: 'player', frame: 1 }],
-            frameRate: 1
-        });
-
-        this.anims.create({
-            key: 'walk-up',
-            frames: this.anims.generateFrameNumbers('player', { frames: [3, 5] }),
+            key: 'idle-right',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 56,
+                end: 61
+            }),
             frameRate: 8,
             repeat: -1
         });
 
         this.anims.create({
             key: 'idle-up',
-            frames: [{ key: 'player', frame: 4 }],
-            frameRate: 1
-        });
-
-        this.anims.create({
-            key: 'walk-side',
-            frames: this.anims.generateFrameNumbers('player', { frames: [6, 8] }),
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 62,
+                end: 67
+            }),
             frameRate: 8,
             repeat: -1
         });
 
         this.anims.create({
-            key: 'idle-side',
-            frames: [{ key: 'player', frame: 7 }],
-            frameRate: 1
+            key: 'idle-left',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 68,
+                end: 73
+            }),
+            frameRate: 8,
+            repeat: -1
         });
 
-        // Bật âm thanh mưa chạy nền lặp đi lặp lại
-        // const rainSound = this.sound.add('rain', { loop: true, volume: 0.3 });
-        // rainSound.play();
+        this.anims.create({
+            key: 'idle-down',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 74,
+                end: 79
+            }),
+            frameRate: 8,
+            repeat: -1
+        });
 
-        // Chuyển màn
+        // =========================
+        // WALK
+        // =========================
+
+        this.anims.create({
+            key: 'walk-right',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 112,
+                end: 117
+            }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'walk-up',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 118,
+                end: 123
+            }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'walk-left',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 124,
+                end: 129
+            }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'walk-down',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 130,
+                end: 135
+            }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+   
+        this.anims.create({
+            key: 'harvest-right',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 168,
+                end: 173
+            }),
+            frameRate: 12,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: 'harvest-up',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 174,
+                end: 179
+            }),
+            frameRate: 12,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: 'harvest-left',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 180,
+                end: 185
+            }),
+            frameRate: 12,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: 'harvest-down',
+            frames: this.anims.generateFrameNumbers('player', {
+                start: 186,
+                end: 191
+            }),
+            frameRate: 12,
+            repeat: 0
+        });
+
         this.scene.start('HouseScene');
     }
 }

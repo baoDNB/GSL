@@ -2,79 +2,165 @@ import Phaser from 'phaser';
 import { joypad } from '../assets/VirtualJoypad.js';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
+
     constructor(scene, x, y) {
-        super(scene, x, y, 'player', 0)
+        super(scene, x, y, 'player', 74);
 
-        scene.add.existing(this)
-        scene.physics.add.existing(this)
+        scene.add.existing(this);
+        scene.physics.add.existing(this);
 
-        this.setScale(0.4)
-        this.setCollideWorldBounds(true)
+        this.setScale(3);
+        this.setCollideWorldBounds(true);
 
-        // --- THÊM 2 DÒNG NÀY ĐỂ FIX LỖI VA CHẠM KHUNG HÌNH SCALE ---
-        // Đặt lại kích thước khung va chạm bằng đúng kích thước hiển thị thực tế
         this.body.setSize(this.width * 0.3, this.height * 0.25);
         this.body.setOffset(this.width * 0.35, this.height * 0.6);
 
-        this.cursors = scene.input.keyboard.createCursorKeys()
+        this.cursors = scene.input.keyboard.createCursorKeys();
+
+        this.spaceKey = scene.input.keyboard.addKey(
+            Phaser.Input.Keyboard.KeyCodes.SPACE
+        );
+
+        this.lastDirection = 'down';
+        this.isHarvesting = false;
     }
 
     update() {
-        // 1. GỘP CHUNG SỰ KIỆN TỪ BÀN PHÍM VÀ NÚT ẢO (JOYPAD)
+
+        if (this.isHarvesting) {
+            this.setVelocity(0);
+            return;
+        }
+
         const isLeft = this.cursors.left.isDown || joypad.left;
         const isRight = this.cursors.right.isDown || joypad.right;
         const isUp = this.cursors.up.isDown || joypad.up;
         const isDown = this.cursors.down.isDown || joypad.down;
-        const isAction = Phaser.Input.Keyboard.JustDown(this.scene.input.keyboard.addKey('SPACE')) || joypad.actionA;
 
-        // 2. KHỞI TẠO VẬN TỐC VÀ TRẠNG THÁI
+        const isAction =
+            Phaser.Input.Keyboard.JustDown(this.spaceKey);
+
         const speed = 150;
-        this.setVelocity(0); // Mặc định dừng lại nếu không bấm phím
-        let isMoving = false;
 
-        // 3. XỬ LÝ DI CHUYỂN NGANG (TRÁI / PHẢI)
+        let vx = 0;
+        let vy = 0;
+
         if (isLeft) {
-            this.setVelocityX(-speed);
-            this.anims.play('walk-side', true);
-            this.setFlipX(false);
+            vx = -speed;
             this.lastDirection = 'left';
-            isMoving = true;
         }
         else if (isRight) {
-            this.setVelocityX(speed);
-            this.anims.play('walk-side', true);
-            this.setFlipX(true);
+            vx = speed;
             this.lastDirection = 'right';
-            isMoving = true;
         }
 
-        // 4. XỬ LÝ DI CHUYỂN DỌC (LÊN / XUỐNG)
         if (isUp) {
-            this.setVelocityY(-speed);
-            this.anims.play('walk-up', true);
+            vy = -speed;
             this.lastDirection = 'up';
-            isMoving = true;
         }
         else if (isDown) {
-            this.setVelocityY(speed);
-            this.anims.play('walk-down', true);
+            vy = speed;
             this.lastDirection = 'down';
-            isMoving = true;
         }
 
-        // 5. XỬ LÝ ĐỨNG YÊN (IDLE) KHI KHÔNG DI CHUYỂN
-        if (!isMoving) {
-            if (this.lastDirection === 'up') this.anims.play('idle-up', true);
-            else if (this.lastDirection === 'down') this.anims.play('idle-down', true);
-            else if (this.lastDirection === 'left') {
-                this.setFlipX(false);
-                this.anims.play('idle-side', true);
+        const vec = new Phaser.Math.Vector2(vx, vy);
+
+        if (vec.length() > 0) {
+            vec.normalize().scale(speed);
+        }
+
+        this.setVelocity(vec.x, vec.y);
+
+        // ======================
+        // WALK / IDLE
+        // ======================
+
+        if (vec.length() > 0) {
+
+            switch (this.lastDirection) {
+
+                case 'right':
+                    this.anims.play('walk-right', true);
+                    break;
+
+                case 'left':
+                    this.anims.play('walk-left', true);
+                    break;
+
+                case 'up':
+                    this.anims.play('walk-up', true);
+                    break;
+
+                case 'down':
+                    this.anims.play('walk-down', true);
+                    break;
             }
-            else if (this.lastDirection === 'right') {
-                this.setFlipX(true);
-                this.anims.play('idle-side', true);
+
+        } else {
+
+            switch (this.lastDirection) {
+
+                case 'right':
+                    this.anims.play('idle-right', true);
+                    break;
+
+                case 'left':
+                    this.anims.play('idle-left', true);
+                    break;
+
+                case 'up':
+                    this.anims.play('idle-up', true);
+                    break;
+
+                case 'down':
+                    this.anims.play('idle-down', true);
+                    break;
             }
+        }
+
+        // ======================
+        // HARVEST
+        // ======================
+
+        if (isAction) {
+            this.startHarvest();
         }
     }
 
+    startHarvest() {
+
+        this.isHarvesting = true;
+
+        this.setVelocity(0);
+
+        let animKey = 'harvest-down';
+
+        switch (this.lastDirection) {
+
+            case 'right':
+                animKey = 'harvest-right';
+                break;
+
+            case 'left':
+                animKey = 'harvest-left';
+                break;
+
+            case 'up':
+                animKey = 'harvest-up';
+                break;
+
+            case 'down':
+                animKey = 'harvest-down';
+                break;
+        }
+
+        this.anims.play(animKey);
+
+        this.once(
+            Phaser.Animations.Events.ANIMATION_COMPLETE,
+            () => {
+                this.isHarvesting = false;
+            }
+        );
+    }
 }
