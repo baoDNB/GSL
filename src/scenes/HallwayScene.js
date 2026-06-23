@@ -1,4 +1,5 @@
 import Player from '../objects/Player.js';
+import Phaser from 'phaser';
 import DialogueBox from '../objects/DialogueBox.js';
 import ArrowGraphic from '../assets/ArrowGraphic.js';
 import { joypad } from '../assets/VirtualJoypad.js'; // 1. IMPORT JOYPAD

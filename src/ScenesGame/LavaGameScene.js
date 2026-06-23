@@ -1,5 +1,6 @@
 import Player from '../objects/Player.js';
 import DialogueBox from '../objects/DialogueBox.js';
+import Phaser from 'phaser';
 
 
 export default class LavaGameScene extends Phaser.Scene {

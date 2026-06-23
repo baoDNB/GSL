@@ -2,6 +2,7 @@ import DialogueBox from '../objects/DialogueBox.js';
 import Player from '../objects/Player.js';
 import ArrowGraphic from '../assets/ArrowGraphic.js';
 import { joypad } from '../assets/VirtualJoypad.js'; // 1. IMPORT JOYPAD
+import Phaser from 'phaser';
 
 export default class KitchenScene extends Phaser.Scene {
     constructor() {

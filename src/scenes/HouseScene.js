@@ -1,4 +1,5 @@
 import Player from '../objects/Player.js';
+import Phaser from 'phaser';
 // 1. IMPORT THÊM DIALOGUEBOX
 import DialogueBox from '../objects/DialogueBox.js';
 

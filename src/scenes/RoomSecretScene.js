@@ -1,6 +1,7 @@
 import Player from '../objects/Player.js';
 // 1. IMPORT THÊM DIALOGUEBOX
 import DialogueBox from '../objects/DialogueBox.js';
+import Phaser from 'phaser';
 
 export default class RoomSecretScene extends Phaser.Scene {
     constructor() {

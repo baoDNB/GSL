@@ -13,6 +13,7 @@ import MemoryGameScene from "./ScenesGame/MemoryGameScene.js";
 import RoomSecretScene from "./scenes/RoomSecretScene.js";
 import { initVirtualJoypad } from "./assets/VirtualJoypad.js";
 import UIScene from "./assets/UIScene.js";
+import Phaser from 'phaser';
 
 // Khởi tạo phím ảo lắng nghe sự kiện từ HTML
 initVirtualJoypad();

@@ -1,5 +1,6 @@
 import DialogueBox from '../objects/DialogueBox.js';
 import { joypad } from '../assets/VirtualJoypad.js'; // 1. IMPORT JOYPAD ẢO
+import Phaser from 'phaser';
 
 export default class MemoryGameScene extends Phaser.Scene {
     constructor() { super('MemoryGameScene'); }
