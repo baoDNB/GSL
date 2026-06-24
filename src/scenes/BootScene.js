@@ -40,10 +40,10 @@ const CHARACTER_ASSETS = {
 };
 
 const DEFAULT_CHARACTER = {
-    body: 'Body_9.png',
-    hairstyle: 'Hairstyle_Short_Brown_Dark.png',
-    outfit: 'Outfit_Laborer_Blue.png',
-    eyes: 'Eyes_Brown.png',
+    body: 'Body_1.png',
+    hairstyle: '',
+    outfit: '',
+    eyes: '',
     accessory: ''
 };
 
@@ -110,6 +110,16 @@ export default class BootScene extends Phaser.Scene {
         try {
             saved = JSON.parse(localStorage.getItem('external_character_assets')) || {};
         } catch (e) {
+            saved = {};
+        }
+
+        if (
+            saved.body === 'Body_9.png' &&
+            saved.hairstyle === 'Hairstyle_Short_Brown_Dark.png' &&
+            saved.outfit === 'Outfit_Laborer_Blue.png' &&
+            saved.eyes === 'Eyes_Brown.png' &&
+            !saved.accessory
+        ) {
             saved = {};
         }
 

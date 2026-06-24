@@ -478,12 +478,12 @@
         const characterTabOrder = ['body', 'hairstyle', 'outfit', 'eyes', 'accessory'];
 
         const defaultCharacter = {
-            body: 'Body_9.png',
+            body: 'Body_1.png',
             hairstyleType: 'Short',
             hairstyleColor: 'Brown_Dark',
-            hairstyle: 'Hairstyle_Short_Brown_Dark.png',
-            outfit: 'Outfit_Laborer_Blue.png',
-            eyes: 'Eyes_Brown.png',
+            hairstyle: '',
+            outfit: '',
+            eyes: '',
             accessory: ''
         };
 
@@ -541,7 +541,14 @@
 
         function getSavedCharacter() {
             try {
-                const saved = { ...defaultCharacter, ...JSON.parse(localStorage.getItem('external_character_assets')) };
+                const storedCharacter = JSON.parse(localStorage.getItem('external_character_assets')) || {};
+                const isOldDefaultCharacter =
+                    storedCharacter.body === 'Body_9.png' &&
+                    storedCharacter.hairstyle === 'Hairstyle_Short_Brown_Dark.png' &&
+                    storedCharacter.outfit === 'Outfit_Laborer_Blue.png' &&
+                    storedCharacter.eyes === 'Eyes_Brown.png' &&
+                    !storedCharacter.accessory;
+                const saved = isOldDefaultCharacter ? { ...defaultCharacter } : { ...defaultCharacter, ...storedCharacter };
                 const parsedHair = parseHairstyleFile(saved.hairstyle);
                 const hairstyleType = hairstyleTypes.includes(saved.hairstyleType) ? saved.hairstyleType : parsedHair.hairstyleType;
                 const hairstyleColor = hairstyleColors.includes(saved.hairstyleColor) ? saved.hairstyleColor : parsedHair.hairstyleColor;
@@ -550,7 +557,7 @@
                     ...saved,
                     hairstyleType,
                     hairstyleColor,
-                    hairstyle: buildHairstyleFile(hairstyleType, hairstyleColor)
+                    hairstyle: saved.hairstyle ? buildHairstyleFile(hairstyleType, hairstyleColor) : ''
                 };
             } catch (e) {
                 return { ...defaultCharacter };
