@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Landing Page - Custom Dialogues & Puzzle Image</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #121214;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .container {
+            padding: 40px 20px;
+            max-width: 700px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .setup-box {
+            background: #1e1e24;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #2d2d3a;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4caf50;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-size: 24px;
+        }
+
+        .hint {
+            text-align: center;
+            color: #a0aec0;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #63b3ed;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            background: #141419;
+            border: 1px solid #3f3f50;
+            color: #fff;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            background: #141419;
+            border: 1px solid #3f3f50;
+            color: #fff;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        #btn-play {
+            width: 100%;
+            padding: 16px;
+            background: #4caf50;
+            border: none;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 25px;
+            text-transform: uppercase;
+        }
+
+        #btn-play:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="setup-box">
+            <h1>Game Custom Landpage</h1>
+            <div class="hint">Format: <b>Speaker: Text</b>. Separate lines with a bar (<b>|</b>)</div>
+
+            <label style="color: #ffcc00;">🌐 Puzzle Image URL (Link ảnh màn chơi ghép hình):</label>
+            <input type="text" id="custom-puzzle-url"
+                placeholder="Dán link ảnh mạng vào đây, ví dụ: https://imgur.com/xyz.png" value="">
+
+            <label>Puzzle Intro:</label>
+            <textarea
+                id="script-puzzleIntro">You: Huh, an old, ancient book left in the middle of the table? And it's glowing...|Admin: The magic map has been activated! Decipher the number matrix to reveal the secret passage!|You: Looks like a 3x3 matrix sliding puzzle. Let's give it a shot!</textarea>
+
+            <label>Found Key:</label>
+            <textarea
+                id="script-foundKey">Kid: Congratulations! You have successfully deciphered the ancient matrix.|You: Oh! A [Mystery Key] just fell out of the book! Let's go to the next room.</textarea>
+
+            <label>Locked Door:</label>
+            <textarea
+                id="script-caConLockedDoor">Kid: You need three keys to enter this room! Go explore the home again and be careful....</textarea>
+
+            <label>Need 2 Keys:</label>
+            <textarea id="script-need_2_keys">Kid: The door still won't budge. You're missing two more keys.</textarea>
+
+            <label>Need 1 Key:</label>
+            <textarea id="script-need_1_keys">Kid: Almost there! We just need one more key.</textarea>
+
+            <label>Open Fridge:</label>
+            <textarea id="script-openFridge">You: Hmm it's a calendar.|You: Father's Day</textarea>
+
+            <label>Inspect Table:</label>
+            <textarea id="script-inspectTable">You: Ooh, someone left me my favorite: Flower! How awesome!</textarea>
+
+            <label>Living Room Table:</label>
+            <textarea
+                id="script-livingRoomTable">You: Someone left a note on the table. It says:|You: We're playing hide and seek. You have to come find us!</textarea>
+
+            <label>Child Tent:</label>
+            <textarea id="script-childTent">You: Looks cozy, I don't see anyone in there</textarea>
+
+            <label>Room Master:</label>
+            <textarea id="script-roomMaster">You: It's the master bedroom but I don't see anyone in here.</textarea>
+
+            <label>Intro House:</label>
+            <textarea
+                id="script-introHouse">Kid: Looks like mom is coming. Let's go hide!|You: I swear I just saw the kid!|You: Hmm, it's locked, let me go through the back.</textarea>
+
+            <label>Victory Dialogue:</label>
+            <textarea
+                id="script-victoryDialogue">You: All three keys fit perfectly into the lock!|You: The secret door is slowly opening... I'm finally free!</textarea>
+
+            <button id="btn-play">Launch Game</button>
+        </div>
+    </div>
+
+    <script>
+        function parseTextToDialogue(elementId) {
+            const rawText = document.getElementById(elementId).value;
+            if (!rawText) return [];
+            return rawText.split('|').map(line => {
+                const colonIndex = line.indexOf(':');
+                if (colonIndex !== -1) {
+                    return {
+                        speaker: line.substring(0, colonIndex).trim(),
+                        text: line.substring(colonIndex + 1).trim()
+                    };
+                }
+                return { speaker: "System", text: line.trim() };
+            });
+        }
+
+        document.getElementById('btn-play').addEventListener('click', () => {
+            const keys = [
+                'puzzleIntro', 'foundKey', 'caConLockedDoor', 'need_2_keys',
+                'need_1_keys', 'openFridge', 'inspectTable', 'livingRoomTable',
+                'childTent', 'roomMaster', 'introHouse', 'victoryDialogue'
+            ];
+
+            const customDialogues = {};
+            keys.forEach(key => {
+                customDialogues[key] = parseTextToDialogue('script-' + key);
+            });
+
+            // 1. Lưu kịch bản thoại đã sửa đổi vào LocalStorage
+            localStorage.setItem('external_game_dialogues', JSON.stringify(customDialogues));
+
+            // 2. XỬ LÝ LƯU LINK ẢNH ĐƯỢC GỬI LÊN
+            const puzzleUrl = document.getElementById('custom-puzzle-url').value.trim();
+            if (puzzleUrl) {
+                localStorage.setItem('external_puzzle_url', puzzleUrl);
+            } else {
+                localStorage.removeItem('external_puzzle_url'); // Xóa đi nếu để trống để dùng ảnh mặc định
+            }
+
+            // Chuyển hướng trình duyệt chạy thẳng vào file chạy game chính
+            window.location.href = 'game.html';
+        });
+    </script>
+</body>
+
+</html>

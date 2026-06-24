@@ -7,7 +7,7 @@ export default class BootScene extends Phaser.Scene {
 
     preload() {
 
-        this.load.spritesheet('player', 'public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/16x16/Body_9.png', {
+        this.load.spritesheet('player', 'assets/Farmer_Generator_Pieces/Character Pieces/Bodies/16x16/Body_9.png', {
             frameWidth: 16,
             frameHeight: 32
         });
