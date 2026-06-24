@@ -14,6 +14,15 @@
                 const savedData = localStorage.getItem('external_game_dialogues');
                 if (savedData) {
                     const customDialogues = JSON.parse(savedData);
+                    if (!customDialogues.finalRoom) {
+                        customDialogues.finalRoom = [
+                            { speaker: "You", text: "So this is the hidden room..." },
+                            { speaker: "Kid", text: "You found us! We knew you could solve every clue." },
+                            { speaker: "You", text: "Three keys, three trials, and one very strange house." },
+                            { speaker: "Kid", text: "The game is over now. Thank you for playing with us." },
+                            { speaker: "You", text: "Let's go home." }
+                        ];
+                    }
                     window.customGameDialogues = customDialogues;
                 }
             } catch (e) { }

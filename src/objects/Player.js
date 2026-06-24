@@ -23,9 +23,35 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.lastDirection = 'down';
         this.isHarvesting = false;
+        this.isTalking = false;
     }
 
     update() {
+
+        if (this.isTalking) {
+            this.setVelocity(0);
+
+            switch (this.lastDirection) {
+                case 'right':
+                    this.anims.play('idle-right', true);
+                    break;
+
+                case 'left':
+                    this.anims.play('idle-left', true);
+                    break;
+
+                case 'up':
+                    this.anims.play('idle-up', true);
+                    break;
+
+                case 'down':
+                default:
+                    this.anims.play('idle-down', true);
+                    break;
+            }
+
+            return;
+        }
 
         if (this.isHarvesting) {
             this.setVelocity(0);

@@ -156,15 +156,6 @@ export default class LavaGameScene extends Phaser.Scene {
     triggerWinGame() {
         this.isGameOver = true;
 
-        // --- BẮT BUỘC THÊM ĐOẠN NÀY ---
-        // 1. Đánh dấu đã thắng game
-        this.registry.set('lavaGameWon', true);
-
-        // 2. Tăng số lượng chìa khóa trong bộ nhớ chung
-        let currentKeys = this.registry.get('keysFound') || 0;
-        this.registry.set('keysFound', currentKeys + 1);
-        // -------------------------------
-
         if (this.keyItem) {
             this.keyItem.destroy();
         }
@@ -183,12 +174,118 @@ export default class LavaGameScene extends Phaser.Scene {
                 this.dialogueBox.startSequence('foundKey', () => {
                     if (this.player) this.player.isTalking = false;
 
-                   
-                    this.scene.start('LivingRoomScene', { fromScene: 'fromLavaGame' });
+                    this.registry.set('lavaGameWon', true);
+                    let currentKeys = this.registry.get('keysFound') || 0;
+                    this.registry.set('keysFound', currentKeys + 1);
+
+                    this.playKeyRewardEffect(() => {
+                        this.scene.start('LivingRoomScene', { fromScene: 'fromLavaGame' });
+                    });
                 });
             } else {
-                this.scene.start('LivingRoomScene', { fromScene: 'fromLavaGame' });
+                this.registry.set('lavaGameWon', true);
+                let currentKeys = this.registry.get('keysFound') || 0;
+                this.registry.set('keysFound', currentKeys + 1);
+                this.playKeyRewardEffect(() => {
+                    this.scene.start('LivingRoomScene', { fromScene: 'fromLavaGame' });
+                });
             }
+        });
+    }
+
+    playKeyRewardEffect(onComplete) {
+        const centerX = this.cameras.main.width / 2;
+        const centerY = this.cameras.main.height / 2;
+        const rewardContainer = this.add.container(centerX, centerY).setDepth(2600);
+        const overlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.55);
+        const glow = this.add.circle(0, -16, 58, 0xf1c40f, 0.28);
+        const ring = this.add.circle(0, -16, 72, 0xf1c40f, 0).setStrokeStyle(3, 0xf1c40f, 0.9);
+        const key = this.add.image(0, -18, 'key_icon_bg').setScale(0.18).setAngle(-18);
+        const title = this.add.text(0, 70, 'KEY ACQUIRED', {
+            fontSize: '22px',
+            color: '#ffe066',
+            fontStyle: 'bold',
+            stroke: '#000000',
+            strokeThickness: 5
+        }).setOrigin(0.5);
+
+        const sparklePoints = [
+            [-84, -58], [82, -62], [-70, 38], [76, 34], [0, -96], [0, 26]
+        ];
+        const sparkles = sparklePoints.map(([x, y], index) => {
+            const sparkle = this.add.star(x, y, 5, 4, 11, 0xffffff, 0.95)
+                .setScale(0)
+                .setAngle(index * 24);
+            rewardContainer.add(sparkle);
+
+            this.tweens.add({
+                targets: sparkle,
+                scale: { from: 0, to: 1 },
+                alpha: { from: 0.2, to: 0 },
+                angle: sparkle.angle + 120,
+                duration: 650,
+                delay: index * 80,
+                ease: 'Sine.easeOut'
+            });
+
+            return sparkle;
+        });
+
+        rewardContainer.add([overlay, glow, ring, key, title]);
+        rewardContainer.setAlpha(0);
+        rewardContainer.setScale(0.7);
+
+        this.tweens.add({
+            targets: rewardContainer,
+            alpha: 1,
+            scale: 1,
+            duration: 260,
+            ease: 'Back.easeOut'
+        });
+
+        this.tweens.add({
+            targets: key,
+            y: -34,
+            angle: 14,
+            scale: 0.26,
+            duration: 620,
+            yoyo: true,
+            repeat: 1,
+            ease: 'Sine.easeInOut'
+        });
+
+        this.tweens.add({
+            targets: ring,
+            scale: { from: 0.55, to: 1.35 },
+            alpha: { from: 1, to: 0 },
+            duration: 900,
+            repeat: 1,
+            ease: 'Sine.easeOut'
+        });
+
+        this.tweens.add({
+            targets: glow,
+            scale: { from: 0.75, to: 1.25 },
+            alpha: { from: 0.45, to: 0.15 },
+            duration: 520,
+            yoyo: true,
+            repeat: 2,
+            ease: 'Sine.easeInOut'
+        });
+
+        this.time.delayedCall(1650, () => {
+            this.tweens.add({
+                targets: rewardContainer,
+                alpha: 0,
+                scale: 0.92,
+                duration: 240,
+                ease: 'Sine.easeIn',
+                onComplete: () => {
+                    sparkles.forEach((sparkle) => sparkle.destroy());
+                    rewardContainer.destroy();
+                    if (onComplete) onComplete();
+                }
+            });
         });
     }
 

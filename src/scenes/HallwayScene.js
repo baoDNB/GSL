@@ -19,6 +19,7 @@ export default class HallwayScene extends Phaser.Scene {
 
         if (!this.registry.has('keysFound')) this.registry.set('keysFound', 0);
         if (!this.registry.has('lavaGameWon')) this.registry.set('lavaGameWon', false);
+        if (!this.registry.has('puzzyRoomWon')) this.registry.set('puzzyRoomWon', false);
         if (!this.registry.has('talkedToFish')) this.registry.set('talkedToFish', false);
         if (!this.registry.has('masterGameWon')) this.registry.set('masterGameWon', false);
         if (!this.registry.has('talkedToMasterEvent')) this.registry.set('talkedToMasterEvent', false);
@@ -37,6 +38,7 @@ export default class HallwayScene extends Phaser.Scene {
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+        this.isEscaping = false;
 
         // 2. Dấu chấm than (Chỉ hiện nếu chưa thắng LavaGame)
         this.bookX = sw * 0.22;
@@ -45,10 +47,10 @@ export default class HallwayScene extends Phaser.Scene {
         let hasVisitedMaster = this.registry.get('visitedMaster');
         let hasVisitedChild = this.registry.get('visitedChild');
         let isLavaWon = this.registry.get('lavaGameWon');
-        let keysFound = this.registry.get('keysFound') || 0;
+        let keysFound = this.getEffectiveKeysFound();
 
         // Nếu đã từng mở UI chìa khóa ở lần thoại trước, khi quay lại cảnh này nó vẫn hiển thị ổn định
-        if (this.registry.get('talkedToFish') && !this.scene.isActive('UIScene')) {
+        if (this.registry.get('talkedToFish') && this.canStartKeyQuest() && !this.scene.isActive('UIScene')) {
             this.scene.launch('UIScene');
         }
 
@@ -173,7 +175,8 @@ export default class HallwayScene extends Phaser.Scene {
         this.physics.add.existing(this.toSecretRoomZone, true);
 
         this.physics.add.overlap(this.player, this.toSecretRoomZone, () => {
-            let keysFound = this.registry.get('keysFound') || 0;
+            if (this.isEscaping) return;
+            let keysFound = this.getEffectiveKeysFound();
             if (keysFound >= 3) {
                 if (this.toSecretRoomZone.body) this.toSecretRoomZone.body.enable = false;
                 this.handleEscape();
@@ -248,8 +251,12 @@ export default class HallwayScene extends Phaser.Scene {
                 this.scene.start('RoomChildScene', { fromScene: 'fromHallway' });
             }
             if (this.physics.overlap(this.player, this.toSecretRoomZone)) {
-                if ((this.registry.get('keysFound') || 0) >= 3) this.handleEscape();
-                else this.handleInteraction();
+                if (this.isEscaping) return;
+                if (this.getEffectiveKeysFound() >= 3) this.handleEscape();
+                else {
+                    this.player.y += 15;
+                    this.handleInteraction();
+                }
             }
         }
 
@@ -262,27 +269,56 @@ export default class HallwayScene extends Phaser.Scene {
         this.player.setVelocity(0);
         this.player.isTalking = true;
 
-        // SỬA TẠI ĐÂY: Kích hoạt bộ đếm chìa khóa xuất hiện ngay khi đoạn thoại bắt đầu!
-        if (!this.scene.isActive('UIScene')) {
+        const canStartKeyQuest = this.canStartKeyQuest();
+
+        // Chỉ hiện bộ đếm chìa khóa sau khi đã đi qua đủ hai phòng chính.
+        if (canStartKeyQuest && !this.scene.isActive('UIScene')) {
             this.scene.launch('UIScene');
         }
 
-        let keys = this.registry.get('keysFound') || 0;
+        let keys = canStartKeyQuest ? this.getEffectiveKeysFound() : 0;
         let msg = (keys === 0) ? 'caConLockedDoor' : `need_${3 - keys}_keys`;
 
         this.dialogueBox.startSequence(msg, () => {
             this.player.isTalking = false;
-            this.registry.set('talkedToFish', true);
+            if (canStartKeyQuest) {
+                this.registry.set('talkedToFish', true);
+            }
         });
     }
 
     handleEscape() {
-        if (this.player.isTalking) return;
+        if (this.isEscaping || this.player.isTalking) return;
+        this.isEscaping = true;
+        this.registry.set('keysFound', Math.max(this.registry.get('keysFound') || 0, 3));
+        if (this.toSecretRoomZone && this.toSecretRoomZone.body) {
+            this.toSecretRoomZone.body.enable = false;
+        }
         this.player.setVelocity(0);
         this.player.isTalking = true;
         this.dialogueBox.startSequence('victoryDialogue', () => {
             this.player.isTalking = false;
             this.scene.start('RoomSecretScene', { fromScene: 'fromHallway' });
         });
+    }
+
+    getEffectiveKeysFound() {
+        const storedKeys = this.registry.get('keysFound') || 0;
+        const wonKeys = [
+            this.registry.get('puzzyRoomWon'),
+            this.registry.get('lavaGameWon'),
+            this.registry.get('masterGameWon')
+        ].filter(Boolean).length;
+        const effectiveKeys = Math.max(storedKeys, wonKeys);
+
+        if (effectiveKeys !== storedKeys) {
+            this.registry.set('keysFound', effectiveKeys);
+        }
+
+        return effectiveKeys;
+    }
+
+    canStartKeyQuest() {
+        return this.registry.get('visitedMaster') === true && this.registry.get('visitedChild') === true;
     }
 }

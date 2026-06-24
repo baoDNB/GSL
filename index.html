@@ -1,64 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Landing Page - Custom Dialogues & Puzzle Image</title>
+    <title>GSL Game Setup</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #121214;
-            color: #e2e8f0;
+            background-color: #f4eadb;
+            color: #3e3021;
             font-family: 'Segoe UI', sans-serif;
         }
 
         .container {
             padding: 40px 20px;
-            max-width: 700px;
+            max-width: 820px;
             margin: 0 auto;
             box-sizing: border-box;
         }
 
         .setup-box {
-            background: #1e1e24;
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid #2d2d3a;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            background: #fffaf1;
+            padding: 34px;
+            border-radius: 16px;
+            border: 1px solid #dec99f;
+            box-shadow: 0 18px 40px rgba(94, 63, 31, 0.16);
         }
 
         h1 {
             text-align: center;
-            color: #4caf50;
+            color: #9a4d18;
             margin-bottom: 5px;
             text-transform: uppercase;
-            font-size: 24px;
+            font-size: 28px;
         }
 
         .hint {
             text-align: center;
-            color: #a0aec0;
+            color: #7c6a55;
             font-size: 13px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
+
+        .setup-section {
+            margin-top: 26px;
+            padding-top: 22px;
+            border-top: 1px solid #ead9b9;
+        }
+
+        .setup-section:first-of-type {
+            border-top: 0;
+            padding-top: 0;
+        }
+
+        .section-title {
+            margin: 0 0 14px;
+            color: #5b3b24;
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: 0;
+            text-transform: uppercase;
+        }
+
+        .dialogue-section textarea {
+            min-height: 74px;
+            line-height: 1.45;
+        }
+
+        .dialogue-section label {
+            margin-top: 18px;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: #b56a2a;
+            box-shadow: 0 0 0 3px rgba(181, 106, 42, 0.16);
+            outline: none;
+        }
         label {
             display: block;
             margin: 15px 0 5px;
             font-size: 14px;
             font-weight: bold;
-            color: #63b3ed;
+            color: #9a4d18;
         }
 
         input[type="text"] {
             width: 100%;
             padding: 12px;
-            background: #141419;
-            border: 1px solid #3f3f50;
-            color: #fff;
-            border-radius: 6px;
+            background: #fffdf8;
+            border: 1px solid #dec99f;
+            color: #3e3021;
+            border-radius: 8px;
             box-sizing: border-box;
             font-size: 14px;
         }
@@ -66,33 +102,223 @@
         textarea {
             width: 100%;
             padding: 12px;
-            background: #141419;
-            border: 1px solid #3f3f50;
-            color: #fff;
-            border-radius: 6px;
+            background: #fffdf8;
+            border: 1px solid #dec99f;
+            color: #3e3021;
+            border-radius: 8px;
             box-sizing: border-box;
             font-size: 14px;
             resize: vertical;
-            min-height: 60px;
+            min-height: 76px;
         }
 
         #btn-play {
             width: 100%;
             padding: 16px;
-            background: #4caf50;
+            background: linear-gradient(135deg, #b56a2a, #d77a00);
             border: none;
             color: white;
             font-size: 18px;
             font-weight: bold;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background 0.2s;
             margin-top: 25px;
             text-transform: uppercase;
         }
+        .character-customizer {
+            overflow: hidden;
+            margin: 24px 0 28px;
+            border: 1px solid #d9c493;
+            border-radius: 16px;
+            background: #fbf6ed;
+            color: #3e3021;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+        }
 
+        .character-tabs {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            background: #efe5d3;
+            border-bottom: 1px solid #d9c493;
+        }
+
+        .character-tab {
+            min-height: 68px;
+            border: 0;
+            border-right: 1px solid #e1d0ab;
+            background: transparent;
+            color: #604a35;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0;
+        }
+
+        .character-tab:last-child {
+            border-right: 0;
+        }
+
+        .character-tab.active {
+            background: #f0ddcf;
+            color: #9a4d18;
+            box-shadow: inset 0 -4px 0 #9a4d18;
+        }
+
+        .character-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 210px;
+            border-bottom: 1px solid #d9c493;
+            background: #fbf8f1;
+        }
+
+        .character-preview-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        #character-preview-canvas {
+            width: 112px;
+            height: 224px;
+            image-rendering: pixelated;
+            cursor: pointer;
+        }
+
+        .character-rotate-hint {
+            color: #7c6a55;
+            font-size: 13px;
+        }
+
+        .character-options {
+            display: block;
+            padding: 18px 20px 22px;
+            background: #fbf6ed;
+        }
+
+        .character-option-group {
+            padding: 0;
+        }
+
+        .character-option-group + .character-option-group {
+            margin-top: 18px;
+        }
+
+        .character-option-title {
+            margin: 0 0 14px;
+            color: #3e3021;
+            font-size: 16px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .character-option-strip {
+            display: grid;
+            grid-template-columns: 40px minmax(0, 1fr) 40px;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .character-option-row {
+            display: flex;
+            gap: 14px;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            padding: 4px 4px 10px;
+        }
+
+        .character-arrow {
+            width: 38px;
+            height: 56px;
+            border: 1px solid #dec99f;
+            border-radius: 999px;
+            background: #fffaf1;
+            color: #5c4632;
+            font-size: 22px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 5px 14px rgba(80, 56, 32, 0.16);
+        }
+
+        .character-arrow:hover {
+            border-color: #9a4d18;
+            color: #9a4d18;
+        }
+
+        .character-option {
+            display: flex;
+            flex: 0 0 112px;
+            width: 112px;
+            height: 112px;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #dec99f;
+            border-radius: 999px;
+            background: #fffaf1;
+            color: #5c4632;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            text-align: center;
+            line-height: 1.2;
+            padding: 10px;
+            box-shadow: inset 0 0 0 5px #fffaf1;
+        }
+
+        .character-option:hover {
+            border-color: #a45a20;
+        }
+
+        .character-option.active {
+            border-color: #9a4d18;
+            background: #fff8eb;
+            color: #9a4d18;
+            box-shadow: inset 0 0 0 5px #fff8eb, 0 0 0 3px #9a4d18;
+        }
+
+        .character-option.color-option {
+            flex-basis: 74px;
+            width: 74px;
+            height: 74px;
+            color: transparent;
+            font-size: 0;
+        }
+
+        .character-option.color-option.active {
+            box-shadow: inset 0 0 0 6px #fff8eb, 0 0 0 3px #9a4d18;
+        }
+
+        .character-option.has-preview {
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .character-option-preview {
+            width: 48px;
+            height: 72px;
+            image-rendering: pixelated;
+            pointer-events: none;
+        }
+
+        .character-option-preview-label {
+            display: none;
+            max-width: 88px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        @media (max-width: 640px) {
+            .character-tabs {
+                grid-template-columns: 1fr;
+            }
+        }
         #btn-play:hover {
-            background: #45a049;
+            background: linear-gradient(135deg, #9a4d18, #c86c00);
         }
     </style>
 </head>
@@ -100,14 +326,34 @@
 <body>
     <div class="container">
         <div class="setup-box">
-            <h1>Game Custom Landpage</h1>
-            <div class="hint">Format: <b>Speaker: Text</b>. Separate lines with a bar (<b>|</b>)</div>
+            <h1>GSL Game Setup</h1>
+            <div class="hint">Tùy chỉnh nhân vật, ảnh puzzle và lời thoại trước khi vào game.</div>
 
-            <label style="color: #ffcc00;">🌐 Puzzle Image URL (Link ảnh màn chơi ghép hình):</label>
+            <section class="setup-section">
+                <div class="section-title">Puzzle Image</div>
+                <label>Image URL</label>
             <input type="text" id="custom-puzzle-url"
-                placeholder="Dán link ảnh mạng vào đây, ví dụ: https://imgur.com/xyz.png" value="">
+                placeholder="Dán link ảnh vào đây, ví dụ: https://imgur.com/xyz.png" value="">
+            </section>
 
-            <label>Puzzle Intro:</label>
+            <section class="setup-section">
+                <div class="section-title">Character</div>
+                <div class="character-customizer">
+                    <div class="character-tabs" id="character-tabs"></div>
+                    <div class="character-preview">
+                    <div class="character-preview-inner">
+                        <canvas id="character-preview-canvas" width="16" height="32" title="Click to rotate"></canvas>
+                        <div class="character-rotate-hint">Click to rotate</div>
+                    </div>
+                </div>
+                    <div class="character-options" id="character-options"></div>
+            </div>
+
+            </section>
+
+            <section class="setup-section dialogue-section">
+                <div class="section-title">Dialogues</div>
+                <label>Puzzle Intro:</label>
             <textarea
                 id="script-puzzleIntro">You: Huh, an old, ancient book left in the middle of the table? And it's glowing...|Admin: The magic map has been activated! Decipher the number matrix to reveal the secret passage!|You: Looks like a 3x3 matrix sliding puzzle. Let's give it a shot!</textarea>
 
@@ -149,11 +395,470 @@
             <textarea
                 id="script-victoryDialogue">You: All three keys fit perfectly into the lock!|You: The secret door is slowly opening... I'm finally free!</textarea>
 
-            <button id="btn-play">Launch Game</button>
+            <label>Final Room:</label>
+            <textarea
+                id="script-finalRoom">You: So this is the hidden room...|Kid: You found us! We knew you could solve every clue.|You: Three keys, three trials, and one very strange house.|Kid: The game is over now. Thank you for playing with us.|You: Let's go home.</textarea>
+
+            </section>
+
+            <button id="btn-play">Save & Continue</button>
         </div>
     </div>
 
     <script>
+        const characterBasePath = 'assets/Farmer_Generator_Pieces/Character Pieces';
+        const previewDirections = [
+            { key: 'down', label: 'Front', frame: 74 },
+            { key: 'left', label: 'Left', frame: 68 },
+            { key: 'up', label: 'Back', frame: 62 },
+            { key: 'right', label: 'Right', frame: 56 }
+        ];
+
+        const characterParts = {
+            body: {
+                label: 'Bodies',
+                folder: 'Bodies',
+                options: [
+                    'Body_1.png', 'Body_2.png', 'Body_3.png', 'Body_4.png', 'Body_5.png',
+                    'Body_6.png', 'Body_7.png', 'Body_8.png', 'Body_9.png'
+                ]
+            },
+            hairstyle: {
+                label: 'Hairstyles',
+                folder: 'Hairstyles',
+                optional: true,
+                options: [
+                    'Hairstyle_Balding_Blonde.png', 'Hairstyle_Balding_Blonde_Ash.png', 'Hairstyle_Balding_Blue.png',
+                    'Hairstyle_Balding_Brown_Ash.png', 'Hairstyle_Balding_Brown_Dark.png', 'Hairstyle_Balding_Brown_Hazel.png',
+                    'Hairstyle_Balding_Brown_Light.png', 'Hairstyle_Balding_Gray.png', 'Hairstyle_Balding_Orange.png',
+                    'Hairstyle_Long_Blonde.png', 'Hairstyle_Long_Blonde_Ash.png', 'Hairstyle_Long_Blue.png',
+                    'Hairstyle_Long_Brown_Ash.png', 'Hairstyle_Long_Brown_Dark.png', 'Hairstyle_Long_Brown_Hazel.png',
+                    'Hairstyle_Long_Brown_Light.png', 'Hairstyle_Long_Gray.png', 'Hairstyle_Long_Orange.png',
+                    'Hairstyle_Short_Blonde.png', 'Hairstyle_Short_Blonde_Ash.png', 'Hairstyle_Short_Blue.png',
+                    'Hairstyle_Short_Brown_Ash.png', 'Hairstyle_Short_Brown_Dark.png', 'Hairstyle_Short_Brown_Hazel.png',
+                    'Hairstyle_Short_Brown_Light.png', 'Hairstyle_Short_Gray.png', 'Hairstyle_Short_Orange.png',
+                    'Hairstyle_Tuft_Blonde.png', 'Hairstyle_Tuft_Blonde_Ash.png', 'Hairstyle_Tuft_Blue.png',
+                    'Hairstyle_Tuft_Brown_Ash.png', 'Hairstyle_Tuft_Brown_Dark.png', 'Hairstyle_Tuft_Brown_Hazel.png',
+                    'Hairstyle_Tuft_Brown_Light.png', 'Hairstyle_Tuft_Gray.png', 'Hairstyle_Tuft_Orange.png',
+                    'Hairstyle_Unkept_Blonde.png', 'Hairstyle_Unkept_Blonde_Ash.png', 'Hairstyle_Unkept_Blue.png',
+                    'Hairstyle_Unkept_Brown_Ash.png', 'Hairstyle_Unkept_Brown_Dark.png', 'Hairstyle_Unkept_Brown_Hazel.png',
+                    'Hairstyle_Unkept_Brown_Light.png', 'Hairstyle_Unkept_Gray.png', 'Hairstyle_Unkept_Orange.png'
+                ]
+            },
+            outfit: {
+                label: 'Outfits',
+                folder: 'Outfits',
+                optional: true,
+                options: [
+                    'Outfit_Braces_Brown.png', 'Outfit_Braces_Green.png', 'Outfit_Braces_Orange.png',
+                    'Outfit_Dungarees_Black.png', 'Outfit_Dungarees_Green.png', 'Outfit_Dungarees_Red.png',
+                    'Outfit_Dungarees_Violet.png', 'Outfit_Laborer_Blue.png', 'Outfit_Laborer_Red.png',
+                    'Outfit_Laborer_Violet.png', 'Outfit_Vest_Brown.png', 'Outfit_Vest_Brown_Light.png',
+                    'Outfit_Vest_Yellow.png'
+                ]
+            },
+            eyes: {
+                label: 'Eyes',
+                folder: 'Eyes',
+                optional: true,
+                options: ['Eyes_Blue.png', 'Eyes_Brown.png', 'Eyes_Gray.png', 'Eyes_Green.png', 'Eyes_Orange.png']
+            },
+            accessory: {
+                label: 'Accessories',
+                folder: 'Accessories',
+                optional: true,
+                options: [
+                    'Accessory_Bamboo_Hat_Brown.png', 'Accessory_Bamboo_Hat_Brown_Dull.png', 'Accessory_Gas_Mask.png',
+                    'Accessory_Straw_Hat_Black.png', 'Accessory_Straw_Hat_Cyan.png', 'Accessory_Straw_Hat_Green.png',
+                    'Accessory_Straw_Hat_Red.png', 'Accessory_Straw_Hat_Violet.png'
+                ]
+            }
+        };
+        const characterLayerOrder = ['body', 'eyes', 'outfit', 'hairstyle', 'accessory'];
+        const characterTabOrder = ['body', 'hairstyle', 'outfit', 'eyes', 'accessory'];
+
+        const defaultCharacter = {
+            body: 'Body_9.png',
+            hairstyleType: 'Short',
+            hairstyleColor: 'Brown_Dark',
+            hairstyle: 'Hairstyle_Short_Brown_Dark.png',
+            outfit: 'Outfit_Laborer_Blue.png',
+            eyes: 'Eyes_Brown.png',
+            accessory: ''
+        };
+
+        const hairstyleTypes = ['Balding', 'Long', 'Short', 'Tuft', 'Unkept'];
+        const hairstyleColors = ['Blonde', 'Blonde_Ash', 'Blue', 'Brown_Ash', 'Brown_Dark', 'Brown_Hazel', 'Brown_Light', 'Gray', 'Orange'];
+
+        const optionColors = {
+            Blonde: '#e8d43a',
+            Blonde_Ash: '#d9c987',
+            Blue: '#4f8fd4',
+            Brown_Ash: '#9a6b45',
+            Brown_Dark: '#5b3928',
+            Brown_Hazel: '#9d6035',
+            Brown_Light: '#c99362',
+            Gray: '#a8a8a8',
+            Orange: '#c46529',
+            Eyes_Blue: '#4f8fd4',
+            Eyes_Brown: '#7a4b2b',
+            Eyes_Gray: '#9da0a3',
+            Eyes_Green: '#43a65b',
+            Eyes_Orange: '#d8792d'
+        };
+        const characterImages = {};
+        let activeCharacterTab = 'body';
+        let activePreviewDirection = 0;
+        const optionScrollMemory = {};
+        let selectedCharacter = getSavedCharacter();
+
+        function toReadableName(fileName) {
+            return fileName ? fileName.replace(/\.png$/i, '').replace(/_/g, ' ') : 'None';
+        }
+
+        function toReadableValue(value) {
+            return value ? value.replace(/_/g, ' ') : 'None';
+        }
+
+        function buildHairstyleFile(type, color) {
+            return `Hairstyle_${type}_${color}.png`;
+        }
+
+        function parseHairstyleFile(fileName) {
+            const match = /^Hairstyle_(Balding|Long|Short|Tuft|Unkept)_(.+)\.png$/i.exec(fileName || '');
+            if (!match) {
+                return {
+                    hairstyleType: defaultCharacter.hairstyleType,
+                    hairstyleColor: defaultCharacter.hairstyleColor
+                };
+            }
+
+            return {
+                hairstyleType: match[1],
+                hairstyleColor: match[2]
+            };
+        }
+
+        function getSavedCharacter() {
+            try {
+                const saved = { ...defaultCharacter, ...JSON.parse(localStorage.getItem('external_character_assets')) };
+                const parsedHair = parseHairstyleFile(saved.hairstyle);
+                const hairstyleType = hairstyleTypes.includes(saved.hairstyleType) ? saved.hairstyleType : parsedHair.hairstyleType;
+                const hairstyleColor = hairstyleColors.includes(saved.hairstyleColor) ? saved.hairstyleColor : parsedHair.hairstyleColor;
+
+                return {
+                    ...saved,
+                    hairstyleType,
+                    hairstyleColor,
+                    hairstyle: buildHairstyleFile(hairstyleType, hairstyleColor)
+                };
+            } catch (e) {
+                return { ...defaultCharacter };
+            }
+        }
+
+        function getAssetPath(partKey, fileName) {
+            const part = characterParts[partKey];
+            return `${characterBasePath}/${part.folder}/16x16/${fileName}`;
+        }
+
+        function loadPreviewImage(partKey, fileName) {
+            return new Promise(resolve => {
+                if (!fileName) {
+                    resolve();
+                    return;
+                }
+
+                const imageKey = `${partKey}:${fileName}`;
+                if (characterImages[imageKey]) {
+                    resolve();
+                    return;
+                }
+
+                const image = new Image();
+                image.onload = () => {
+                    characterImages[imageKey] = image;
+                    resolve();
+                };
+                image.onerror = resolve;
+                image.src = getAssetPath(partKey, fileName);
+            });
+        }
+
+        async function renderCharacterPreview() {
+            await Promise.all(characterLayerOrder.map(partKey => loadPreviewImage(partKey, selectedCharacter[partKey])));
+
+            const canvas = document.getElementById('character-preview-canvas');
+            const context = canvas.getContext('2d');
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.imageSmoothingEnabled = false;
+
+            characterLayerOrder.forEach(partKey => {
+                const fileName = selectedCharacter[partKey];
+                if (!fileName) return;
+
+                const image = characterImages[`${partKey}:${fileName}`];
+                if (!image) return;
+
+                const columns = Math.floor(image.width / 16);
+                const previewFrameIndex = previewDirections[activePreviewDirection].frame;
+                const sx = (previewFrameIndex % columns) * 16;
+                const sy = Math.floor(previewFrameIndex / columns) * 32;
+                context.drawImage(image, sx, sy, 16, 32, 0, 0, 16, 32);
+            });
+        }
+        function rotatePreviewDirection() {
+            activePreviewDirection = (activePreviewDirection + 1) % previewDirections.length;
+            renderCharacterPreview();
+        }
+        function getOptionScrollKey(title) {
+            return `${activeCharacterTab}:${title}`;
+        }
+
+        function rememberOptionScrollPositions() {
+            document.querySelectorAll('#character-options .character-option-group').forEach(group => {
+                const title = group.querySelector('.character-option-title')?.textContent;
+                const row = group.querySelector('.character-option-row');
+                if (title && row) {
+                    optionScrollMemory[getOptionScrollKey(title)] = row.scrollLeft;
+                }
+            });
+        }
+
+        function restoreOptionScrollPositions() {
+            requestAnimationFrame(() => {
+                document.querySelectorAll('#character-options .character-option-group').forEach(group => {
+                    const title = group.querySelector('.character-option-title')?.textContent;
+                    const row = group.querySelector('.character-option-row');
+                    if (title && row) {
+                        row.scrollLeft = optionScrollMemory[getOptionScrollKey(title)] || 0;
+                    }
+                });
+            });
+        }
+        function renderCharacterTabs() {
+            const tabs = document.getElementById('character-tabs');
+            tabs.innerHTML = '';
+
+            characterTabOrder.forEach(partKey => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = `character-tab ${partKey === activeCharacterTab ? 'active' : ''}`;
+                button.textContent = characterParts[partKey].label;
+                button.addEventListener('click', () => {
+                    activeCharacterTab = partKey;
+                    rememberOptionScrollPositions();
+                    renderCharacterTabs();
+                    renderCharacterOptions();
+                });
+                tabs.appendChild(button);
+            });
+        }
+
+        function getCharacterAssetPath(partKey, fileName, size = '16x16') {
+            if (!fileName || !characterParts[partKey]) return '';
+            return `${characterBasePath}/${characterParts[partKey].folder}/${size}/${fileName}`;
+        }
+
+        function drawOptionPreview(canvas, imageSrc) {
+            const context = canvas.getContext('2d');
+            const image = new Image();
+            image.onload = () => {
+                const columns = Math.floor(image.width / 16);
+                const frame = previewDirections[activePreviewDirection].frame;
+                const sx = (frame % columns) * 16;
+                const sy = Math.floor(frame / columns) * 32;
+
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.imageSmoothingEnabled = false;
+                context.drawImage(image, sx, sy, 16, 32, 0, 0, 16, 32);
+            };
+            image.src = imageSrc;
+        }
+
+        function createCharacterOption(label, isActive, onClick, className = '', color = '', imageSrc = '') {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = `character-option ${imageSrc ? 'has-preview' : ''} ${className} ${isActive ? 'active' : ''}`.trim();
+            button.setAttribute('aria-label', label);
+            button.title = label;
+            if (imageSrc) {
+                const image = document.createElement('canvas');
+                image.className = 'character-option-preview';
+                image.width = 16;
+                image.height = 32;
+                drawOptionPreview(image, imageSrc);
+
+                const text = document.createElement('span');
+                text.className = 'character-option-preview-label';
+                text.textContent = label;
+
+                button.appendChild(image);
+                button.appendChild(text);
+            } else {
+                button.textContent = label;
+            }
+            if (color) {
+                button.style.backgroundColor = color;
+            }
+            button.addEventListener('click', onClick);
+            return button;
+        }
+
+        function appendOptionGroup(container, title, values, getLabel, isActive, onSelect, getClass = () => '', getColor = () => '', getImage = () => '') {
+            const group = document.createElement('div');
+            group.className = 'character-option-group';
+
+            const heading = document.createElement('div');
+            heading.className = 'character-option-title';
+            heading.textContent = title;
+            group.appendChild(heading);
+
+            const strip = document.createElement('div');
+            strip.className = 'character-option-strip';
+
+            const previous = document.createElement('button');
+            previous.type = 'button';
+            previous.className = 'character-arrow';
+            previous.textContent = '‹';
+            previous.setAttribute('aria-label', `Previous ${title}`);
+
+            const row = document.createElement('div');
+            row.className = 'character-option-row';
+
+            const next = document.createElement('button');
+            next.type = 'button';
+            next.className = 'character-arrow';
+            next.textContent = '›';
+            next.setAttribute('aria-label', `Next ${title}`);
+
+            const scrollOptions = direction => {
+                row.scrollBy({ left: direction * Math.max(140, row.clientWidth * 0.72), behavior: 'smooth' });
+                window.setTimeout(() => {
+                    optionScrollMemory[getOptionScrollKey(title)] = row.scrollLeft;
+                }, 220);
+            };
+
+            previous.addEventListener('click', () => scrollOptions(-1));
+            next.addEventListener('click', () => scrollOptions(1));
+
+            values.forEach(value => {
+                row.appendChild(createCharacterOption(
+                    getLabel(value),
+                    isActive(value),
+                    () => onSelect(value),
+                    getClass(value),
+                    getColor(value),
+                    getImage(value)
+                ));
+            });
+
+            strip.appendChild(previous);
+            strip.appendChild(row);
+            strip.appendChild(next);
+            group.appendChild(strip);
+            container.appendChild(group);
+        }
+
+        function renderHairstyleOptions(options) {
+            appendOptionGroup(
+                options,
+                'Hair Style',
+                ['', ...hairstyleTypes],
+                toReadableValue,
+                value => value === '' ? !selectedCharacter.hairstyle : selectedCharacter.hairstyleType === value && Boolean(selectedCharacter.hairstyle),
+                value => {
+                    selectedCharacter = value
+                        ? {
+                            ...selectedCharacter,
+                            hairstyleType: value,
+                            hairstyleColor: selectedCharacter.hairstyleColor || defaultCharacter.hairstyleColor,
+                            hairstyle: buildHairstyleFile(value, selectedCharacter.hairstyleColor || defaultCharacter.hairstyleColor)
+                        }
+                        : { ...selectedCharacter, hairstyle: '' };
+                    renderCharacterOptions();
+                    renderCharacterPreview();
+                },
+                () => '',
+                () => '',
+                value => value ? getCharacterAssetPath('hairstyle', buildHairstyleFile(value, selectedCharacter.hairstyleColor || defaultCharacter.hairstyleColor)) : ''
+            );
+
+            if (!selectedCharacter.hairstyle) {
+                return;
+            }
+
+            appendOptionGroup(
+                options,
+                'Hair Color',
+                hairstyleColors,
+                toReadableValue,
+                value => selectedCharacter.hairstyleColor === value,
+                value => {
+                    selectedCharacter = {
+                        ...selectedCharacter,
+                        hairstyleColor: value,
+                        hairstyle: buildHairstyleFile(selectedCharacter.hairstyleType, value)
+                    };
+                    renderCharacterOptions();
+                    renderCharacterPreview();
+                },
+                () => 'color-option',
+                value => optionColors[value] || ''
+            );
+        }        function renderCharacterOptions() {
+            rememberOptionScrollPositions();
+            const part = characterParts[activeCharacterTab];
+            const options = document.getElementById('character-options');
+            options.innerHTML = '';
+
+            if (activeCharacterTab === 'hairstyle') {
+                renderHairstyleOptions(options);
+                restoreOptionScrollPositions();
+                return;
+            }
+
+            const values = part.optional ? ['', ...part.options] : part.options;
+            const group = document.createElement('div');
+            group.className = 'character-option-group';
+
+            const valuesForPart = values;
+            appendOptionGroup(
+                options,
+                part.label,
+                valuesForPart,
+                fileName => toReadableName(fileName).replace(`${part.label.slice(0, -1)} `, ''),
+                fileName => selectedCharacter[activeCharacterTab] === fileName,
+                fileName => {
+                    selectedCharacter = { ...selectedCharacter, [activeCharacterTab]: fileName };
+                    renderCharacterOptions();
+                    renderCharacterPreview();
+                },
+                () => activeCharacterTab === 'eyes' ? 'color-option' : '',
+                fileName => {
+                    const colorKey = fileName ? fileName.replace(/\.png$/i, '') : '';
+                    return activeCharacterTab === 'eyes' ? optionColors[colorKey] || '' : '';
+                },
+                fileName => activeCharacterTab === 'eyes' ? '' : getCharacterAssetPath(activeCharacterTab, fileName)
+            );
+            restoreOptionScrollPositions();
+        }
+
+        function getSelectedCharacter() {
+            const hairstyle = selectedCharacter.hairstyle
+                ? buildHairstyleFile(selectedCharacter.hairstyleType, selectedCharacter.hairstyleColor)
+                : '';
+            return { ...selectedCharacter, hairstyle };
+        }
+
+        function initCharacterControls() {
+            document.getElementById('character-preview-canvas').addEventListener('click', rotatePreviewDirection);
+            renderCharacterTabs();
+            renderCharacterOptions();
+            renderCharacterPreview();
+        }
+
+        initCharacterControls();
         function parseTextToDialogue(elementId) {
             const rawText = document.getElementById(elementId).value;
             if (!rawText) return [];
@@ -173,7 +878,8 @@
             const keys = [
                 'puzzleIntro', 'foundKey', 'caConLockedDoor', 'need_2_keys',
                 'need_1_keys', 'openFridge', 'inspectTable', 'livingRoomTable',
-                'childTent', 'roomMaster', 'introHouse', 'victoryDialogue'
+                'childTent', 'roomMaster', 'introHouse', 'victoryDialogue',
+                'finalRoom'
             ];
 
             const customDialogues = {};
@@ -183,6 +889,7 @@
 
             // 1. Lưu kịch bản thoại đã sửa đổi vào LocalStorage
             localStorage.setItem('external_game_dialogues', JSON.stringify(customDialogues));
+            localStorage.setItem('external_character_assets', JSON.stringify(getSelectedCharacter()));
 
             // 2. XỬ LÝ LƯU LINK ẢNH ĐƯỢC GỬI LÊN
             const puzzleUrl = document.getElementById('custom-puzzle-url').value.trim();

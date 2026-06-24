@@ -74,33 +74,76 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;
 
-        // Tạo container quản lý vị trí tuyệt đối
         this.puzzleContainer = this.add.container(0, 0).setDepth(2000);
 
-        let puzzleBg = this.add.rectangle(centerX, centerY, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.85);
-        let puzzleBoard = this.add.rectangle(centerX, centerY, 310, 310, 0x2c3e50).setStrokeStyle(4, 0xf1c40f);
-
-        let puzzleTitle = this.add.text(centerX, centerY - 220, '🧩 NUMBER MATRIX PUZZLE 🧩', { fontSize: '22px', color: '#f1c40f', fontWeight: 'bold' }).setOrigin(0.5);
-        let puzzleGuide = this.add.text(centerX, centerY + 220, 'Use Mouse, WASD, Arrow Keys, or Joypad to move!', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5);
+        const puzzleBg = this.add.rectangle(centerX, centerY, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.85);
+        const puzzleBoard = this.add.rectangle(centerX, centerY, 310, 310, 0x2c3e50).setStrokeStyle(4, 0xf1c40f);
+        const puzzleTitle = this.add.text(centerX, centerY - 220, 'IMAGE SLIDING PUZZLE', { fontSize: '22px', color: '#f1c40f', fontWeight: 'bold' }).setOrigin(0.5);
+        const puzzleGuide = this.add.text(centerX, centerY + 220, 'Use Mouse, WASD, Arrow Keys, or Joypad to move!', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5);
         this.puzzleContainer.add([puzzleBg, puzzleBoard, puzzleTitle, puzzleGuide]);
 
+        const puzzleUrl = this.getCustomPuzzleUrl();
+        const tileSize = 96;
+
+        if (puzzleUrl) {
+            this.loadCustomPuzzleImage(
+                puzzleUrl,
+                () => this.createPuzzleTiles(tileSize, true),
+                () => {
+                    puzzleTitle.setText('NUMBER MATRIX PUZZLE');
+                    this.createPuzzleTiles(tileSize, false);
+                }
+            );
+        } else {
+            puzzleTitle.setText('NUMBER MATRIX PUZZLE');
+            this.createPuzzleTiles(tileSize, false);
+        }
+    }
+
+    getCustomPuzzleUrl() {
+        if (typeof window === 'undefined' || !window.customPuzzleImageUrl) {
+            return '';
+        }
+
+        return String(window.customPuzzleImageUrl).trim();
+    }
+
+    loadCustomPuzzleImage(url, onReady, onError) {
+        const textureKey = 'custom_puzzle_image';
+        this.customPuzzleTextureKey = textureKey;
+
+        if (this.textures.exists(textureKey)) {
+            this.textures.remove(textureKey);
+        }
+
+        const handleReady = () => {
+            this.load.off('loaderror', handleError);
+            onReady();
+        };
+
+        const handleError = (file) => {
+            if (file && file.key !== textureKey) return;
+            this.load.off(`filecomplete-image-${textureKey}`, handleReady);
+            onError();
+        };
+
+        this.load.setCORS('anonymous');
+        this.load.once(`filecomplete-image-${textureKey}`, handleReady);
+        this.load.once('loaderror', handleError);
+        this.load.image(textureKey, url);
+        this.load.start();
+    }
+
+    createPuzzleTiles(tileSize, useImageTiles) {
         this.correctOrder = [0, 1, 2, 3, 4, 5, 6, 7, 8];
         this.boardState = [...this.correctOrder];
         this.tiles = {};
-
         this.emptyIndex = 8;
         this.shuffleBoard();
 
-        const tileSize = 96;
-
         for (let i = 0; i < 9; i++) {
-            let val = i;
-            let tile = this.add.container(0, 0);
-
-            let bgRect = this.add.rectangle(0, 0, tileSize - 6, tileSize - 6, 0xd35400);
-            let textNum = this.add.text(0, 0, (val + 1).toString(), { fontSize: '24px', color: '#ffffff', fontWeight: 'bold' }).setOrigin(0.5);
-
-            tile.add([bgRect, textNum]);
+            const val = i;
+            const tile = useImageTiles ? this.createImagePuzzleTile(val, tileSize) : this.createNumberPuzzleTile(val, tileSize);
 
             tile.setInteractive(new Phaser.Geom.Rectangle(-tileSize / 2, -tileSize / 2, tileSize, tileSize), Phaser.Geom.Rectangle.Contains);
             tile.tileValue = val;
@@ -120,6 +163,50 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         this.updateTilePositionsImmediately();
     }
 
+    createNumberPuzzleTile(val, tileSize) {
+        const tile = this.add.container(0, 0);
+        const bgRect = this.add.rectangle(0, 0, tileSize - 6, tileSize - 6, 0xd35400);
+        const textNum = this.add.text(0, 0, (val + 1).toString(), {
+            fontSize: '24px',
+            color: '#ffffff',
+            fontWeight: 'bold'
+        }).setOrigin(0.5);
+
+        tile.add([bgRect, textNum]);
+        return tile;
+    }
+
+    createImagePuzzleTile(val, tileSize) {
+        const tile = this.add.container(0, 0);
+        const frame = this.add.rectangle(0, 0, tileSize - 4, tileSize - 4, 0x111827).setStrokeStyle(2, 0xf1c40f);
+        const texture = this.textures.get(this.customPuzzleTextureKey);
+        const source = texture.getSourceImage();
+        const sourceWidth = source.width || source.naturalWidth;
+        const sourceHeight = source.height || source.naturalHeight;
+        const squareSize = Math.min(sourceWidth, sourceHeight);
+        const cropX = (sourceWidth - squareSize) / 2;
+        const cropY = (sourceHeight - squareSize) / 2;
+        const pieceSize = squareSize / 3;
+        const row = Math.floor(val / 3);
+        const col = val % 3;
+        const frameName = `piece_${val}`;
+
+        if (!texture.has(frameName)) {
+            texture.add(
+                frameName,
+                0,
+                Math.round(cropX + col * pieceSize),
+                Math.round(cropY + row * pieceSize),
+                Math.round(pieceSize),
+                Math.round(pieceSize)
+            );
+        }
+
+        const image = this.add.image(0, 0, this.customPuzzleTextureKey, frameName)
+            .setDisplaySize(tileSize - 8, tileSize - 8);
+        tile.add([frame, image]);
+        return tile;
+    }
     shuffleBoard() {
         for (let i = 0; i < 40; i++) {
             let validMoves = [];
@@ -233,13 +320,6 @@ export default class PuzzyRoomScene extends Phaser.Scene {
             this.time.delayedCall(400, () => {
                 this.destroyPuzzleUI();
 
-                // CẬP NHẬT CHÌA KHÓA VÀO REGISTRY
-                let currentKeys = this.registry.get('keysFound') || 0;
-                if (!this.registry.get('puzzyRoomWon')) {
-                    this.registry.set('keysFound', currentKeys + 1);
-                    this.registry.set('puzzyRoomWon', true);
-                }
-
                 // Hiện hộp thoại nhận chìa khóa
                 if (this.player) this.player.isTalking = true;
 
@@ -249,10 +329,115 @@ export default class PuzzyRoomScene extends Phaser.Scene {
 
                 this.dialogueBox.startSequence('foundKey', () => {
                     if (this.player) this.player.isTalking = false;
-                    this.scene.start('RoomChildScene', { fromScene: 'PuzzyRoomScene' });
+
+                    let currentKeys = this.registry.get('keysFound') || 0;
+                    if (!this.registry.get('puzzyRoomWon')) {
+                        this.registry.set('keysFound', currentKeys + 1);
+                        this.registry.set('puzzyRoomWon', true);
+                    }
+
+                    this.playKeyRewardEffect(() => {
+                        this.scene.start('RoomChildScene', { fromScene: 'PuzzyRoomScene' });
+                    });
                 });
             });
         }
+    }
+
+    playKeyRewardEffect(onComplete) {
+        const centerX = this.cameras.main.width / 2;
+        const centerY = this.cameras.main.height / 2;
+        const rewardContainer = this.add.container(centerX, centerY).setDepth(2600);
+        const overlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.55);
+        const glow = this.add.circle(0, -16, 58, 0xf1c40f, 0.28);
+        const ring = this.add.circle(0, -16, 72, 0xf1c40f, 0).setStrokeStyle(3, 0xf1c40f, 0.9);
+        const key = this.add.image(0, -18, 'key_icon_bg').setScale(0.18).setAngle(-18);
+        const title = this.add.text(0, 70, 'KEY ACQUIRED', {
+            fontSize: '22px',
+            color: '#ffe066',
+            fontStyle: 'bold',
+            stroke: '#000000',
+            strokeThickness: 5
+        }).setOrigin(0.5);
+
+        const sparklePoints = [
+            [-84, -58], [82, -62], [-70, 38], [76, 34], [0, -96], [0, 26]
+        ];
+        const sparkles = sparklePoints.map(([x, y], index) => {
+            const sparkle = this.add.star(x, y, 5, 4, 11, 0xffffff, 0.95)
+                .setScale(0)
+                .setAngle(index * 24);
+            rewardContainer.add(sparkle);
+
+            this.tweens.add({
+                targets: sparkle,
+                scale: { from: 0, to: 1 },
+                alpha: { from: 0.2, to: 0 },
+                angle: sparkle.angle + 120,
+                duration: 650,
+                delay: index * 80,
+                ease: 'Sine.easeOut'
+            });
+
+            return sparkle;
+        });
+
+        rewardContainer.add([overlay, glow, ring, key, title]);
+        rewardContainer.setAlpha(0);
+        rewardContainer.setScale(0.7);
+
+        this.tweens.add({
+            targets: rewardContainer,
+            alpha: 1,
+            scale: 1,
+            duration: 260,
+            ease: 'Back.easeOut'
+        });
+
+        this.tweens.add({
+            targets: key,
+            y: -34,
+            angle: 14,
+            scale: 0.26,
+            duration: 620,
+            yoyo: true,
+            repeat: 1,
+            ease: 'Sine.easeInOut'
+        });
+
+        this.tweens.add({
+            targets: ring,
+            scale: { from: 0.55, to: 1.35 },
+            alpha: { from: 1, to: 0 },
+            duration: 900,
+            repeat: 1,
+            ease: 'Sine.easeOut'
+        });
+
+        this.tweens.add({
+            targets: glow,
+            scale: { from: 0.75, to: 1.25 },
+            alpha: { from: 0.45, to: 0.15 },
+            duration: 520,
+            yoyo: true,
+            repeat: 2,
+            ease: 'Sine.easeInOut'
+        });
+
+        this.time.delayedCall(1650, () => {
+            this.tweens.add({
+                targets: rewardContainer,
+                alpha: 0,
+                scale: 0.92,
+                duration: 240,
+                ease: 'Sine.easeIn',
+                onComplete: () => {
+                    sparkles.forEach((sparkle) => sparkle.destroy());
+                    rewardContainer.destroy();
+                    if (onComplete) onComplete();
+                }
+            });
+        });
     }
 
     destroyPuzzleUI() {

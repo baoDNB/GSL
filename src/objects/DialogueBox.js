@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { joypad } from '../assets/VirtualJoypad.js'; // Bắt buộc import phím ảo vào đây
 
-export const DIALOGUES = window.customGameDialogues || {
+const DEFAULT_DIALOGUES = {
     puzzleIntro: [
         { speaker: "You", text: "Huh, an old, ancient book left in the middle of the table? And it's glowing..." },
         { speaker: "Admin", text: "The magic map has been activated! Decipher the number matrix to reveal the secret passage!" },
@@ -45,8 +45,19 @@ export const DIALOGUES = window.customGameDialogues || {
     victoryDialogue: [
         { speaker: "You", text: "All three keys fit perfectly into the lock!" },
         { speaker: "You", text: "The secret door is slowly opening... I'm finally free!" }
+    ],
+    finalRoom: [
+        { speaker: "You", text: "So this is the hidden room..." },
+        { speaker: "Kid", text: "You found us! We knew you could solve every clue." },
+        { speaker: "You", text: "Three keys, three trials, and one very strange house." },
+        { speaker: "Kid", text: "The game is over now. Thank you for playing with us." },
+        { speaker: "You", text: "Let's go home." }
     ]
 };
+
+export const DIALOGUES = (typeof window !== 'undefined' && window.customGameDialogues)
+    ? window.customGameDialogues
+    : DEFAULT_DIALOGUES;
 
 export default class DialogueBox {
     constructor(scene) {
@@ -86,6 +97,7 @@ export default class DialogueBox {
         this.onComplete = onComplete;
         this.index = 0;
         this.isShowing = true;
+        this.lockPlayer();
 
         this.box.setVisible(true);
         this.text.setVisible(true);
@@ -115,6 +127,25 @@ export default class DialogueBox {
         this.scene.input.off('pointerdown', this.nextNode, this);
         this.box.setVisible(false);
         this.text.setVisible(false);
+        this.unlockPlayer();
+    }
+
+    lockPlayer() {
+        if (!this.scene.player) return;
+
+        this.scene.player.isTalking = true;
+        if (this.scene.player.body) {
+            this.scene.player.setVelocity(0, 0);
+        }
+    }
+
+    unlockPlayer() {
+        if (!this.scene.player) return;
+
+        this.scene.player.isTalking = false;
+        if (this.scene.player.body) {
+            this.scene.player.setVelocity(0, 0);
+        }
     }
 
     update() {
