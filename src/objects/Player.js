@@ -17,10 +17,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.cursors = scene.input.keyboard.createCursorKeys();
 
-        this.spaceKey = scene.input.keyboard.addKey(
-            Phaser.Input.Keyboard.KeyCodes.SPACE
-        );
-
         this.lastDirection = 'down';
         this.isHarvesting = false;
         this.isTalking = false;
@@ -62,9 +58,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         const isRight = this.cursors.right.isDown || joypad.right;
         const isUp = this.cursors.up.isDown || joypad.up;
         const isDown = this.cursors.down.isDown || joypad.down;
-
-        const isAction =
-            Phaser.Input.Keyboard.JustDown(this.spaceKey);
 
         const speed = 150;
 
@@ -144,13 +137,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             }
         }
 
-        // ======================
-        // HARVEST
-        // ======================
-
-        if (isAction) {
-            this.startHarvest();
-        }
     }
 
     startHarvest() {
@@ -181,6 +167,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         }
 
         this.anims.play(animKey);
+
+        this.scene.time.delayedCall(550, () => {
+            this.isHarvesting = false;
+        });
 
         this.once(
             Phaser.Animations.Events.ANIMATION_COMPLETE,

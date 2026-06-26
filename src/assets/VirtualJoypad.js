@@ -1,6 +1,5 @@
 // src/assets/VirtualJoypad.js
 
-// Đối tượng lưu trữ trạng thái phím
 export const joypad = {
     up: false,
     down: false,
@@ -10,26 +9,40 @@ export const joypad = {
     actionB: false
 };
 
-// Hàm gắn sự kiện vào HTML
+export function pulseActionButton(buttonId = 'btn-a') {
+    const btn = document.getElementById(buttonId);
+    if (!btn) return;
+
+    btn.classList.remove('is-pressed');
+    void btn.offsetWidth;
+    btn.classList.add('is-pressed');
+
+    window.setTimeout(() => {
+        btn.classList.remove('is-pressed');
+    }, 120);
+}
+
 export function initVirtualJoypad() {
     const bindButton = (htmlId, keyName) => {
         const btn = document.getElementById(htmlId);
         if (!btn) return;
 
-        // Dùng 'pointerdown/up/out' để bao gồm cả cảm ứng điện thoại và click chuột
-        btn.addEventListener('pointerdown', (e) => { 
-            e.preventDefault(); 
-            joypad[keyName] = true; 
+        btn.addEventListener('pointerdown', (e) => {
+            e.preventDefault();
+            joypad[keyName] = true;
+            btn.classList.add('is-pressed');
         });
-        
-        btn.addEventListener('pointerup', (e) => { 
-            e.preventDefault(); 
-            joypad[keyName] = false; 
+
+        btn.addEventListener('pointerup', (e) => {
+            e.preventDefault();
+            joypad[keyName] = false;
+            btn.classList.remove('is-pressed');
         });
-        
-        btn.addEventListener('pointerout', (e) => { 
-            e.preventDefault(); 
-            joypad[keyName] = false; 
+
+        btn.addEventListener('pointerout', (e) => {
+            e.preventDefault();
+            joypad[keyName] = false;
+            btn.classList.remove('is-pressed');
         });
     };
 
@@ -39,4 +52,10 @@ export function initVirtualJoypad() {
     bindButton('btn-right', 'right');
     bindButton('btn-a', 'actionA');
     bindButton('btn-b', 'actionB');
+
+    window.addEventListener('keydown', (event) => {
+        if (!event.repeat && event.key?.toLowerCase() === 'e') {
+            pulseActionButton('btn-a');
+        }
+    });
 }

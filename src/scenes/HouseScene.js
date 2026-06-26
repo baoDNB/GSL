@@ -56,8 +56,7 @@ export default class HouseScene extends Phaser.Scene {
 
         this.startMenuActive = true;
         this.startMenuKeys = this.input.keyboard.addKeys({
-            enter: Phaser.Input.Keyboard.KeyCodes.ENTER,
-            space: Phaser.Input.Keyboard.KeyCodes.SPACE,
+            e: Phaser.Input.Keyboard.KeyCodes.E,
             up: Phaser.Input.Keyboard.KeyCodes.UP,
             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
             w: Phaser.Input.Keyboard.KeyCodes.W,
@@ -320,9 +319,7 @@ export default class HouseScene extends Phaser.Scene {
             const moveDown = Phaser.Input.Keyboard.JustDown(this.startMenuKeys.down) ||
                 Phaser.Input.Keyboard.JustDown(this.startMenuKeys.s) ||
                 joypad.down;
-            const wantsSelect = Phaser.Input.Keyboard.JustDown(this.startMenuKeys.enter) ||
-                Phaser.Input.Keyboard.JustDown(this.startMenuKeys.space) ||
-                joypad.actionA;
+            const wantsSelect = Phaser.Input.Keyboard.JustDown(this.startMenuKeys.e) || joypad.actionA;
 
             if (moveUp) {
                 this.moveStartMenuSelection(-1);

@@ -271,7 +271,8 @@ body {
     transition: transform 0.05s ease;
 }
 
-.action-btn:active {
+.action-btn:active,
+.action-btn.is-pressed {
     transform: translateY(4px);
     box-shadow: 0 1px 0 #4a020c, inset 0 1px 4px rgba(0, 0, 0, 0.6);
 }

@@ -89,7 +89,6 @@ export default class RoomMasterScene extends Phaser.Scene {
 
         // Đăng ký các phím vật lý
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-        this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
         this.toHallwayZone = this.add.zone(sw * 0.5, sh - 10, sw * 0.2, 30).setOrigin(0.5);
@@ -111,9 +110,7 @@ export default class RoomMasterScene extends Phaser.Scene {
         this.isPlayerAtBed = this.physics.overlap(this.player, this.bedZone) && !isWon;
 
         // GỘP PHÍM BÀN PHÍM VÀ NÚT ẢO
-        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) ||
-            Phaser.Input.Keyboard.JustDown(this.keySpace) ||
-            joypad.actionA;
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || joypad.actionA;
 
         const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
             joypad.actionB;

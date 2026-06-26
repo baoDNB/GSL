@@ -51,7 +51,7 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         });
 
         // 5. Đăng ký phím cứng hành động
-        this.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        this.interactKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.hasInteracted = false;
 
         // KHAI BÁO CÁC PHÍM ĐIỀU KHIỂN CHO GAME XẾP HÌNH
@@ -455,7 +455,7 @@ export default class PuzzyRoomScene extends Phaser.Scene {
             return;
         }
 
-        // 2. ƯU TIÊN CHẶN ĐẦU KHI ĐANG THOẠI: Bấm nút A/SPACE để tua thoại câu tiếp theo
+        // 2. ƯU TIÊN CHẶN ĐẦU KHI ĐANG THOẠI: Bấm nút A/E để tua thoại câu tiếp theo
         if (this.player && this.player.isTalking) {
             if (isActionA) {
                 joypad.actionA = false; // Xóa tín hiệu lặp frame ảo

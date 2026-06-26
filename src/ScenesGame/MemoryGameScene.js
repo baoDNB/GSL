@@ -39,7 +39,6 @@ export default class MemoryGameScene extends Phaser.Scene {
         // 2. Input Setup
         this.cursors = this.input.keyboard.createCursorKeys();
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-        this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         this.add.text(sw / 2, 50, `LEVEL ${this.currentLevel}/3`, {
             fontSize: '32px', fill: '#ffffff', fontStyle: 'bold',
@@ -92,9 +91,7 @@ export default class MemoryGameScene extends Phaser.Scene {
 
     update() {
         // --- ĐỒNG BỘ NÚT HÀNH ĐỘNG A ---
-        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || 
-                          Phaser.Input.Keyboard.JustDown(this.keySpace) ||
-                          joypad.actionA;
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || joypad.actionA;
 
         // ƯU TIÊN CHẶN ĐẦU: Nếu đang hiện thoại, bấm nút A để tua thoại và thoát xử lý game ngay
         if (this.isInDialogue) {
@@ -173,7 +170,7 @@ export default class MemoryGameScene extends Phaser.Scene {
             this.selectionRect.setVisible(false); // Ẩn khung vàng chọn bài để nhìn thoại rõ hơn
             
             // Thay đổi dòng trạng thái hướng dẫn người chơi
-            this.statusText.setText('Press [E], [SPACE] or Button A to continue...');
+            this.statusText.setText('Press [E] or Button A to continue...');
 
             // Clear luôn bộ nhớ đệm bàn phím và nút ảo của frame hiện tại để tránh dính nút ngay lập tức
             joypad.actionA = false;

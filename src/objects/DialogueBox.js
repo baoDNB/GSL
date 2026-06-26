@@ -63,10 +63,11 @@ export default class DialogueBox {
     constructor(scene) {
         this.scene = scene;
         this.isShowing = false; // Biến kiểm tra xem thoại có đang mở không
+        this.visible = false;
+        this.lastAdvanceFrame = -1;
 
         // Đăng ký phím bàn phím
         this.keyE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-        this.keySpace = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // Vẽ hộp thoại thô nằm ở nửa dưới màn hình
         this.box = scene.add.rectangle(480, 500, 900, 140, 0x000000, 0.8)
@@ -97,6 +98,7 @@ export default class DialogueBox {
         this.onComplete = onComplete;
         this.index = 0;
         this.isShowing = true;
+        this.visible = true;
         this.lockPlayer();
 
         this.box.setVisible(true);
@@ -118,16 +120,28 @@ export default class DialogueBox {
     }
 
     nextNode() {
+        const currentFrame = this.scene.game.loop.frame;
+        if (this.lastAdvanceFrame === currentFrame) return;
+        this.lastAdvanceFrame = currentFrame;
+
         this.index++;
         this.showNode();
     }
 
+    next() {
+        this.nextNode();
+    }
+
     hide() {
         this.isShowing = false;
+        this.visible = false;
         this.scene.input.off('pointerdown', this.nextNode, this);
         this.box.setVisible(false);
         this.text.setVisible(false);
+        this.scene.actionBlockedUntil = this.scene.time.now + 250;
         this.unlockPlayer();
+        joypad.actionA = false;
+
     }
 
     lockPlayer() {
@@ -152,9 +166,8 @@ export default class DialogueBox {
         // Nếu hộp thoại không hiện, bỏ qua không làm gì cả
         if (!this.isShowing) return;
 
-        // Bắt sự kiện Nút A hoặc phím E/Space
+        // Bắt sự kiện nút A hoặc phím E
         const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) ||
-            Phaser.Input.Keyboard.JustDown(this.keySpace) ||
             joypad.actionA;
 
         if (isActionA) {

@@ -34,7 +34,6 @@ export default class LivingRoomScene extends Phaser.Scene {
 
         // --- ĐỒNG BỘ ĐẦY ĐỦ CÁC PHÍM CỨNG ---
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-        this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
         this.tableX = (screenWidth * 0.4) + (screenWidth * 0.18) / 2;
@@ -136,9 +135,7 @@ export default class LivingRoomScene extends Phaser.Scene {
         this.player.update();
 
         // --- GỘP KHỞI TẠO ĐIỀU KIỆN NÚT HÀNH ĐỘNG ---
-        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) ||
-            Phaser.Input.Keyboard.JustDown(this.keySpace) ||
-            joypad.actionA;
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || joypad.actionA;
 
         const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
             joypad.actionB;

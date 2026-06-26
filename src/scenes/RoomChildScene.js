@@ -95,7 +95,6 @@ export default class RoomChildScene extends Phaser.Scene {
         this.physics.add.existing(this.puzzyZone, true);
 
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
-        this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.cameras.main.fadeIn(1200, 0, 0, 0);
 
@@ -110,9 +109,7 @@ export default class RoomChildScene extends Phaser.Scene {
         // Kiểm tra xem Player có đang đứng trong vùng tương tác hay không
         let isNearPuzzy = this.physics.overlap(this.player, this.puzzyZone) && !isWon;
 
-        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) ||
-            Phaser.Input.Keyboard.JustDown(this.keySpace) ||
-            joypad.actionA;
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || joypad.actionA;
 
         const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
             joypad.actionB;
