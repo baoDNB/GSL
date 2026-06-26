@@ -112,6 +112,36 @@
             min-height: 76px;
         }
 
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            background: #fffdf8;
+            border: 1px dashed #c9945b;
+            color: #3e3021;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .puzzle-file-note {
+            margin-top: 8px;
+            color: #7c6a55;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .puzzle-file-preview {
+            display: none;
+            margin-top: 12px;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border: 1px solid #dec99f;
+            border-radius: 8px;
+            background: #fffdf8;
+        }
+
         #btn-play {
             width: 100%;
             padding: 16px;
@@ -381,9 +411,10 @@
 
             <section class="setup-section">
                 <div class="section-title">Puzzle Image</div>
-                <label>Image URL</label>
-            <input type="text" id="custom-puzzle-url"
-                placeholder="Dán link ảnh vào đây, ví dụ: https://imgur.com/xyz.png" value="">
+                <label>Image File</label>
+            <input type="file" id="custom-puzzle-file" accept="image/*">
+            <div class="puzzle-file-note" id="custom-puzzle-note">Chọn ảnh trong máy. Nên dùng ảnh dưới 3MB.</div>
+            <img class="puzzle-file-preview" id="custom-puzzle-preview" alt="Puzzle preview">
             </section>
 
             <section class="setup-section">
@@ -931,7 +962,57 @@
             });
         }
 
-        document.getElementById('btn-play').addEventListener('click', () => {
+        function readPuzzleFileAsDataUrl() {
+            return new Promise((resolve, reject) => {
+                const fileInput = document.getElementById('custom-puzzle-file');
+                const file = fileInput.files && fileInput.files[0];
+
+                if (!file) {
+                    resolve('');
+                    return;
+                }
+
+                if (!file.type.startsWith('image/')) {
+                    reject(new Error('Vui lòng chọn đúng file ảnh.'));
+                    return;
+                }
+
+                if (file.size > 3 * 1024 * 1024) {
+                    reject(new Error('Ảnh quá lớn. Vui lòng chọn ảnh dưới 3MB.'));
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(new Error('Không đọc được file ảnh này.'));
+                reader.readAsDataURL(file);
+            });
+        }
+
+        document.getElementById('custom-puzzle-file').addEventListener('change', async () => {
+            const preview = document.getElementById('custom-puzzle-preview');
+            const note = document.getElementById('custom-puzzle-note');
+
+            try {
+                const dataUrl = await readPuzzleFileAsDataUrl();
+                if (dataUrl) {
+                    preview.src = dataUrl;
+                    preview.style.display = 'block';
+                    note.textContent = 'Đã chọn ảnh. Ảnh này sẽ dùng làm các mảnh puzzle.';
+                } else {
+                    preview.removeAttribute('src');
+                    preview.style.display = 'none';
+                    note.textContent = 'Chọn ảnh trong máy. Nên dùng ảnh dưới 3MB.';
+                }
+            } catch (error) {
+                preview.removeAttribute('src');
+                preview.style.display = 'none';
+                note.textContent = error.message;
+                document.getElementById('custom-puzzle-file').value = '';
+            }
+        });
+
+        document.getElementById('btn-play').addEventListener('click', async () => {
             const keys = [
                 'puzzleIntro', 'foundKey', 'caConLockedDoor', 'need_2_keys',
                 'need_1_keys', 'openFridge', 'inspectTable', 'livingRoomTable',
@@ -948,12 +1029,17 @@
             localStorage.setItem('external_game_dialogues', JSON.stringify(customDialogues));
             localStorage.setItem('external_character_assets', JSON.stringify(getSelectedCharacter()));
 
-            // 2. XỬ LÝ LƯU LINK ẢNH ĐƯỢC GỬI LÊN
-            const puzzleUrl = document.getElementById('custom-puzzle-url').value.trim();
-            if (puzzleUrl) {
-                localStorage.setItem('external_puzzle_url', puzzleUrl);
-            } else {
-                localStorage.removeItem('external_puzzle_url'); // Xóa đi nếu để trống để dùng ảnh mặc định
+            // 2. XỬ LÝ LƯU ẢNH PUZZLE TỪ MÁY
+            try {
+                const puzzleImageData = await readPuzzleFileAsDataUrl();
+                if (puzzleImageData) {
+                    localStorage.setItem('external_puzzle_url', puzzleImageData);
+                } else {
+                    localStorage.removeItem('external_puzzle_url'); // Xóa đi nếu để trống để dùng ảnh mặc định
+                }
+            } catch (error) {
+                document.getElementById('custom-puzzle-note').textContent = error.message;
+                return;
             }
 
             // Chuyển hướng trình duyệt chạy thẳng vào file chạy game chính
