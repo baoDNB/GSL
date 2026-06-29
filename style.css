@@ -475,3 +475,52 @@ body {
         bottom: 20px;
     }
 }
+
+@media screen and (max-width: 480px) {
+    html,
+    body {
+        min-height: 100svh;
+        align-items: flex-start;
+    }
+
+    .retro-console-wrapper {
+        height: 100svh !important;
+        padding-bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+    }
+
+    .console-body-controls {
+        margin-top: 8px !important;
+        flex: 0 0 clamp(230px, 36svh, 315px) !important;
+        min-height: 230px;
+        padding: 0 10px;
+    }
+
+    .dpad-housing {
+        width: clamp(116px, 30vw, 136px) !important;
+        height: clamp(116px, 30vw, 136px) !important;
+        top: 38% !important;
+    }
+
+    .dpad-cross {
+        width: calc(100% - 18px) !important;
+        height: calc(100% - 18px) !important;
+    }
+
+    .dpad-center-pivot {
+        width: clamp(46px, 13vw, 56px) !important;
+        height: clamp(46px, 13vw, 56px) !important;
+    }
+
+    .action-housing {
+        top: 38% !important;
+    }
+
+    .action-btn {
+        width: clamp(48px, 13vw, 56px) !important;
+        height: clamp(48px, 13vw, 56px) !important;
+    }
+
+    .system-buttons {
+        bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+    }
+}
