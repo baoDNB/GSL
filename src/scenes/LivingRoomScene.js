@@ -108,7 +108,7 @@ export default class LivingRoomScene extends Phaser.Scene {
 
         this.physics.add.overlap(this.player, this.toKitchenZone, () => {
             if (this.dialogueBox && this.dialogueBox.visible) return; // Không chuyển cảnh khi đang thoại
-            this.sound.play('doorOpenSfx'); // <--- THÊM VÀO ĐÂY
+            this.sound.play('doorOpenSfx', { volume: 0.25 }); // <--- THÊM VÀO ĐÂY
             this.scene.start('KitchenScene', { fromScene: 'LivingRoomScene' });
         });
 
@@ -117,7 +117,7 @@ export default class LivingRoomScene extends Phaser.Scene {
         this.physics.add.existing(this.toHallwayZone, true); // True = Static Body (đứng im)
         this.physics.add.overlap(this.player, this.toHallwayZone, () => {
             if (this.dialogueBox && this.dialogueBox.visible) return; // Không chuyển cảnh khi đang thoại
-            this.sound.play('doorOpenSfx'); // <--- THÊM VÀO ĐÂY
+            this.sound.play('doorOpenSfx', { volume: 0.25 }); // <--- THÊM VÀO ĐÂY
             this.scene.start('HallwayScene', { fromScene: 'LivingRoomScene' });
         });
 

@@ -54,17 +54,30 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             return;
         }
 
-        const isLeft = this.cursors.left.isDown || joypad.left;
-        const isRight = this.cursors.right.isDown || joypad.right;
-        const isUp = this.cursors.up.isDown || joypad.up;
-        const isDown = this.cursors.down.isDown || joypad.down;
+        const stickX = joypad.axisX || 0;
+        const stickY = joypad.axisY || 0;
+        const isUsingStick = Math.abs(stickX) > 0.05 || Math.abs(stickY) > 0.05;
+        const isLeft = this.cursors.left.isDown || (!isUsingStick && joypad.left);
+        const isRight = this.cursors.right.isDown || (!isUsingStick && joypad.right);
+        const isUp = this.cursors.up.isDown || (!isUsingStick && joypad.up);
+        const isDown = this.cursors.down.isDown || (!isUsingStick && joypad.down);
 
         const speed = 150;
 
         let vx = 0;
         let vy = 0;
 
-        if (isLeft) {
+        if (isUsingStick) {
+            vx = stickX * speed;
+            vy = stickY * speed;
+
+            if (Math.abs(stickX) > Math.abs(stickY)) {
+                this.lastDirection = stickX > 0 ? 'right' : 'left';
+            } else {
+                this.lastDirection = stickY > 0 ? 'down' : 'up';
+            }
+        }
+        else if (isLeft) {
             vx = -speed;
             this.lastDirection = 'left';
         }
@@ -84,7 +97,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         const vec = new Phaser.Math.Vector2(vx, vy);
 
-        if (vec.length() > 0) {
+        if (!isUsingStick && vec.length() > 0) {
             vec.normalize().scale(speed);
         }
 

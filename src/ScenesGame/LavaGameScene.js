@@ -179,7 +179,7 @@ export default class LavaGameScene extends Phaser.Scene {
                     this.registry.set('keysFound', currentKeys + 1);
 
                     this.playKeyRewardEffect(() => {
-                        this.scene.start('LivingRoomScene', { fromScene: 'fromLavaGame' });
+                        this.scene.start('HallwayScene', { fromScene: 'fromLavaGame' });
                     });
                 });
             } else {
@@ -187,7 +187,7 @@ export default class LavaGameScene extends Phaser.Scene {
                 let currentKeys = this.registry.get('keysFound') || 0;
                 this.registry.set('keysFound', currentKeys + 1);
                 this.playKeyRewardEffect(() => {
-                    this.scene.start('LivingRoomScene', { fromScene: 'fromLavaGame' });
+                    this.scene.start('HallwayScene', { fromScene: 'fromLavaGame' });
                 });
             }
         });

@@ -86,7 +86,7 @@ export default class RoomChildScene extends Phaser.Scene {
         this.physics.add.existing(this.toHallwayZone, true);
         this.physics.add.overlap(this.player, this.toHallwayZone, () => {
             if (this.dialogueBox && this.dialogueBox.visible) return;
-            this.sound.play('doorOpenSfx'); // <--- THÊM VÀO ĐÂY
+            this.sound.play('doorOpenSfx', { volume: 0.25 }); // <--- THÊM VÀO ĐÂY
             this.scene.start('HallwayScene', { fromScene: 'fromChildRoom' });
         });
 
