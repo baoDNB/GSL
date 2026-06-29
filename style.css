@@ -476,28 +476,34 @@ body {
     }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     html,
     body {
-        min-height: 100svh;
+        height: var(--app-height, 100vh) !important;
+        min-height: var(--app-height, 100vh) !important;
         align-items: flex-start;
     }
 
     .retro-console-wrapper {
-        height: 100svh !important;
-        padding-bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+        width: 100vw !important;
+        max-width: none !important;
+        height: var(--app-height, 100vh) !important;
+        max-height: var(--app-height, 100vh) !important;
+        aspect-ratio: auto !important;
+        border-radius: 0 !important;
+        padding-bottom: calc(10px + env(safe-area-inset-bottom)) !important;
     }
 
     .console-body-controls {
-        margin-top: 8px !important;
-        flex: 0 0 clamp(230px, 36svh, 315px) !important;
-        min-height: 230px;
+        margin-top: 6px !important;
+        flex: 0 0 min(245px, 34vh) !important;
+        min-height: 210px;
         padding: 0 10px;
     }
 
     .dpad-housing {
-        width: clamp(116px, 30vw, 136px) !important;
-        height: clamp(116px, 30vw, 136px) !important;
+        width: clamp(108px, 28vw, 128px) !important;
+        height: clamp(108px, 28vw, 128px) !important;
         top: 38% !important;
     }
 
@@ -507,8 +513,8 @@ body {
     }
 
     .dpad-center-pivot {
-        width: clamp(46px, 13vw, 56px) !important;
-        height: clamp(46px, 13vw, 56px) !important;
+        width: clamp(42px, 12vw, 52px) !important;
+        height: clamp(42px, 12vw, 52px) !important;
     }
 
     .action-housing {
@@ -516,11 +522,16 @@ body {
     }
 
     .action-btn {
-        width: clamp(48px, 13vw, 56px) !important;
-        height: clamp(48px, 13vw, 56px) !important;
+        width: clamp(44px, 12vw, 52px) !important;
+        height: clamp(44px, 12vw, 52px) !important;
+    }
+
+    .action-pad-recess {
+        gap: 16px !important;
+        padding: 8px 10px !important;
     }
 
     .system-buttons {
-        bottom: calc(10px + env(safe-area-inset-bottom)) !important;
+        bottom: calc(6px + env(safe-area-inset-bottom)) !important;
     }
 }
