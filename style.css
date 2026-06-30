@@ -30,7 +30,8 @@ body {
 
     width: 100%;
     max-width: 440px;
-    height: min(86vh, 680px);
+    height: auto;
+    max-height: min(92vh, 720px);
     aspect-ratio: auto;
 
     border-radius: 12px 12px 70px 12px;
@@ -128,7 +129,7 @@ body {
 /* 5. Khu vực nút bấm */
 .console-body-controls {
     width: 100%;
-    flex: 0 0 250px;
+    flex: 0 0 clamp(185px, 32vh, 245px);
     position: relative;
     margin-top: 4px;
     padding: 0 15px;
@@ -380,7 +381,8 @@ body {
 @media screen and (max-width: 480px) {
     .retro-console-wrapper {
         width: 100vw !important;
-        height: 100dvh !important;
+        height: auto !important;
+        min-height: 0 !important;
         max-height: none !important;
         aspect-ratio: auto !important;
         border-radius: 0px !important;
@@ -397,7 +399,7 @@ body {
 
     .console-body-controls {
         margin-top: 6px;
-        flex: 1;
+        flex: 0 0 clamp(170px, 28svh, 225px);
         display: flex;
         flex-direction: column;
         padding: 0 10px;
@@ -496,8 +498,8 @@ body {
     .retro-console-wrapper {
         width: 100vw !important;
         max-width: none !important;
-        height: var(--app-height, 100vh) !important;
-        max-height: var(--app-height, 100vh) !important;
+        height: auto !important;
+        max-height: min(var(--app-height, 100vh), 100svh) !important;
         aspect-ratio: auto !important;
         border-radius: 0 !important;
         padding-bottom: calc(10px + env(safe-area-inset-bottom)) !important;
@@ -505,8 +507,8 @@ body {
 
     .console-body-controls {
         margin-top: 6px !important;
-        flex: 0 0 min(205px, 30vh) !important;
-        min-height: 175px;
+        flex: 0 0 clamp(165px, 28svh, 215px) !important;
+        min-height: 0;
         padding: 0 10px;
     }
 
