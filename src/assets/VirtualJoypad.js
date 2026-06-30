@@ -39,7 +39,7 @@ export function initVirtualJoypad() {
         if (!btn) return;
 
         btn.addEventListener('pointerdown', (e) => {
-            e.preventDefault();
+            e.preventDefault();    
             joypad[keyName] = true;
             btn.classList.add('is-pressed');
         });

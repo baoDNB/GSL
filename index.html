@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -32,9 +32,10 @@
         h1 {
             text-align: center;
             color: #9a4d18;
-            margin-bottom: 5px;
+            margin: 0 0 5px;
             text-transform: uppercase;
-            font-size: 28px;
+            font-size: 24px;
+            line-height: 1.1;
         }
 
         .hint {
@@ -56,13 +57,488 @@
             padding-top: 0;
         }
 
+        .intro-hero {
+            display: grid;
+            grid-template-columns: minmax(0, 0.95fr) minmax(280px, 1.05fr);
+            gap: 28px;
+            align-items: center;
+            padding: 16px 0 8px;
+        }
+
+        .intro-visual {
+            display: block;
+        }
+
+        .intro-main-shot img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .intro-main-shot {
+            overflow: hidden;
+            border: 1px solid #ead6b6;
+            border-radius: 10px;
+            background: #f2e4c9;
+            aspect-ratio: 16 / 10;
+            box-shadow: 0 10px 22px rgba(94, 63, 31, 0.12);
+        }
+
+        .intro-kicker {
+            margin: 0 0 7px;
+            color: #b56a2a;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .intro-title {
+            margin: 0;
+            color: #302516;
+            font-size: 28px;
+            font-weight: 900;
+            line-height: 1.06;
+        }
+
+        .intro-rating {
+            margin: 9px 0 0;
+            color: #bd7b08;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .intro-text {
+            margin: 11px 0 0;
+            color: #5f4b36;
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        .intro-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .intro-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 0 20px;
+            border: 0;
+            border-radius: 6px;
+            background: #c26d19;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 900;
+            font-family: inherit;
+            text-decoration: none;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .intro-action.secondary {
+            border: 1px solid #d5bd8f;
+            background: #fffdf8;
+            color: #7a4b1d;
+        }
+
+        .intro-storefront {
+            overflow: visible;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+        }
+
+        .intro-feature-section {
+            margin-top: 28px;
+        }
+
+        .intro-feature-heading {
+            margin: 0;
+            color: #c66a08;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .intro-feature-subtitle {
+            margin: 7px auto 0;
+            max-width: 640px;
+            color: #6f5942;
+            font-size: 13px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .intro-feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .intro-feature-card {
+            overflow: hidden;
+            border: 1px solid #e0cfb3;
+            border-radius: 8px;
+            background: #fffdf8;
+            box-shadow: 0 5px 12px rgba(70, 44, 18, 0.06);
+        }
+
+        .intro-feature-card img {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 8.5;
+            object-fit: cover;
+            background: #ead9bd;
+        }
+
+        .intro-feature-copy {
+            padding: 13px 15px 15px;
+        }
+
+        .intro-feature-copy h3 {
+            margin: 0;
+            color: #23180d;
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .intro-feature-copy p {
+            margin: 7px 0 0;
+            color: #654d36;
+            font-size: 12px;
+            line-height: 1.55;
+        }
+
+        .intro-how-section {
+            margin: 34px -34px 0;
+            padding: 28px 34px 2px;
+            border-top: 1px solid #ead9b9;
+            background: #fffdf8;
+        }
+
+        .intro-how-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            max-width: 690px;
+            margin: 20px auto 0;
+        }
+
+        .intro-how-step {
+            text-align: center;
+        }
+
+        .intro-how-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            margin-bottom: 9px;
+            border-radius: 999px;
+            background: #d87300;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .intro-how-image {
+            display: block;
+            width: 100%;
+            aspect-ratio: 1 / 0.82;
+            object-fit: contain;
+            border: 1px solid #e0cfb3;
+            border-radius: 8px;
+            background: #fff8ea;
+            box-shadow: 0 6px 14px rgba(70, 44, 18, 0.06);
+        }
+
+        .intro-how-step:first-child .intro-how-image {
+            border-radius: 8px;
+        }
+
+        .intro-how-step:last-child .intro-how-image {
+            border-radius: 8px;
+        }
+
+        .intro-how-title {
+            margin: 12px 0 0;
+            color: #24180d;
+            font-size: 14px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .intro-how-text {
+            margin: 6px auto 0;
+            max-width: 190px;
+            color: #6b5039;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
         .section-title {
-            margin: 0 0 14px;
+            margin: 0 0 10px;
             color: #5b3b24;
             font-size: 15px;
             font-weight: 900;
             letter-spacing: 0;
+            text-transform: none;
+        }
+
+        .intro-section > .section-title {
+            color: #302516;
+            font-size: 24px;
+            line-height: 1.15;
+        }
+
+        .setup-workbench {
+            margin-top: 26px;
+            padding-top: 22px;
+            border-top: 1px solid #ead9b9;
+        }
+
+        .setup-workbench-header {
+            margin-bottom: 14px;
+        }
+
+        .setup-workbench-title {
+            margin: 0;
+            color: #302516;
+            font-size: 24px;
+            font-weight: 900;
+        }
+
+        .setup-workbench-note {
+            margin: 5px 0 0;
+            color: #7c6a55;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .setup-progress {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+
+        .setup-progress-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 42px;
+            padding: 8px 12px;
+            border: 1px solid #eadcc4;
+            border-radius: 8px;
+            background: #fbf7ee;
+            color: #7c6a55;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .setup-progress-dot {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            width: 22px;
+            height: 22px;
+            border-radius: 999px;
+            background: #efe5d3;
+            color: #6b4c0a;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .setup-progress-step.active {
+            border-color: #d39348;
+            background: #fff3d9;
+            color: #3e3021;
+            box-shadow: none;
+        }
+
+        .setup-progress-step.active .setup-progress-dot {
+            background: #f4c21b;
+            color: #402b05;
+        }
+
+        .setup-progress-step.complete {
+            border-color: #9ab870;
+            background: #f5faef;
+            color: #476225;
+        }
+
+        .setup-progress-step.complete .setup-progress-dot {
+            background: #8eb85f;
+            color: #ffffff;
+        }
+
+        .setup-progress-step.locked {
+            opacity: 0.56;
+        }
+
+        .setup-card {
+            margin-top: 0;
+            padding: 20px 22px;
+            border: 1px solid #eadcc4;
+            border-radius: 10px;
+            background: #fffdf8;
+            box-shadow: none;
+        }
+
+        .setup-card.is-hidden {
+            display: none;
+        }
+
+        .setup-card + .setup-card {
+            margin-top: 18px;
+        }
+
+        .setup-card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .setup-step {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 auto;
+            min-height: 22px;
+            padding: 0 8px;
+            border-radius: 999px;
+            background: #f6ecd9;
+            color: #7a4b1d;
+            font-size: 11px;
+            font-weight: 900;
             text-transform: uppercase;
+        }
+
+        .setup-card .section-title {
+            margin: 0;
+        }
+
+        .setup-card-note {
+            margin: 0 0 18px;
+            color: #7c6a55;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .setup-error {
+            display: none;
+            margin: 0 0 18px;
+            padding: 11px 13px;
+            border: 1px solid #e7b6a5;
+            border-radius: 8px;
+            background: #fff7f3;
+            color: #97402a;
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .setup-error.is-visible {
+            display: block;
+        }
+
+        .field-error {
+            border-color: #d76b55 !important;
+            background: #fffaf7 !important;
+            box-shadow: 0 0 0 2px rgba(215, 107, 85, 0.12) !important;
+        }
+
+        .game-details-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .game-detail-field.full {
+            grid-column: auto;
+        }
+
+        .game-detail-field label {
+            text-transform: none;
+            color: #4f3b28;
+            letter-spacing: 0;
+        }
+
+        .game-detail-field input {
+            min-height: 54px;
+            font-size: 16px;
+        }
+
+        .field-counter {
+            margin-top: 5px;
+            color: #7c6a55;
+            font-size: 12px;
+            text-align: right;
+        }
+
+        .field-message {
+            display: none;
+            margin-top: 5px;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: #b44732;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .field-message.is-visible {
+            display: block;
+        }
+
+        .setup-card .character-customizer {
+            margin: 14px 0 0;
+        }
+
+        .setup-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .setup-action {
+            min-height: 40px;
+            padding: 0 18px;
+            border: 1px solid #d5bd8f;
+            border-radius: 6px;
+            background: #fffaf1;
+            color: #7a4b1d;
+            font-size: 13px;
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .setup-action.primary {
+            border-color: #b56a2a;
+            background: #c26d19;
+            color: #ffffff;
+        }
+
+        .dialogue-field + .dialogue-field {
+            margin-top: 16px;
+        }
+
+        .hidden-dialogues {
+            display: none;
         }
 
         .dialogue-section textarea {
@@ -80,23 +556,32 @@
             box-shadow: 0 0 0 3px rgba(181, 106, 42, 0.16);
             outline: none;
         }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #9b8770;
+            font-family: inherit;
+            opacity: 0.72;
+        }
+
         label {
             display: block;
-            margin: 15px 0 5px;
-            font-size: 14px;
-            font-weight: bold;
-            color: #9a4d18;
+            margin: 0 0 7px;
+            font-size: 13px;
+            font-weight: 900;
+            color: #5a402a;
         }
 
         input[type="text"] {
             width: 100%;
-            padding: 12px;
+            padding: 12px 14px;
             background: #fffdf8;
-            border: 1px solid #dec99f;
+            border: 1px solid #e3d0ad;
             color: #3e3021;
             border-radius: 8px;
             box-sizing: border-box;
             font-size: 14px;
+            transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
         }
 
         textarea {
@@ -143,17 +628,18 @@
         }
 
         #btn-play {
-            width: 100%;
-            padding: 16px;
+            min-width: 180px;
+            min-height: 40px;
+            padding: 0 22px;
             background: linear-gradient(135deg, #b56a2a, #d77a00);
             border: none;
             color: white;
-            font-size: 18px;
+            font-size: 13px;
             font-weight: bold;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             transition: background 0.2s;
-            margin-top: 25px;
+            margin-top: 0;
             text-transform: uppercase;
         }
         .character-customizer {
@@ -352,6 +838,77 @@
                 border-radius: 12px;
             }
 
+            .intro-actions {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .intro-hero {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 12px 0 6px;
+            }
+
+            .intro-title {
+                font-size: 25px;
+            }
+
+            .intro-feature-grid,
+            .intro-how-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .intro-how-section {
+                margin-inline: -14px;
+                padding-inline: 14px;
+            }
+
+            .intro-how-grid {
+                gap: 26px;
+                max-width: none;
+            }
+
+            .intro-how-step:first-child .intro-how-image,
+            .intro-how-step:last-child .intro-how-image,
+            .intro-how-image {
+                border-radius: 8px;
+            }
+
+            .setup-workbench-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .setup-workbench-note {
+                max-width: none;
+                text-align: left;
+            }
+
+            .setup-progress {
+                grid-template-columns: 1fr;
+            }
+
+            .setup-card {
+                padding: 16px;
+            }
+
+            .game-details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .game-detail-field.full {
+                grid-column: auto;
+            }
+
+            .setup-actions {
+                flex-direction: column-reverse;
+            }
+
+            .setup-action,
+            #btn-play {
+                width: 100%;
+            }
+
             .character-tabs {
                 grid-template-columns: repeat(5, minmax(0, 1fr));
             }
@@ -397,6 +954,7 @@
                 height: 52px;
             }
         }
+
         #btn-play:hover {
             background: linear-gradient(135deg, #9a4d18, #c86c00);
         }
@@ -407,82 +965,229 @@
     <div class="container">
         <div class="setup-box">
             <h1>GSL Game Setup</h1>
-            <div class="hint">Tùy chỉnh nhân vật, ảnh puzzle và lời thoại trước khi vào game.</div>
+            <div class="hint">Customize the character, puzzle image, and dialogue before entering the game.</div>
 
-            <section class="setup-section">
-                <div class="section-title">Puzzle Image</div>
-                <label>Image File</label>
-            <input type="file" id="custom-puzzle-file" accept="image/*">
-            <div class="puzzle-file-note" id="custom-puzzle-note">Chọn ảnh trong máy. Nên dùng ảnh dưới 3MB.</div>
-            <img class="puzzle-file-preview" id="custom-puzzle-preview" alt="Puzzle preview">
-            </section>
+            <section class="setup-section intro-section">
+                <div class="section-title">Introduction</div>
+                <div class="intro-storefront">
+                    <div class="intro-hero">
+                        <div class="intro-visual">
+                            <div class="intro-main-shot">
+                                <img src="assets/house.png" alt="GSL house scene">
+                            </div>
+                        </div>
 
-            <section class="setup-section">
-                <div class="section-title">Character</div>
-                <div class="character-customizer">
-                    <div class="character-tabs" id="character-tabs"></div>
-                    <div class="character-preview">
-                    <div class="character-preview-inner">
-                        <canvas id="character-preview-canvas" width="16" height="32" title="Click to rotate"></canvas>
-                        <div class="character-rotate-hint">Click to rotate</div>
+                        <div class="intro-copy">
+                            <p class="intro-kicker">Custom Father's Day adventure</p>
+                            <h2 class="intro-title">Legendary Dad Adventure</h2>
+                            <div class="intro-rating">3 keys - 3 mini games - 1 hidden room</div>
+                            <p class="intro-text">
+                                Build a small story game for Dad. Customize the character, puzzle image,
+                                and key dialogue before sending him into the house to solve clues.
+                            </p>
+                            <div class="intro-actions">
+                                <button type="button" class="intro-action" id="btn-play-now">Play Now</button>
+                                <a class="intro-action secondary" href="#setup-workbench">Customize Setup</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                    <div class="character-options" id="character-options"></div>
+
+                <div class="intro-feature-section">
+                    <h2 class="intro-feature-heading">What's Inside the Game</h2>
+                    <p class="intro-feature-subtitle">Explore rooms, solve puzzles, and discover personalized surprises.</p>
+                    <div class="intro-feature-grid">
+                        <article class="intro-feature-card">
+                            <img src="assets/livingroom.png" alt="Living room gameplay">
+                            <div class="intro-feature-copy">
+                                <h3>Explore Every Room</h3>
+                                <p>Inspect rooms, follow clues, and find hidden messages.</p>
+                            </div>
+                        </article>
+                        <article class="intro-feature-card">
+                            <img src="assets/lavagame.png" alt="Mini game challenge">
+                            <div class="intro-feature-copy">
+                                <h3>Solve Mini Games</h3>
+                                <p>Clear three challenges to unlock the final room.</p>
+                            </div>
+                        </article>
+                        <article class="intro-feature-card">
+                            <img src="assets/kitchen.png" alt="Personalized kitchen scene">
+                            <div class="intro-feature-copy">
+                                <h3>Personalized for Him</h3>
+                                <p>Names, dialogue, and your puzzle image make it his.</p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="intro-how-section">
+                    <h2 class="intro-feature-heading">How It Works</h2>
+                    <p class="intro-feature-subtitle">Three simple steps. One playable gift.</p>
+                    <div class="intro-how-grid">
+                        <article class="intro-how-step">
+                            <span class="intro-how-number">1</span>
+                            <img class="intro-how-image" src="assets/intro-step-customize.png" alt="Customize the game">
+                            <h3 class="intro-how-title">Customize</h3>
+                            <p class="intro-how-text">Set the names, look, image, and key dialogue.</p>
+                        </article>
+                        <article class="intro-how-step">
+                            <span class="intro-how-number">2</span>
+                            <img class="intro-how-image" src="assets/intro-step-play.png" alt="Play the game">
+                            <h3 class="intro-how-title">Play</h3>
+                            <p class="intro-how-text">Enter the house, solve puzzles, and collect keys.</p>
+                        </article>
+                        <article class="intro-how-step">
+                            <span class="intro-how-number">3</span>
+                            <img class="intro-how-image" src="assets/intro-step-keep.png" alt="Keep the final memory">
+                            <h3 class="intro-how-title">Keep</h3>
+                            <p class="intro-how-text">End with a personal final room surprise.</p>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
+            <div class="setup-workbench" id="setup-workbench">
+                <div class="setup-workbench-header">
+                    <h2 class="setup-workbench-title">Personalize Your Game</h2>
+                    <p class="setup-workbench-note">Finish each step to unlock the next one.</p>
+                </div>
+
+                <div class="setup-progress" id="setup-progress">
+                    <div class="setup-progress-step active" data-progress-step="1">
+                        <span class="setup-progress-dot">1</span>
+                        <span>Details</span>
+                    </div>
+                    <div class="setup-progress-step" data-progress-step="2">
+                        <span class="setup-progress-dot">2</span>
+                        <span>Puzzle Image</span>
+                    </div>
+                    <div class="setup-progress-step" data-progress-step="3">
+                        <span class="setup-progress-dot">3</span>
+                        <span>Story</span>
+                    </div>
+                </div>
+
+                <section class="setup-section setup-card" data-setup-step="1">
+                    <div class="setup-card-header">
+                        <span class="setup-step">Step 1</span>
+                        <div class="section-title">Game Details</div>
+                    </div>
+                    <p class="setup-card-note">Rename the game and the main speakers, then customize Dad's look.</p>
+                    <div class="setup-error" data-step-error="1"></div>
+                    <div class="game-details-grid">
+                        <div class="game-detail-field full">
+                            <label>Game Title</label>
+                            <input type="text" id="game-title-input" placeholder="e.g. Legendary Dad" maxlength="40" data-maxlength="40">
+                            <div class="field-counter" data-counter-for="game-title-input">0/40</div>
+                            <div class="field-message" data-field-message="game-title-input"></div>
+                        </div>
+                        <div class="game-detail-field">
+                            <label>Subtitle</label>
+                            <input type="text" id="game-subtitle-input" placeholder="e.g. The Ultimate Challenge" maxlength="40" data-maxlength="40">
+                            <div class="field-counter" data-counter-for="game-subtitle-input">0/40</div>
+                            <div class="field-message" data-field-message="game-subtitle-input"></div>
+                        </div>
+                        <div class="game-detail-field">
+                            <label>Player Name (replaces "You")</label>
+                            <input type="text" id="player-name-input" placeholder="e.g. Dad" maxlength="24" data-maxlength="24">
+                            <div class="field-counter" data-counter-for="player-name-input">0/24</div>
+                            <div class="field-message" data-field-message="player-name-input"></div>
+                        </div>
+                        <div class="game-detail-field">
+                            <label>Child Name (replaces "Kid")</label>
+                            <input type="text" id="kid-name-input" placeholder="e.g. Kid" maxlength="24" data-maxlength="24">
+                            <div class="field-counter" data-counter-for="kid-name-input">0/24</div>
+                            <div class="field-message" data-field-message="kid-name-input"></div>
+                        </div>
+                        <div class="game-detail-field">
+                            <label>Guide Name (replaces "Admin")</label>
+                            <input type="text" id="admin-name-input" placeholder="e.g. Admin" maxlength="24" data-maxlength="24">
+                            <div class="field-counter" data-counter-for="admin-name-input">0/24</div>
+                            <div class="field-message" data-field-message="admin-name-input"></div>
+                        </div>
+                    </div>
+                    <div class="character-customizer">
+                        <div class="character-tabs" id="character-tabs"></div>
+                        <div class="character-preview">
+                            <div class="character-preview-inner">
+                                <canvas id="character-preview-canvas" width="16" height="32" title="Click to rotate"></canvas>
+                                <div class="character-rotate-hint">Click to rotate</div>
+                            </div>
+                        </div>
+                        <div class="character-options" id="character-options"></div>
+                    </div>
+                    <div class="setup-actions">
+                        <button type="button" class="setup-action primary" data-next-step="2">Complete Step 1</button>
+                    </div>
+                </section>
+
+                <section class="setup-section setup-card is-hidden" data-setup-step="2">
+                    <div class="setup-card-header">
+                        <span class="setup-step">Step 2</span>
+                        <div class="section-title">Puzzle Image</div>
+                    </div>
+                    <p class="setup-card-note">Choose the picture that will become the sliding puzzle.</p>
+                    <div class="setup-error" data-step-error="2"></div>
+                    <label>Image File</label>
+                    <input type="file" id="custom-puzzle-file" accept="image/*">
+                    <div class="puzzle-file-note" id="custom-puzzle-note">Choose an image from your device. Images under 3MB work best.</div>
+                    <img class="puzzle-file-preview" id="custom-puzzle-preview" alt="Puzzle preview">
+                    <div class="setup-actions">
+                        <button type="button" class="setup-action" data-prev-step="1">Back</button>
+                        <button type="button" class="setup-action primary" data-next-step="3">Complete Step 2</button>
+                    </div>
+                </section>
+
+                <section class="setup-section setup-card dialogue-section is-hidden" data-setup-step="3">
+                    <div class="setup-card-header">
+                        <span class="setup-step">Step 3</span>
+                        <div class="section-title">Dialogues</div>
+                    </div>
+                    <p class="setup-card-note">Only key story moments are editable here. Use | between lines.</p>
+                    <div class="setup-error" data-step-error="3"></div>
+                    <div class="dialogue-list">
+                        <div class="dialogue-field">
+                            <label>Opening Scene:</label>
+                            <textarea id="script-introHouse">Kid: Looks like mom is coming. Let's go hide!|You: I swear I just saw the kid!|You: Hmm, it's locked, let me go through the back.</textarea>
+                        </div>
+
+                        <div class="dialogue-field">
+                            <label>Main Clue:</label>
+                            <textarea id="script-livingRoomTable">You: Someone left a note on the table. It says:|You: We're playing hide and seek. You have to come find us!</textarea>
+                        </div>
+
+                        <div class="dialogue-field">
+                            <label>Puzzle Intro:</label>
+                            <textarea id="script-puzzleIntro">You: Huh, an old, ancient book left in the middle of the table? And it's glowing...|Admin: The magic map has been activated! Decipher the number matrix to reveal the secret passage!|You: Looks like a 3x3 matrix sliding puzzle. Let's give it a shot!</textarea>
+                        </div>
+
+                        <div class="dialogue-field">
+                            <label>Victory Dialogue:</label>
+                            <textarea id="script-victoryDialogue">You: All three keys fit perfectly into the lock!|You: The secret door is slowly opening... I'm finally free!</textarea>
+                        </div>
+
+                        <div class="dialogue-field">
+                            <label>Final Room:</label>
+                            <textarea id="script-finalRoom">You: So this is the hidden room...|Kid: You found us! We knew you could solve every clue.|You: Three keys, three trials, and one very strange house.|Kid: The game is over now. Thank you for playing with us.|You: Let's go home.</textarea>
+                        </div>
+                    </div>
+                    <div class="hidden-dialogues" aria-hidden="true">
+                        <textarea id="script-foundKey">Kid: Congratulations! You have successfully deciphered the ancient matrix.|You: Oh! A [Mystery Key] just fell out of the book! Let's go to the next room.</textarea>
+                        <textarea id="script-caConLockedDoor">Kid: You need three keys to enter this room! Go explore the home again and be careful....</textarea>
+                        <textarea id="script-need_2_keys">Kid: The door still won't budge. You're missing two more keys.</textarea>
+                        <textarea id="script-need_1_keys">Kid: Almost there! We just need one more key.</textarea>
+                        <textarea id="script-openFridge">You: Hmm it's a calendar.|You: Father's Day</textarea>
+                        <textarea id="script-inspectTable">You: Ooh, someone left me my favorite: Flower! How awesome!</textarea>
+                        <textarea id="script-childTent">You: Looks cozy, I don't see anyone in there</textarea>
+                        <textarea id="script-roomMaster">You: It's the master bedroom but I don't see anyone in here.</textarea>
+                    </div>
+                    <div class="setup-actions">
+                        <button type="button" class="setup-action" data-prev-step="2">Back</button>
+                        <button id="btn-play">Save & Continue</button>
+                    </div>
+                </section>
             </div>
-
-            </section>
-
-            <section class="setup-section dialogue-section">
-                <div class="section-title">Dialogues</div>
-                <label>Puzzle Intro:</label>
-            <textarea
-                id="script-puzzleIntro">You: Huh, an old, ancient book left in the middle of the table? And it's glowing...|Admin: The magic map has been activated! Decipher the number matrix to reveal the secret passage!|You: Looks like a 3x3 matrix sliding puzzle. Let's give it a shot!</textarea>
-
-            <label>Found Key:</label>
-            <textarea
-                id="script-foundKey">Kid: Congratulations! You have successfully deciphered the ancient matrix.|You: Oh! A [Mystery Key] just fell out of the book! Let's go to the next room.</textarea>
-
-            <label>Locked Door:</label>
-            <textarea
-                id="script-caConLockedDoor">Kid: You need three keys to enter this room! Go explore the home again and be careful....</textarea>
-
-            <label>Need 2 Keys:</label>
-            <textarea id="script-need_2_keys">Kid: The door still won't budge. You're missing two more keys.</textarea>
-
-            <label>Need 1 Key:</label>
-            <textarea id="script-need_1_keys">Kid: Almost there! We just need one more key.</textarea>
-
-            <label>Open Fridge:</label>
-            <textarea id="script-openFridge">You: Hmm it's a calendar.|You: Father's Day</textarea>
-
-            <label>Inspect Table:</label>
-            <textarea id="script-inspectTable">You: Ooh, someone left me my favorite: Flower! How awesome!</textarea>
-
-            <label>Living Room Table:</label>
-            <textarea
-                id="script-livingRoomTable">You: Someone left a note on the table. It says:|You: We're playing hide and seek. You have to come find us!</textarea>
-
-            <label>Child Tent:</label>
-            <textarea id="script-childTent">You: Looks cozy, I don't see anyone in there</textarea>
-
-            <label>Room Master:</label>
-            <textarea id="script-roomMaster">You: It's the master bedroom but I don't see anyone in here.</textarea>
-
-            <label>Intro House:</label>
-            <textarea
-                id="script-introHouse">Kid: Looks like mom is coming. Let's go hide!|You: I swear I just saw the kid!|You: Hmm, it's locked, let me go through the back.</textarea>
-
-            <label>Victory Dialogue:</label>
-            <textarea
-                id="script-victoryDialogue">You: All three keys fit perfectly into the lock!|You: The secret door is slowly opening... I'm finally free!</textarea>
-
-            <label>Final Room:</label>
-            <textarea
-                id="script-finalRoom">You: So this is the hidden room...|Kid: You found us! We knew you could solve every clue.|You: Three keys, three trials, and one very strange house.|Kid: The game is over now. Thank you for playing with us.|You: Let's go home.</textarea>
-
-            </section>
-
-            <button id="btn-play">Save & Continue</button>
         </div>
     </div>
 
@@ -566,6 +1271,14 @@
             outfit: '',
             eyes: '',
             accessory: ''
+        };
+
+        const defaultGameMeta = {
+            gameTitle: 'Legendary Dad: The Ultimate Challenge',
+            gameSubtitle: 'The Ultimate Challenge',
+            playerName: 'Dad',
+            kidName: 'Kid',
+            adminName: 'Admin'
         };
 
         const hairstyleTypes = ['Balding', 'Long', 'Short', 'Tuft', 'Unkept'];
@@ -947,14 +1660,228 @@
         }
 
         initCharacterControls();
+
+        function getSavedGameMeta() {
+            try {
+                return { ...defaultGameMeta, ...(JSON.parse(localStorage.getItem('external_game_meta')) || {}) };
+            } catch (e) {
+                return { ...defaultGameMeta };
+            }
+        }
+
+        function getGameMetaFromForm() {
+            const readValue = (id, fallback) => {
+                const value = document.getElementById(id)?.value.trim();
+                return value || fallback;
+            };
+
+            return {
+                gameTitle: readValue('game-title-input', defaultGameMeta.gameTitle),
+                gameSubtitle: readValue('game-subtitle-input', defaultGameMeta.gameSubtitle),
+                playerName: readValue('player-name-input', defaultGameMeta.playerName),
+                kidName: readValue('kid-name-input', defaultGameMeta.kidName),
+                adminName: readValue('admin-name-input', defaultGameMeta.adminName)
+            };
+        }
+
+        function initGameMetaControls() {
+            const fields = {
+                'game-title-input': '',
+                'game-subtitle-input': '',
+                'player-name-input': '',
+                'kid-name-input': '',
+                'admin-name-input': ''
+            };
+
+            Object.entries(fields).forEach(([id, value]) => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.value = value;
+                    updateFieldCounter(input);
+                }
+            });
+        }
+
+        function mapSpeakerName(speaker, meta) {
+            const key = speaker.trim().toLowerCase();
+            const speakerMap = {
+                you: meta.playerName,
+                dad: meta.playerName,
+                player: meta.playerName,
+                kid: meta.kidName,
+                child: meta.kidName,
+                admin: meta.adminName,
+                guide: meta.adminName
+            };
+            return speakerMap[key] || speaker.trim();
+        }
+
+        initGameMetaControls();
+
+        let activeSetupStep = 1;
+        const completedSetupSteps = new Set();
+
+        function setStepError(step, message = '') {
+            const error = document.querySelector(`[data-step-error="${step}"]`);
+            if (!error) return;
+            error.textContent = message;
+            error.classList.toggle('is-visible', Boolean(message));
+        }
+
+        function setFieldMessage(id, message = '') {
+            const messageEl = document.querySelector(`[data-field-message="${id}"]`);
+            if (!messageEl) return;
+            messageEl.textContent = message;
+            messageEl.classList.toggle('is-visible', Boolean(message));
+        }
+
+        function updateFieldCounter(input) {
+            const maxLength = Number(input.dataset.maxlength || input.maxLength || 0);
+            const counter = document.querySelector(`[data-counter-for="${input.id}"]`);
+            if (counter && maxLength > 0) {
+                counter.textContent = `${input.value.length}/${maxLength}`;
+            }
+        }
+
+        function isBasicEnglish(value) {
+            return /^[\x20-\x7E]*$/.test(value);
+        }
+
+        function clearFieldErrors(step) {
+            document.querySelectorAll(`[data-setup-step="${step}"] .field-error`).forEach(field => {
+                field.classList.remove('field-error');
+                setFieldMessage(field.id);
+            });
+        }
+
+        function markFieldError(id, message = '') {
+            document.getElementById(id)?.classList.add('field-error');
+            setFieldMessage(id, message);
+        }
+
+        function validateSetupStep(step) {
+            clearFieldErrors(step);
+            setStepError(step);
+
+            if (step === 1) {
+                const requiredFields = [
+                    ['game-title-input', 'Game Title'],
+                    ['game-subtitle-input', 'Subtitle'],
+                    ['player-name-input', 'Player Name'],
+                    ['kid-name-input', 'Child Name'],
+                    ['admin-name-input', 'Guide Name']
+                ];
+                const missing = requiredFields.filter(([id]) => !document.getElementById(id)?.value.trim());
+                if (missing.length) {
+                    missing.forEach(([id]) => markFieldError(id, 'Required'));
+                    setStepError(step, `Complete all required fields: ${missing.map(([, label]) => label).join(', ')}.`);
+                    return false;
+                }
+
+                const asciiOnlyFields = [
+                    ['game-title-input', 'Game Title'],
+                    ['game-subtitle-input', 'Subtitle']
+                ];
+                const invalid = asciiOnlyFields.filter(([id]) => !isBasicEnglish(document.getElementById(id)?.value || ''));
+                if (invalid.length) {
+                    invalid.forEach(([id, label]) => {
+                        markFieldError(id, `${label} can only use basic English letters, numbers, and punctuation. Character names can use Vietnamese.`);
+                    });
+                    setStepError(step, 'Please remove unsupported characters from the title fields before continuing.');
+                    return false;
+                }
+            }
+
+            if (step === 2) {
+                const fileInput = document.getElementById('custom-puzzle-file');
+                const hasSelectedFile = Boolean(fileInput?.files && fileInput.files[0]);
+                const hasSavedPuzzle = Boolean(localStorage.getItem('external_puzzle_url'));
+                if (!hasSelectedFile && !hasSavedPuzzle) {
+                    markFieldError('custom-puzzle-file');
+                    setStepError(step, 'Please upload a puzzle image before continuing.');
+                    return false;
+                }
+            }
+
+            if (step === 3) {
+                const requiredDialogues = [
+                    ['script-introHouse', 'Opening Scene'],
+                    ['script-livingRoomTable', 'Main Clue'],
+                    ['script-puzzleIntro', 'Puzzle Intro'],
+                    ['script-victoryDialogue', 'Victory Dialogue'],
+                    ['script-finalRoom', 'Final Room']
+                ];
+                const missing = requiredDialogues.filter(([id]) => !document.getElementById(id)?.value.trim());
+                if (missing.length) {
+                    missing.forEach(([id]) => markFieldError(id, 'Required'));
+                    setStepError(step, `Complete all required fields: ${missing.map(([, label]) => label).join(', ')}.`);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function renderSetupStep() {
+            document.querySelectorAll('[data-setup-step]').forEach(section => {
+                const step = Number(section.dataset.setupStep);
+                section.classList.toggle('is-hidden', step !== activeSetupStep);
+            });
+
+            document.querySelectorAll('[data-progress-step]').forEach(item => {
+                const step = Number(item.dataset.progressStep);
+                const dot = item.querySelector('.setup-progress-dot');
+                item.classList.toggle('active', step === activeSetupStep);
+                item.classList.toggle('complete', completedSetupSteps.has(step));
+                item.classList.toggle('locked', step > activeSetupStep && !completedSetupSteps.has(step - 1));
+                if (dot) dot.textContent = completedSetupSteps.has(step) ? '✓' : String(step);
+            });
+        }
+
+        document.querySelectorAll('[data-next-step]').forEach(button => {
+            button.addEventListener('click', () => {
+                if (!validateSetupStep(activeSetupStep)) return;
+                completedSetupSteps.add(activeSetupStep);
+                activeSetupStep = Number(button.dataset.nextStep);
+                renderSetupStep();
+                document.querySelector('.setup-workbench')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        document.querySelectorAll('[data-prev-step]').forEach(button => {
+            button.addEventListener('click', () => {
+                activeSetupStep = Number(button.dataset.prevStep);
+                renderSetupStep();
+                document.querySelector('.setup-workbench')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        renderSetupStep();
+
+        document.querySelectorAll('.game-details-grid input, .game-details-grid textarea, .dialogue-list textarea, #custom-puzzle-file').forEach(field => {
+            field.addEventListener('input', () => {
+                field.classList.remove('field-error');
+                setFieldMessage(field.id);
+                if (field.matches('input[data-maxlength]')) updateFieldCounter(field);
+                setStepError(activeSetupStep);
+            });
+            field.addEventListener('change', () => {
+                field.classList.remove('field-error');
+                setFieldMessage(field.id);
+                if (field.matches('input[data-maxlength]')) updateFieldCounter(field);
+                setStepError(activeSetupStep);
+            });
+        });
+
         function parseTextToDialogue(elementId) {
             const rawText = document.getElementById(elementId).value;
+            const meta = getGameMetaFromForm();
             if (!rawText) return [];
             return rawText.split('|').map(line => {
                 const colonIndex = line.indexOf(':');
                 if (colonIndex !== -1) {
                     return {
-                        speaker: line.substring(0, colonIndex).trim(),
+                        speaker: mapSpeakerName(line.substring(0, colonIndex), meta),
                         text: line.substring(colonIndex + 1).trim()
                     };
                 }
@@ -973,18 +1900,18 @@
                 }
 
                 if (!file.type.startsWith('image/')) {
-                    reject(new Error('Vui lòng chọn đúng file ảnh.'));
+                    reject(new Error('Please choose a valid image file.'));
                     return;
                 }
 
                 if (file.size > 3 * 1024 * 1024) {
-                    reject(new Error('Ảnh quá lớn. Vui lòng chọn ảnh dưới 3MB.'));
+                    reject(new Error('This image is too large. Please choose an image under 3MB.'));
                     return;
                 }
 
                 const reader = new FileReader();
                 reader.onload = () => resolve(reader.result);
-                reader.onerror = () => reject(new Error('Không đọc được file ảnh này.'));
+                reader.onerror = () => reject(new Error('This image file could not be read.'));
                 reader.readAsDataURL(file);
             });
         }
@@ -998,11 +1925,11 @@
                 if (dataUrl) {
                     preview.src = dataUrl;
                     preview.style.display = 'block';
-                    note.textContent = 'Đã chọn ảnh. Ảnh này sẽ dùng làm các mảnh puzzle.';
+                    note.textContent = 'Image selected. This image will be used for the puzzle pieces.';
                 } else {
                     preview.removeAttribute('src');
                     preview.style.display = 'none';
-                    note.textContent = 'Chọn ảnh trong máy. Nên dùng ảnh dưới 3MB.';
+                    note.textContent = 'Choose an image from your device. Images under 3MB work best.';
                 }
             } catch (error) {
                 preview.removeAttribute('src');
@@ -1012,7 +1939,9 @@
             }
         });
 
-        document.getElementById('btn-play').addEventListener('click', async () => {
+        async function saveSetupAndLaunchGame(options = {}) {
+            if (options.validateFinalStep && !validateSetupStep(3)) return;
+
             const keys = [
                 'puzzleIntro', 'foundKey', 'caConLockedDoor', 'need_2_keys',
                 'need_1_keys', 'openFridge', 'inspectTable', 'livingRoomTable',
@@ -1025,26 +1954,30 @@
                 customDialogues[key] = parseTextToDialogue('script-' + key);
             });
 
-            // 1. Lưu kịch bản thoại đã sửa đổi vào LocalStorage
+            // 1. Save the edited dialogue script to LocalStorage.
+            localStorage.setItem('external_game_meta', JSON.stringify(getGameMetaFromForm()));
             localStorage.setItem('external_game_dialogues', JSON.stringify(customDialogues));
             localStorage.setItem('external_character_assets', JSON.stringify(getSelectedCharacter()));
 
-            // 2. XỬ LÝ LƯU ẢNH PUZZLE TỪ MÁY
+            // 2. Save the selected puzzle image from the user's device.
             try {
                 const puzzleImageData = await readPuzzleFileAsDataUrl();
                 if (puzzleImageData) {
                     localStorage.setItem('external_puzzle_url', puzzleImageData);
                 } else {
-                    localStorage.removeItem('external_puzzle_url'); // Xóa đi nếu để trống để dùng ảnh mặc định
+                    localStorage.removeItem('external_puzzle_url'); // Remove it when empty so the default image is used.
                 }
             } catch (error) {
                 document.getElementById('custom-puzzle-note').textContent = error.message;
                 return;
             }
 
-            // Chuyển hướng trình duyệt chạy thẳng vào file chạy game chính
+            // Redirect the browser to the main game page.
             window.location.href = 'game.html';
-        });
+        }
+
+        document.getElementById('btn-play-now').addEventListener('click', () => saveSetupAndLaunchGame());
+        document.getElementById('btn-play').addEventListener('click', () => saveSetupAndLaunchGame({ validateFinalStep: true }));
     </script>
 </body>
 

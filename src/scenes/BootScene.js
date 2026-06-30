@@ -295,6 +295,9 @@ export default class BootScene extends Phaser.Scene {
             repeat: 0
         });
 
+        if (typeof window !== 'undefined') {
+            window.dispatchEvent(new Event('gsl-game-ready'));
+        }
         this.scene.start('HouseScene');
     }
 }

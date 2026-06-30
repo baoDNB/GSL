@@ -6,7 +6,7 @@ export default class UIScene extends Phaser.Scene {
 
     create() {
         const { width, height } = this.cameras.main;
-        
+
         // 1. Dòng chữ số lượng
         this.keyUiText = this.add.text(25, 0, `${this.registry.get('keysFound') || 0}/3`, {
             fontSize: '20px', fill: '#fff', fontStyle: 'bold', stroke: '#000', strokeThickness: 4
@@ -22,7 +22,7 @@ export default class UIScene extends Phaser.Scene {
         // 3. Biểu tượng chìa khoá chính (cũng ép về 30x30 pixel)
         const keyIcon = this.add.image(0, 0, 'key_icon_bg')
             .setOrigin(0.5)
-            .setDisplaySize(70,70); // Ép kích thước bằng với bóng
+            .setDisplaySize(70, 70); // Ép kích thước bằng với bóng
 
         // 4. Gom vào Container và đặt ở góc trên bên phải màn hình
         // Mình đổi uiY thành height * 0.1 để UI nằm tít trên cao cho gọn

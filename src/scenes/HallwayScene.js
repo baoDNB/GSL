@@ -49,40 +49,20 @@ export default class HallwayScene extends Phaser.Scene {
         let keysFound = this.getEffectiveKeysFound();
 
         // Nếu đã từng mở UI chìa khóa ở lần thoại trước, khi quay lại cảnh này nó vẫn hiển thị ổn định
-        if (this.registry.get('talkedToFish') && this.canStartKeyQuest() && !this.scene.isActive('UIScene')) {
-            this.scene.launch('UIScene');
+        if (this.registry.get('talkedToFish') && this.canStartKeyQuest()) {
+            if (!this.scene.isActive('UIScene')) {
+                this.scene.launch('UIScene');
+            }
+            this.createKeyQuestArrows(sw, sh);
         }
 
         // Chuyển động mũi tên các phòng
         if (!hasVisitedMaster) {
-            this.arrowMaster = ArrowGraphic.createArrow(this, sw * 0.75, sh * 0.4);
-            this.tweens.add({
-                targets: this.arrowMaster,
-                y: this.arrowMaster.y - 10,
-                duration: 500,
-                yoyo: true,
-                repeat: -1
-            });
+            this.createMasterRoomArrow(sw, sh);
         }
         if (!hasVisitedChild) {
-            this.arrowChild = ArrowGraphic.createArrow(this, sw * 0.46, sh * 0.4);
-            this.tweens.add({
-                targets: this.arrowChild,
-                y: this.arrowChild.y - 10,
-                duration: 500,
-                yoyo: true,
-                repeat: -1
-            });
+            this.createChildRoomArrow(sw, sh);
         }
-
-        this.arrowLivingRoom = ArrowGraphic.createArrow(this, sw * 0.05, sh * 0.9);
-        this.tweens.add({
-            targets: this.arrowLivingRoom,
-            y: this.arrowLivingRoom.y - 10,
-            duration: 500,
-            yoyo: true,
-            repeat: -1
-        });
 
         if (hasVisitedMaster && hasVisitedChild && keysFound < 3) {
             this.exclamation = this.add.text(this.bookX, this.bookY, '!', {
@@ -272,6 +252,10 @@ export default class HallwayScene extends Phaser.Scene {
         if (canStartKeyQuest && !this.scene.isActive('UIScene')) {
             this.scene.launch('UIScene');
         }
+        if (canStartKeyQuest) {
+            const { width: sw, height: sh } = this.cameras.main;
+            this.createKeyQuestArrows(sw, sh);
+        }
 
         let keys = canStartKeyQuest ? this.getEffectiveKeysFound() : 0;
         let msg = (keys === 0) ? 'caConLockedDoor' : `need_${3 - keys}_keys`;
@@ -317,5 +301,50 @@ export default class HallwayScene extends Phaser.Scene {
 
     canStartKeyQuest() {
         return this.registry.get('visitedMaster') === true && this.registry.get('visitedChild') === true;
+    }
+
+    createKeyQuestArrows(sw, sh) {
+        this.createLivingRoomArrow(sw, sh);
+        this.createMasterRoomArrow(sw, sh);
+        this.createChildRoomArrow(sw, sh);
+    }
+
+    createMasterRoomArrow(sw, sh) {
+        if (this.arrowMaster && this.arrowMaster.active) return;
+
+        this.arrowMaster = ArrowGraphic.createArrow(this, sw * 0.75, sh * 0.4);
+        this.tweens.add({
+            targets: this.arrowMaster,
+            y: this.arrowMaster.y - 10,
+            duration: 500,
+            yoyo: true,
+            repeat: -1
+        });
+    }
+
+    createChildRoomArrow(sw, sh) {
+        if (this.arrowChild && this.arrowChild.active) return;
+
+        this.arrowChild = ArrowGraphic.createArrow(this, sw * 0.46, sh * 0.4);
+        this.tweens.add({
+            targets: this.arrowChild,
+            y: this.arrowChild.y - 10,
+            duration: 500,
+            yoyo: true,
+            repeat: -1
+        });
+    }
+
+    createLivingRoomArrow(sw, sh) {
+        if (this.arrowLivingRoom && this.arrowLivingRoom.active) return;
+
+        this.arrowLivingRoom = ArrowGraphic.createArrow(this, sw * 0.05, sh * 0.9);
+        this.tweens.add({
+            targets: this.arrowLivingRoom,
+            y: this.arrowLivingRoom.y - 10,
+            duration: 500,
+            yoyo: true,
+            repeat: -1
+        });
     }
 }

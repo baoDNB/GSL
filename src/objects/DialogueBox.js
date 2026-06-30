@@ -59,6 +59,28 @@ export const DIALOGUES = (typeof window !== 'undefined' && window.customGameDial
     ? window.customGameDialogues
     : DEFAULT_DIALOGUES;
 
+function getDialogueMeta() {
+    if (typeof window === 'undefined') return {};
+    return window.customGameMeta || {};
+}
+
+function mapDialogueSpeaker(speaker) {
+    const originalSpeaker = String(speaker || '').trim();
+    const key = originalSpeaker.toLowerCase();
+    const meta = getDialogueMeta();
+    const speakerMap = {
+        you: meta.playerName,
+        dad: meta.playerName,
+        player: meta.playerName,
+        kid: meta.kidName,
+        child: meta.kidName,
+        admin: meta.adminName,
+        guide: meta.adminName
+    };
+
+    return speakerMap[key] || originalSpeaker;
+}
+
 export default class DialogueBox {
     constructor(scene) {
         this.scene = scene;
@@ -112,7 +134,7 @@ export default class DialogueBox {
     showNode() {
         if (this.dialogues && this.index < this.dialogues.length) {
             let node = this.dialogues[this.index];
-            this.text.setText(`${node.speaker}: ${node.text}`);
+            this.text.setText(`${mapDialogueSpeaker(node.speaker)}: ${node.text}`);
         } else {
             this.hide();
             if (this.onComplete) this.onComplete();

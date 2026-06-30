@@ -4,6 +4,17 @@ import Phaser from 'phaser';
 import DialogueBox from '../objects/DialogueBox.js';
 import { joypad } from '../assets/VirtualJoypad.js';
 
+const DEFAULT_GAME_META = {
+    gameTitle: 'Legendary Dad: The Ultimate Challenge',
+    gameSubtitle: 'The Ultimate Challenge',
+    playerName: 'Dad'
+};
+
+function getGameMeta() {
+    if (typeof window === 'undefined') return DEFAULT_GAME_META;
+    return { ...DEFAULT_GAME_META, ...(window.customGameMeta || {}) };
+}
+
 export default class HouseScene extends Phaser.Scene {
     constructor() {
         super('HouseScene');
@@ -53,6 +64,10 @@ export default class HouseScene extends Phaser.Scene {
         const screenHeight = this.cameras.main.height;
         const centerX = screenWidth / 2;
         const centerY = screenHeight / 2;
+        const gameMeta = getGameMeta();
+        const playerLabel = (gameMeta.playerName || DEFAULT_GAME_META.playerName).toUpperCase();
+        const gameTitle = (gameMeta.gameTitle || DEFAULT_GAME_META.gameTitle).toUpperCase();
+        const gameSubtitle = (gameMeta.gameSubtitle || DEFAULT_GAME_META.gameSubtitle).toUpperCase();
 
         this.startMenuActive = true;
         this.startMenuKeys = this.input.keyboard.addKeys({
@@ -82,7 +97,7 @@ export default class HouseScene extends Phaser.Scene {
             strokeThickness: 5,
             fontFamily: 'monospace'
         }).setOrigin(0.5);
-        const badgeText = this.add.text(centerX, centerY - 70, 'DAD', {
+        const badgeText = this.add.text(centerX, centerY - 70, playerLabel, {
             fontSize: '26px',
             color: '#ffffff',
             fontStyle: 'bold',
@@ -92,7 +107,7 @@ export default class HouseScene extends Phaser.Scene {
         }).setOrigin(0.5);
         const ribbon = this.add.rectangle(centerX, centerY - 52, 170, 28, 0xffc43d, 1)
             .setStrokeStyle(3, 0x7a3f00);
-        const ribbonText = this.add.text(centerX, centerY - 52, 'BEST DAD EVER', {
+        const ribbonText = this.add.text(centerX, centerY - 52, `BEST ${playerLabel} EVER`, {
             fontSize: '16px',
             color: '#ffffff',
             fontStyle: 'bold',
@@ -100,15 +115,17 @@ export default class HouseScene extends Phaser.Scene {
             strokeThickness: 4,
             fontFamily: 'monospace'
         }).setOrigin(0.5);
-        const title = this.add.text(centerX, centerY + 18, 'LEGENDARY DAD', {
-            fontSize: '30px',
+        const title = this.add.text(centerX, centerY + 18, gameTitle, {
+            fontSize: '26px',
             color: '#ffe066',
             fontStyle: 'bold',
             stroke: '#000000',
             strokeThickness: 7,
-            fontFamily: 'monospace'
+            fontFamily: 'monospace',
+            align: 'center',
+            wordWrap: { width: 560 }
         }).setOrigin(0.5);
-        const subtitle = this.add.text(centerX, centerY + 48, 'THE ULTIMATE CHALLENGE', {
+        const subtitle = this.add.text(centerX, centerY + 56, gameSubtitle, {
             fontSize: '14px',
             color: '#ffffff',
             fontStyle: 'bold',
