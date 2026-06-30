@@ -381,9 +381,9 @@ body {
 @media screen and (max-width: 480px) {
     .retro-console-wrapper {
         width: 100vw !important;
-        height: auto !important;
-        min-height: 0 !important;
-        max-height: none !important;
+        height: var(--app-height, 100dvh) !important;
+        min-height: var(--app-height, 100dvh) !important;
+        max-height: var(--app-height, 100dvh) !important;
         aspect-ratio: auto !important;
         border-radius: 0px !important;
         box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.6);
@@ -399,7 +399,8 @@ body {
 
     .console-body-controls {
         margin-top: 6px;
-        flex: 0 0 clamp(205px, 31svh, 245px);
+        flex: 1 1 auto;
+        min-height: 0;
         display: flex;
         flex-direction: column;
         padding: 0 10px;
@@ -498,8 +499,9 @@ body {
     .retro-console-wrapper {
         width: 100vw !important;
         max-width: none !important;
-        height: auto !important;
+        height: var(--app-height, 100vh) !important;
         max-height: min(var(--app-height, 100vh), 100svh) !important;
+        min-height: 0 !important;
         aspect-ratio: auto !important;
         border-radius: 0 !important;
         padding-bottom: calc(10px + env(safe-area-inset-bottom)) !important;
@@ -507,7 +509,7 @@ body {
 
     .console-body-controls {
         margin-top: 6px !important;
-        flex: 0 0 clamp(200px, 31svh, 245px) !important;
+        flex: 1 1 auto !important;
         min-height: 0;
         padding: 0 10px;
     }
