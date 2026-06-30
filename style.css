@@ -399,7 +399,7 @@ body {
 
     .console-body-controls {
         margin-top: 6px;
-        flex: 0 0 clamp(170px, 28svh, 225px);
+        flex: 0 0 clamp(205px, 31svh, 245px);
         display: flex;
         flex-direction: column;
         padding: 0 10px;
@@ -407,8 +407,8 @@ body {
 
     /* --- PHÂN BỔ LẠI CỤM NÚT TRÊN MOBILE --- */
     .dpad-housing {
-        width: 126px;
-        height: 126px;
+        width: 150px;
+        height: 150px;
         left: 10px;
         top: 38%;
         transform: translateY(-50%);
@@ -469,8 +469,8 @@ body {
     }
 
     .action-btn {
-        width: 50px;
-        height: 50px;
+        width: 58px;
+        height: 58px;
     }
 
     .action-pad-recess {
@@ -507,14 +507,14 @@ body {
 
     .console-body-controls {
         margin-top: 6px !important;
-        flex: 0 0 clamp(165px, 28svh, 215px) !important;
+        flex: 0 0 clamp(200px, 31svh, 245px) !important;
         min-height: 0;
         padding: 0 10px;
     }
 
     .dpad-housing {
-        width: clamp(112px, 30vw, 132px) !important;
-        height: clamp(112px, 30vw, 132px) !important;
+        width: clamp(140px, 34vw, 160px) !important;
+        height: clamp(140px, 34vw, 160px) !important;
         top: 38% !important;
     }
 
@@ -578,8 +578,8 @@ body {
     }
 
     .action-btn {
-        width: clamp(42px, 11vw, 48px) !important;
-        height: clamp(42px, 11vw, 48px) !important;
+        width: clamp(52px, 13vw, 60px) !important;
+        height: clamp(52px, 13vw, 60px) !important;
     }
 
     .action-pad-recess {
@@ -780,8 +780,8 @@ body {
 
 @media screen and (max-width: 768px) {
     .dpad-cross {
-        width: clamp(112px, 30vw, 132px) !important;
-        height: clamp(112px, 30vw, 132px) !important;
+        width: clamp(140px, 34vw, 160px) !important;
+        height: clamp(140px, 34vw, 160px) !important;
     }
 
     .dpad-axis-horizontal {
