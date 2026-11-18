@@ -40,15 +40,14 @@ export default class ArrowGraphic {
 
         // Đầu mũi tên (tam giác chỉ xuống)
         graphics.fillTriangle(
-            x - 7.5, y + 15, // Đỉnh trái
-            x + 7.5, y + 15, // Đỉnh phải
-            x, y + 25        // Mũi nhọn dưới cùng
+            x - 7.5,
+            y + 15, // Đỉnh trái
+            x + 7.5,
+            y + 15, // Đỉnh phải
+            x,
+            y + 25, // Mũi nhọn dưới cùng
         );
-        graphics.strokeTriangle(
-            x - 7.5, y + 15,
-            x + 7.5, y + 15,
-            x, y + 25
-        );
+        graphics.strokeTriangle(x - 7.5, y + 15, x + 7.5, y + 15, x, y + 25);
 
         return graphics;
     }

@@ -1,250 +1,223 @@
 <!doctype html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="./favicon.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Phaser - Template</title>
+        <link rel="stylesheet" href="./style.css" />
+        <style>
+            #app {
+                position: relative;
+            }
 
-<head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="./favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Phaser - Template</title>
-    <link rel="stylesheet" href="./style.css">
-    <style>
-        #app {
-            position: relative;
-        }
+            .game-loading-overlay {
+                position: absolute;
+                inset: 0;
+                z-index: 20;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                background: #19182b;
+                color: #ffffff;
+                font-family: 'Courier New', Courier, monospace;
+                box-sizing: border-box;
+                transition:
+                    opacity 260ms ease,
+                    visibility 260ms ease;
+            }
 
-        .game-loading-overlay {
-            position: absolute;
-            inset: 0;
-            z-index: 20;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            background: #19182b;
-            color: #ffffff;
-            font-family: 'Courier New', Courier, monospace;
-            box-sizing: border-box;
-            transition: opacity 260ms ease, visibility 260ms ease;
-        }
+            .game-loading-overlay.is-hidden {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+            }
 
-        .game-loading-overlay.is-hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
+            .game-loading-shell {
+                width: 100%;
+                height: 100%;
+                padding: 0;
+                border-radius: 0;
+                background: transparent;
+                box-shadow: none;
+                box-sizing: border-box;
+            }
 
-        .game-loading-shell {
-            width: 100%;
-            height: 100%;
-            padding: 0;
-            border-radius: 0;
-            background: transparent;
-            box-shadow: none;
-            box-sizing: border-box;
-        }
+            .game-loading-title {
+                display: none;
+            }
 
-        .game-loading-title {
-            display: none;
-        }
+            .game-loading-screen {
+                position: relative;
+                display: flex;
+                width: 100%;
+                height: 100%;
+                min-height: 0;
+                align-items: center;
+                justify-content: center;
+                border: 0;
+                border-radius: 0;
+                background: transparent;
+                box-sizing: border-box;
+            }
 
-        .game-loading-screen {
-            position: relative;
-            display: flex;
-            width: 100%;
-            height: 100%;
-            min-height: 0;
-            align-items: center;
-            justify-content: center;
-            border: 0;
-            border-radius: 0;
-            background: transparent;
-            box-sizing: border-box;
-        }
-
-        .game-loading-center {
-            width: min(270px, 70%);
-            text-align: center;
-        }
-
-        .game-loading-text {
-            margin-bottom: 14px;
-            color: #bdb8c9;
-            font-size: clamp(10px, 2vw, 13px);
-        }
-
-        .game-loading-bar {
-            height: 17px;
-            background: #32313a;
-            overflow: hidden;
-            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.22);
-        }
-
-        .game-loading-fill {
-            width: 62%;
-            height: 100%;
-            background: #4caf50;
-            animation: loadingPulse 1.1s ease-in-out infinite alternate;
-        }
-
-        .game-loading-power {
-            display: none;
-        }
-
-        .game-loading-led {
-            width: 10px;
-            height: 10px;
-            border-radius: 999px;
-            background: #4ee03f;
-        }
-
-        @media (max-width: 480px) {
             .game-loading-center {
-                width: 72%;
+                width: min(270px, 70%);
+                text-align: center;
             }
-        }
 
-        @keyframes loadingPulse {
-            from { width: 48%; }
-            to { width: 88%; }
-        }
-    </style>
+            .game-loading-text {
+                margin-bottom: 14px;
+                color: #bdb8c9;
+                font-size: clamp(10px, 2vw, 13px);
+            }
 
-    <script>
-        (function () {
-            try {
-                const savedData = localStorage.getItem('external_game_dialogues');
-                if (savedData) {
-                    const customDialogues = JSON.parse(savedData);
-                    if (!customDialogues.finalRoom) {
-                        customDialogues.finalRoom = [
-                            { speaker: "You", text: "So this is the hidden room..." },
-                            { speaker: "Kid", text: "You found us! We knew you could solve every clue." },
-                            { speaker: "You", text: "Three keys, three trials, and one very strange house." },
-                            { speaker: "Kid", text: "The game is over now. Thank you for playing with us." },
-                            { speaker: "You", text: "Let's go home." }
-                        ];
-                    }
-                    window.customGameDialogues = customDialogues;
+            .game-loading-bar {
+                height: 17px;
+                background: #32313a;
+                overflow: hidden;
+                box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.22);
+            }
+
+            .game-loading-fill {
+                width: 62%;
+                height: 100%;
+                background: #4caf50;
+                animation: loadingPulse 1.1s ease-in-out infinite alternate;
+            }
+
+            .game-loading-power {
+                display: none;
+            }
+
+            .game-loading-led {
+                width: 10px;
+                height: 10px;
+                border-radius: 999px;
+                background: #4ee03f;
+            }
+
+            @media (max-width: 480px) {
+                .game-loading-center {
+                    width: 72%;
                 }
-            } catch (e) { }
-        })();
-    </script>
-    <script>
-        (function () {
-            const savedUrl = localStorage.getItem('external_puzzle_url');
-            if (savedUrl) {
-                window.customPuzzleImageUrl = savedUrl;
-            }
-        })();
-    </script>
-    <script>
-        (function () {
-            try {
-                const savedMeta = JSON.parse(localStorage.getItem('external_game_meta') || '{}');
-                window.customGameMeta = savedMeta;
-                if (savedMeta.gameTitle) document.title = savedMeta.gameTitle;
-            } catch (e) {
-                window.customGameMeta = {};
-            }
-        })();
-    </script>
-    <script>
-        (function () {
-            function setAppHeight() {
-                const height = window.visualViewport ? window.visualViewport.height : window.innerHeight;
-                document.documentElement.style.setProperty('--app-height', `${height}px`);
             }
 
-            setAppHeight();
-            window.addEventListener('resize', setAppHeight);
-            if (window.visualViewport) {
-                window.visualViewport.addEventListener('resize', setAppHeight);
+            @keyframes loadingPulse {
+                from {
+                    width: 48%;
+                }
+                to {
+                    width: 88%;
+                }
             }
-        })();
-    </script>
-</head>
+        </style>
 
-<body>
-    <div class="retro-console-wrapper">
-        <div class="screen-bezel">
-            <div id="app">
-                <div class="game-loading-overlay" id="game-loading-overlay">
-                    <div class="game-loading-shell">
-                        <div class="game-loading-title" id="game-loading-title">Ready Player U</div>
-                        <div class="game-loading-screen">
-                            <div class="game-loading-center">
-                                <div class="game-loading-text">Loading room...</div>
-                                <div class="game-loading-bar">
-                                    <div class="game-loading-fill"></div>
+        <script>
+            (function () {
+                function setAppHeight() {
+                    const height = window.visualViewport
+                        ? window.visualViewport.height
+                        : window.innerHeight;
+                    document.documentElement.style.setProperty('--app-height', `${height}px`);
+                }
+
+                setAppHeight();
+                window.addEventListener('resize', setAppHeight);
+                if (window.visualViewport) {
+                    window.visualViewport.addEventListener('resize', setAppHeight);
+                }
+            })();
+        </script>
+    </head>
+
+    <body>
+        <div class="retro-console-wrapper">
+            <div class="screen-bezel">
+                <div id="app">
+                    <div class="game-loading-overlay" id="game-loading-overlay">
+                        <div class="game-loading-shell">
+                            <div class="game-loading-title" id="game-loading-title">
+                                Ready Player U
+                            </div>
+                            <div class="game-loading-screen">
+                                <div class="game-loading-center">
+                                    <div class="game-loading-text">Loading room...</div>
+                                    <div class="game-loading-bar">
+                                        <div class="game-loading-fill"></div>
+                                    </div>
+                                </div>
+                                <div class="game-loading-power">
+                                    <span class="game-loading-led"></span>
+                                    <span>Power</span>
                                 </div>
                             </div>
-                            <div class="game-loading-power">
-                                <span class="game-loading-led"></span>
-                                <span>Power</span>
-                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="console-body-controls">
+                <div class="dpad-housing">
+                    <div class="dpad-cross">
+                        <div class="dpad-axis-horizontal"></div>
+                        <div class="dpad-axis-vertical"></div>
+                        <button id="btn-up" class="dpad-btn up" aria-label="Up"></button>
+                        <button id="btn-left" class="dpad-btn left" aria-label="Left"></button>
+                        <button id="btn-right" class="dpad-btn right" aria-label="Right"></button>
+                        <button id="btn-down" class="dpad-btn down" aria-label="Down"></button>
+                        <div class="dpad-center-pivot"></div>
+                    </div>
+                </div>
+
+                <div class="system-buttons">
+                    <div class="pill-button-container">
+                        <button id="btn-select" class="pill-btn"></button>
+                        <span class="pill-label">SELECT</span>
+                    </div>
+                    <div class="pill-button-container">
+                        <button id="btn-start" class="pill-btn"></button>
+                        <span class="pill-label">START</span>
+                    </div>
+                </div>
+
+                <div class="action-housing">
+                    <div class="action-pad-recess">
+                        <div class="action-btn-wrapper">
+                            <button id="btn-b" class="action-btn b-button"></button>
+                            <span class="action-label">B</span>
+                        </div>
+                        <div class="action-btn-wrapper">
+                            <button id="btn-a" class="action-btn a-button"></button>
+                            <span class="action-label">A</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="console-body-controls">
-            <div class="dpad-housing">
-                <div class="dpad-cross">
-                    <div class="dpad-axis-horizontal"></div>
-                    <div class="dpad-axis-vertical"></div>
-                    <button id="btn-up" class="dpad-btn up" aria-label="Up"></button>
-                    <button id="btn-left" class="dpad-btn left" aria-label="Left"></button>
-                    <button id="btn-right" class="dpad-btn right" aria-label="Right"></button>
-                    <button id="btn-down" class="dpad-btn down" aria-label="Down"></button>
-                    <div class="dpad-center-pivot"></div>
-                </div>
-            </div>
+        <script>
+            (function () {
+                const startedAt = Date.now();
+                const overlay = document.getElementById('game-loading-overlay');
 
-            <div class="system-buttons">
-                <div class="pill-button-container">
-                    <button id="btn-select" class="pill-btn"></button>
-                    <span class="pill-label">SELECT</span>
-                </div>
-                <div class="pill-button-container">
-                    <button id="btn-start" class="pill-btn"></button>
-                    <span class="pill-label">START</span>
-                </div>
-            </div>
+                function hideLoading() {
+                    const elapsed = Date.now() - startedAt;
+                    const delay = Math.max(0, 1100 - elapsed);
+                    window.setTimeout(() => {
+                        overlay?.classList.add('is-hidden');
+                    }, delay);
+                }
 
-            <div class="action-housing">
-                <div class="action-pad-recess">
-                    <div class="action-btn-wrapper">
-                        <button id="btn-b" class="action-btn b-button"></button>
-                        <span class="action-label">B</span>
-                    </div>
-                    <div class="action-btn-wrapper">
-                        <button id="btn-a" class="action-btn a-button"></button>
-                        <span class="action-label">A</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        (function () {
-            const startedAt = Date.now();
-            const overlay = document.getElementById('game-loading-overlay');
-
-            function hideLoading() {
-                const elapsed = Date.now() - startedAt;
-                const delay = Math.max(0, 1100 - elapsed);
-                window.setTimeout(() => {
-                    overlay?.classList.add('is-hidden');
-                }, delay);
-            }
-
-            window.addEventListener('gsl-game-ready', hideLoading, { once: true });
-            window.setTimeout(hideLoading, 4200);
-        })();
-    </script>
-    <script type="module" src="./src/main.js"></script>
-</body>
-
+                window.addEventListener('gsl-game-ready', hideLoading, { once: true });
+                window.setTimeout(hideLoading, 4200);
+            })();
+        </script>
+        <script type="module">
+            import { loadCustomization } from './src/customization.js';
+            loadCustomization();
+            await import('./src/main.js');
+        </script>
+    </body>
 </html>

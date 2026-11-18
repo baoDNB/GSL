@@ -7,7 +7,7 @@ import { joypad } from '../assets/VirtualJoypad.js';
 const DEFAULT_GAME_META = {
     gameTitle: 'Legendary Dad: The Ultimate Challenge',
     gameSubtitle: 'The Ultimate Challenge',
-    playerName: 'Dad'
+    playerName: 'Dad',
 };
 
 function getGameMeta() {
@@ -36,8 +36,8 @@ export default class HouseScene extends Phaser.Scene {
         this.isAutoWalking = true;
 
         // 2. Tạo Player đứng đúng vị trí góc dưới bên trái vỉa hè
-        const startX = screenWidth * 0.18; 
-        const startY = screenHeight * 0.88; 
+        const startX = screenWidth * 0.18;
+        const startY = screenHeight * 0.88;
 
         this.player = new Player(this, startX, startY);
         this.player.lastDirection = 'up';
@@ -67,7 +67,9 @@ export default class HouseScene extends Phaser.Scene {
         const gameMeta = getGameMeta();
         const playerLabel = (gameMeta.playerName || DEFAULT_GAME_META.playerName).toUpperCase();
         const gameTitle = (gameMeta.gameTitle || DEFAULT_GAME_META.gameTitle).toUpperCase();
-        const gameSubtitle = (gameMeta.gameSubtitle || DEFAULT_GAME_META.gameSubtitle).toUpperCase();
+        const gameSubtitle = (
+            gameMeta.gameSubtitle || DEFAULT_GAME_META.gameSubtitle
+        ).toUpperCase();
 
         this.startMenuActive = true;
         this.startMenuKeys = this.input.keyboard.addKeys({
@@ -75,98 +77,141 @@ export default class HouseScene extends Phaser.Scene {
             up: Phaser.Input.Keyboard.KeyCodes.UP,
             down: Phaser.Input.Keyboard.KeyCodes.DOWN,
             w: Phaser.Input.Keyboard.KeyCodes.W,
-            s: Phaser.Input.Keyboard.KeyCodes.S
+            s: Phaser.Input.Keyboard.KeyCodes.S,
         });
 
         const introContainer = this.add.container(0, 0).setDepth(3000);
-        const overlay = this.add.rectangle(centerX, centerY, screenWidth, screenHeight, 0x000000, 0.42);
-        const topText = this.add.text(centerX, 58, 'READY PLAYER U', {
-            fontSize: '20px',
-            color: '#ffe066',
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 5,
-            fontFamily: 'monospace'
-        }).setOrigin(0.5);
-        const badgeGlow = this.add.circle(centerX, centerY - 70, 54, 0x2f80ed, 0.68)
+        const overlay = this.add.rectangle(
+            centerX,
+            centerY,
+            screenWidth,
+            screenHeight,
+            0x000000,
+            0.42,
+        );
+        const topText = this.add
+            .text(centerX, 58, 'READY PLAYER U', {
+                fontSize: '20px',
+                color: '#ffe066',
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 5,
+                fontFamily: 'monospace',
+            })
+            .setOrigin(0.5);
+        const badgeGlow = this.add
+            .circle(centerX, centerY - 70, 54, 0x2f80ed, 0.68)
             .setStrokeStyle(4, 0xffd84d, 0.95);
-        const crown = this.add.text(centerX, centerY - 116, '♛ ♛ ♛', {
-            fontSize: '18px',
-            color: '#ffd84d',
-            stroke: '#000000',
-            strokeThickness: 5,
-            fontFamily: 'monospace'
-        }).setOrigin(0.5);
-        const badgeText = this.add.text(centerX, centerY - 70, playerLabel, {
-            fontSize: '26px',
-            color: '#ffffff',
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 6,
-            fontFamily: 'monospace'
-        }).setOrigin(0.5);
-        const ribbon = this.add.rectangle(centerX, centerY - 52, 170, 28, 0xffc43d, 1)
+        const crown = this.add
+            .text(centerX, centerY - 116, '♛ ♛ ♛', {
+                fontSize: '18px',
+                color: '#ffd84d',
+                stroke: '#000000',
+                strokeThickness: 5,
+                fontFamily: 'monospace',
+            })
+            .setOrigin(0.5);
+        const badgeText = this.add
+            .text(centerX, centerY - 70, playerLabel, {
+                fontSize: '26px',
+                color: '#ffffff',
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 6,
+                fontFamily: 'monospace',
+            })
+            .setOrigin(0.5);
+        const ribbon = this.add
+            .rectangle(centerX, centerY - 52, 170, 28, 0xffc43d, 1)
             .setStrokeStyle(3, 0x7a3f00);
-        const ribbonText = this.add.text(centerX, centerY - 52, `BEST ${playerLabel} EVER`, {
-            fontSize: '16px',
-            color: '#ffffff',
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 4,
-            fontFamily: 'monospace'
-        }).setOrigin(0.5);
-        const title = this.add.text(centerX, centerY + 18, gameTitle, {
-            fontSize: '26px',
-            color: '#ffe066',
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 7,
-            fontFamily: 'monospace',
-            align: 'center',
-            wordWrap: { width: 560 }
-        }).setOrigin(0.5);
-        const subtitle = this.add.text(centerX, centerY + 56, gameSubtitle, {
-            fontSize: '14px',
-            color: '#ffffff',
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 4,
-            fontFamily: 'monospace'
-        }).setOrigin(0.5);
-        const startButton = this.add.rectangle(centerX, centerY + 118, 260, 30, 0x4f79a8, 1)
+        const ribbonText = this.add
+            .text(centerX, centerY - 52, `BEST ${playerLabel} EVER`, {
+                fontSize: '16px',
+                color: '#ffffff',
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 4,
+                fontFamily: 'monospace',
+            })
+            .setOrigin(0.5);
+        const title = this.add
+            .text(centerX, centerY + 18, gameTitle, {
+                fontSize: '26px',
+                color: '#ffe066',
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 7,
+                fontFamily: 'monospace',
+                align: 'center',
+                wordWrap: { width: 560 },
+            })
+            .setOrigin(0.5);
+        const subtitle = this.add
+            .text(centerX, centerY + 56, gameSubtitle, {
+                fontSize: '14px',
+                color: '#ffffff',
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 4,
+                fontFamily: 'monospace',
+            })
+            .setOrigin(0.5);
+        const startButton = this.add
+            .rectangle(centerX, centerY + 118, 260, 30, 0x4f79a8, 1)
             .setStrokeStyle(2, 0x89a9cf)
             .setInteractive({ useHandCursor: true });
-        const startText = this.add.text(centerX, centerY + 118, 'START QUEST', {
-            fontSize: '17px',
-            color: '#ffffff',
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 4,
-            fontFamily: 'monospace'
-        }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-        const homeButton = this.add.rectangle(centerX, centerY + 158, 260, 30, 0x4f79a8, 1)
+        const startText = this.add
+            .text(centerX, centerY + 118, 'START QUEST', {
+                fontSize: '17px',
+                color: '#ffffff',
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 4,
+                fontFamily: 'monospace',
+            })
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true });
+        const homeButton = this.add
+            .rectangle(centerX, centerY + 158, 260, 30, 0x4f79a8, 1)
             .setStrokeStyle(2, 0x89a9cf)
             .setInteractive({ useHandCursor: true });
-        const homeText = this.add.text(centerX, centerY + 158, 'HOME', {
-            fontSize: '17px',
-            color: '#ffffff',
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 4,
-            fontFamily: 'monospace'
-        }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-        const selector = this.add.text(centerX - 150, centerY + 118, '>', {
-            fontSize: '20px',
-            color: '#ffe066',
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 4,
-            fontFamily: 'monospace'
-        }).setOrigin(0.5);
+        const homeText = this.add
+            .text(centerX, centerY + 158, 'HOME', {
+                fontSize: '17px',
+                color: '#ffffff',
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 4,
+                fontFamily: 'monospace',
+            })
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true });
+        const selector = this.add
+            .text(centerX - 150, centerY + 118, '>', {
+                fontSize: '20px',
+                color: '#ffe066',
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 4,
+                fontFamily: 'monospace',
+            })
+            .setOrigin(0.5);
 
         introContainer.add([
-            overlay, topText, badgeGlow, crown, badgeText, ribbon, ribbonText,
-            title, subtitle, startButton, startText, homeButton, homeText, selector
+            overlay,
+            topText,
+            badgeGlow,
+            crown,
+            badgeText,
+            ribbon,
+            ribbonText,
+            title,
+            subtitle,
+            startButton,
+            startText,
+            homeButton,
+            homeText,
+            selector,
         ]);
         introContainer.setAlpha(0);
         introContainer.setScale(0.96);
@@ -174,7 +219,7 @@ export default class HouseScene extends Phaser.Scene {
         this.startMenuSelected = 0;
         this.startMenuItems = [
             { button: startButton, text: startText, y: centerY + 118 },
-            { button: homeButton, text: homeText, y: centerY + 158 }
+            { button: homeButton, text: homeText, y: centerY + 158 },
         ];
         this.startMenuSelector = selector;
         this.updateStartMenuSelection();
@@ -184,7 +229,7 @@ export default class HouseScene extends Phaser.Scene {
             alpha: 1,
             scale: 1,
             duration: 360,
-            ease: 'Back.easeOut'
+            ease: 'Back.easeOut',
         });
 
         this.tweens.add({
@@ -193,7 +238,7 @@ export default class HouseScene extends Phaser.Scene {
             duration: 520,
             yoyo: true,
             repeat: -1,
-            ease: 'Sine.easeInOut'
+            ease: 'Sine.easeInOut',
         });
 
         startButton.on('pointerdown', () => this.beginQuestFromMenu());
@@ -240,7 +285,11 @@ export default class HouseScene extends Phaser.Scene {
     }
 
     moveStartMenuSelection(direction) {
-        this.startMenuSelected = Phaser.Math.Wrap(this.startMenuSelected + direction, 0, this.startMenuItems.length);
+        this.startMenuSelected = Phaser.Math.Wrap(
+            this.startMenuSelected + direction,
+            0,
+            this.startMenuItems.length,
+        );
         this.updateStartMenuSelection();
     }
 
@@ -270,7 +319,7 @@ export default class HouseScene extends Phaser.Scene {
             onComplete: () => {
                 if (this.startMenuContainer) this.startMenuContainer.destroy();
                 this.startIntroDialogue();
-            }
+            },
         });
     }
 
@@ -316,9 +365,9 @@ export default class HouseScene extends Phaser.Scene {
                         this.cameras.main.once('camerafadeoutcomplete', () => {
                             this.scene.start('KitchenScene');
                         });
-                    }
+                    },
                 });
-            }
+            },
         });
     }
 
@@ -330,13 +379,16 @@ export default class HouseScene extends Phaser.Scene {
 
     update() {
         if (this.startMenuActive) {
-            const moveUp = Phaser.Input.Keyboard.JustDown(this.startMenuKeys.up) ||
+            const moveUp =
+                Phaser.Input.Keyboard.JustDown(this.startMenuKeys.up) ||
                 Phaser.Input.Keyboard.JustDown(this.startMenuKeys.w) ||
                 joypad.up;
-            const moveDown = Phaser.Input.Keyboard.JustDown(this.startMenuKeys.down) ||
+            const moveDown =
+                Phaser.Input.Keyboard.JustDown(this.startMenuKeys.down) ||
                 Phaser.Input.Keyboard.JustDown(this.startMenuKeys.s) ||
                 joypad.down;
-            const wantsSelect = Phaser.Input.Keyboard.JustDown(this.startMenuKeys.e) || joypad.actionA;
+            const wantsSelect =
+                Phaser.Input.Keyboard.JustDown(this.startMenuKeys.e) || joypad.actionA;
 
             if (moveUp) {
                 this.moveStartMenuSelection(-1);

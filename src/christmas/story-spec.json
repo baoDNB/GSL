@@ -1,0 +1,289 @@
+{
+    "game": {
+        "title": "Noel: Đường Về Nhà",
+        "subtitle": "Ba điều ước nhỏ. Một mùa Giáng sinh thật lớn.",
+        "logicalWidth": 950,
+        "logicalHeight": 680,
+        "playerName": "An"
+    },
+    "startScene": "opening",
+    "requiredRewards": 3,
+    "scenes": [
+        {
+            "id": "opening",
+            "type": "opening",
+            "background": "assets/christmas/pixel/house.png",
+            "dialogue": "openingIntro",
+            "transitions": [
+                {
+                    "to": "kitchen",
+                    "condition": "enterHouse"
+                }
+            ]
+        },
+        {
+            "id": "hub",
+            "type": "hub",
+            "background": "assets/christmas/pixel/livingroom.png",
+            "transitions": [
+                {
+                    "to": "kitchen",
+                    "condition": "downstairsDoor"
+                },
+                {
+                    "to": "hallway",
+                    "condition": "stairs"
+                }
+            ]
+        },
+        {
+            "id": "kitchen",
+            "type": "exploration",
+            "background": "assets/christmas/pixel/kitchen.png",
+            "transitions": [
+                {
+                    "to": "bakingTrial",
+                    "condition": "interact"
+                },
+                {
+                    "to": "hub",
+                    "condition": "rightDoor"
+                },
+                {
+                    "to": "garden",
+                    "condition": "frontDoor"
+                }
+            ]
+        },
+        {
+            "id": "giftRoom",
+            "type": "exploration",
+            "background": "assets/christmas/pixel/roomchild.png",
+            "transitions": [
+                {
+                    "to": "memoryTrial",
+                    "condition": "interact"
+                },
+                {
+                    "to": "hallway",
+                    "condition": "exit"
+                }
+            ]
+        },
+        {
+            "id": "garden",
+            "type": "exploration",
+            "background": "assets/christmas/pixel/house.png",
+            "transitions": [
+                {
+                    "to": "crossingTrial",
+                    "condition": "interact"
+                },
+                {
+                    "to": "kitchen",
+                    "condition": "frontDoor"
+                }
+            ]
+        },
+        {
+            "id": "bakingTrial",
+            "type": "trial",
+            "trialKind": "recipe-mixing-oven",
+            "stages": 3,
+            "rewardFlag": "baking",
+            "transitions": [
+                {
+                    "to": "kitchen",
+                    "condition": "winOrExit"
+                }
+            ]
+        },
+        {
+            "id": "memoryTrial",
+            "type": "trial",
+            "trialKind": "memory-match-4-6-8-pairs",
+            "stages": 3,
+            "rewardFlag": "memory",
+            "transitions": [
+                {
+                    "to": "giftRoom",
+                    "condition": "winOrExit"
+                }
+            ]
+        },
+        {
+            "id": "crossingTrial",
+            "type": "trial",
+            "trialKind": "safe-path-6-7-8-columns",
+            "stages": 3,
+            "rewardFlag": "crossing",
+            "transitions": [
+                {
+                    "to": "garden",
+                    "condition": "winOrExit"
+                }
+            ]
+        },
+        {
+            "id": "ending",
+            "type": "ending",
+            "background": "assets/christmas/pixel/roomsecret.png",
+            "dialogue": "finalRoom",
+            "transitions": [
+                {
+                    "to": "hallway",
+                    "condition": "exploreAgain"
+                }
+            ]
+        },
+        {
+            "id": "hallway",
+            "type": "hub",
+            "background": "assets/christmas/pixel/hallway.png",
+            "transitions": [
+                {
+                    "to": "hub",
+                    "condition": "stairs"
+                },
+                {
+                    "to": "giftRoom",
+                    "condition": "middleDoor"
+                },
+                {
+                    "to": "bedroom",
+                    "condition": "rightDoor"
+                },
+                {
+                    "to": "ending",
+                    "condition": "leftDoorAndRewards>=3AndTreeLit"
+                }
+            ]
+        },
+        {
+            "id": "bedroom",
+            "type": "exploration",
+            "background": "assets/christmas/pixel/roommaster.png",
+            "transitions": [
+                {
+                    "to": "hallway",
+                    "condition": "exit"
+                }
+            ]
+        },
+        {
+            "id": "treeLights",
+            "type": "ritual",
+            "background": "assets/christmas/pixel/livingroom.png",
+            "dialogue": "lightsIntro",
+            "transitions": [{ "to": "hub", "condition": "treeLit" }]
+        }
+    ],
+    "dialogues": {
+        "openingIntro": [
+            {
+                "speaker": "An",
+                "text": "Đêm 24 tháng 12. Tuyết đã về… và một lá thư lạ đang chờ trước cửa nhà!"
+            },
+            {
+                "speaker": "Thư của ông già Noel",
+                "text": "An thân mến, hãy tìm ba điều ước: hơi ấm sẻ chia, món quà ký ức và ánh sao dẫn đường."
+            },
+            {
+                "speaker": "An",
+                "text": "Mình sẽ tìm đồ chuẩn bị, vượt qua ba chặng của mỗi thử thách rồi mang các điều ước về thắp sáng cây thông! Nhật ký sẽ chỉ món đồ cần tìm tiếp theo."
+            }
+        ],
+        "welcome": [
+            {
+                "speaker": "Mảnh giấy trên bàn bếp",
+                "text": "Chào An! Cửa phải bếp nối với cửa trái phòng khách. Đi lên cầu thang trong phòng khách; ở tầng trên, đi xuống đầu cầu thang để trở lại. Mỗi cửa chỉ chuyển phòng khi con đi đúng hướng mũi tên."
+            }
+        ],
+        "locked": [
+            {
+                "speaker": "An",
+                "text": "Căn phòng Giáng sinh chưa mở. Mình cần đủ ba điều ước từ bếp, những hộp quà và người tuyết ngoài sân."
+            }
+        ],
+        "bakingIntro": [
+            {
+                "speaker": "Công thức của bà",
+                "text": "Ba chặng làm bánh: chọn BỘT → BƠ → ĐƯỜNG → GỪNG, khuấy bột theo hướng, rồi canh kim lò trong vùng xanh để lấy ba mẻ bánh. Mỗi chặng đều tự lưu."
+            }
+        ],
+        "memoryIntro": [
+            {
+                "speaker": "Lời nhắn bên những hộp quà",
+                "text": "Chuẩn bị ba đợt quà: bốn, sáu rồi tám cặp. Dùng mũi tên và E hoặc chạm để lật hai hộp. Không giới hạn số lượt; đợt quà đã xong luôn được giữ lại."
+            }
+        ],
+        "crossingIntro": [
+            {
+                "speaker": "Người tuyết",
+                "text": "Đèn lồng và khăn len đã sẵn sàng! Ta sẽ qua ba lối tuyết: sáu, bảy rồi tám cột. Nhìn các ván vàng, sau đó chọn từ trái sang phải. Trượt chân chỉ làm lại lối đang đi."
+            }
+        ],
+        "already": [
+            {
+                "speaker": "An",
+                "text": "Điều ước ở đây đã được cất trong túi rồi. Mình mang nó về cây thông nhé!"
+            }
+        ],
+        "finalRoom": [
+            {
+                "speaker": "An",
+                "text": "Hơi ấm sẻ chia, những kỷ niệm đẹp và một ánh sao dẫn đường… đủ cả rồi!"
+            },
+            {
+                "speaker": "Ông già Noel",
+                "text": "Con đã mang phép màu về nhà. Giáng sinh đẹp nhất là khi ta dành thời gian và sự quan tâm cho nhau."
+            },
+            {
+                "speaker": "An",
+                "text": "Chúc mọi người một Giáng sinh an lành. Mình cùng thắp sáng cây thông nào!"
+            }
+        ],
+        "treeNote": [
+            {
+                "speaker": "An",
+                "text": "Mình cần mang đủ ba điều ước về đây để thắp sáng cây thông, rồi mới mở cửa treo vòng nguyệt quế bên trái hành lang tầng trên."
+            }
+        ],
+        "fridgeNote": [
+            {
+                "speaker": "An",
+                "text": "Đã tìm được công thức của bà! Lấy thêm lọ gia vị ở quầy bên trái rồi đến phía trước bếp. Công thức: bột, bơ, đường, gừng."
+            }
+        ],
+        "familyNote": [
+            {
+                "speaker": "Lời nhắn của gia đình",
+                "text": "Đồ chuẩn bị nằm trong bếp, ở bàn đèn phòng khách, bàn nhỏ hành lang và phòng bố mẹ. Phòng hai anh em ở cửa giữa; phòng bố mẹ ở cửa phải. Xem nhật ký để biết món còn thiếu."
+            }
+        ],
+        "bedroomNote": [
+            {
+                "speaker": "Lá thư của mẹ",
+                "text": "Ruy băng ở tủ bên phải, khăn len ở bàn cạnh giường. Khi đủ ba điều ước, con về cây thông và đặt lần lượt: bánh, quà, kẹo, ngôi sao. Khi cây sáng, cửa đoàn viên sẽ mở."
+            }
+        ],
+        "treeDone": [
+            {
+                "speaker": "An",
+                "text": "Cây thông đã sáng! Mình đến cửa đoàn viên bên trái hành lang tầng trên thôi."
+            }
+        ],
+        "treeLocked": [
+            {
+                "speaker": "An",
+                "text": "Mình đã đủ ba điều ước. Cần trở về cây thông ở phòng khách để thắp sáng trước khi mở cửa đoàn viên."
+            }
+        ],
+        "lightsIntro": [
+            {
+                "speaker": "Lời nhắn của mẹ",
+                "text": "Đặt bánh ấm, hộp quà, kẹo ngọt rồi ngôi sao dưới cây thông. Mỗi món sẽ thắp một ánh đèn đưa cả nhà về bên nhau."
+            }
+        ]
+    }
+}

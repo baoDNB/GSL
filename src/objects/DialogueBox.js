@@ -1,63 +1,93 @@
 import Phaser from 'phaser';
 import { joypad } from '../assets/VirtualJoypad.js'; // Bắt buộc import phím ảo vào đây
+import { normalizeDialogueSequence } from '../customization.js';
 
 const DEFAULT_DIALOGUES = {
     puzzleIntro: [
-        { speaker: "You", text: "Huh, an old, ancient book left in the middle of the table? And it's glowing..." },
-        { speaker: "Admin", text: "The magic map has been activated! Decipher the number matrix to reveal the secret passage!" },
-        { speaker: "You", text: "Looks like a 3x3 matrix sliding puzzle. Let's give it a shot!" }
+        {
+            speaker: 'You',
+            text: "Huh, an old, ancient book left in the middle of the table? And it's glowing...",
+        },
+        {
+            speaker: 'Admin',
+            text: 'The magic map has been activated! Decipher the number matrix to reveal the secret passage!',
+        },
+        { speaker: 'You', text: "Looks like a 3x3 matrix sliding puzzle. Let's give it a shot!" },
     ],
     foundKey: [
-        { speaker: "Kid", text: "Congratulations! You have successfully deciphered the ancient matrix." },
-        { speaker: "You", text: "Oh! A [Mystery Key] just fell out of the book! Let's go to the next room." }
+        {
+            speaker: 'Kid',
+            text: 'Congratulations! You have successfully deciphered the ancient matrix.',
+        },
+        {
+            speaker: 'You',
+            text: "Oh! A [Mystery Key] just fell out of the book! Let's go to the next room.",
+        },
     ],
     caConLockedDoor: [
-        { speaker: "Kid", text: "You need three keys to enter this room! Go explore the home again and be careful...." },
+        {
+            speaker: 'Kid',
+            text: 'You need three keys to enter this room! Go explore the home again and be careful....',
+        },
     ],
     need_2_keys: [
-        { speaker: "Kid", text: "The door still won't budge. You're missing two more keys." }
+        { speaker: 'Kid', text: "The door still won't budge. You're missing two more keys." },
     ],
-    need_1_keys: [
-        { speaker: "Kid", text: "Almost there! We just need one more key." }
-    ],
+    need_1_keys: [{ speaker: 'Kid', text: 'Almost there! We just need one more key.' }],
     openFridge: [
-        { speaker: "You", text: "Hmm it's a calendar." },
-        { speaker: "You", text: "Father's Day" }
+        { speaker: 'You', text: "Hmm it's a calendar." },
+        { speaker: 'You', text: "Father's Day" },
     ],
     inspectTable: [
-        { speaker: "You", text: "Ooh, someone left me my favorite: Flower! How awesome!" }
+        { speaker: 'You', text: 'Ooh, someone left me my favorite: Flower! How awesome!' },
     ],
     livingRoomTable: [
-        { speaker: "You", text: "Someone left a note on the table. It says:" },
-        { speaker: "You", text: "We're playing hide and seek. You have to come find us!" }
+        { speaker: 'You', text: 'Someone left a note on the table. It says:' },
+        { speaker: 'You', text: "We're playing hide and seek. You have to come find us!" },
     ],
-    childTent: [
-        { speaker: "You", text: "Looks cozy, I don't see anyone in there" }
-    ],
+    childTent: [{ speaker: 'You', text: "Looks cozy, I don't see anyone in there" }],
     roomMaster: [
-        { speaker: "You", text: "It's the master bedroom but I don't see anyone in here." }
+        { speaker: 'You', text: "It's the master bedroom but I don't see anyone in here." },
+    ],
+    lavaIntro: [
+        {
+            speaker: 'Admin',
+            text: 'Lava Crossing begins now. Stay on the wooden path and do not step into the lava.',
+        },
+        {
+            speaker: 'You',
+            text: 'So the floor really is lava... I just need to reach the key safely.',
+        },
+    ],
+    memoryIntro: [
+        {
+            speaker: 'Admin',
+            text: 'Memory Match begins now. Flip two cards at a time and remember where each number is.',
+        },
+        { speaker: 'You', text: 'Three levels of matching cards. Got it, time to focus.' },
     ],
     introHouse: [
-        { speaker: "Kid", text: "Looks like mom is coming. Let's go hide!" },
-        { speaker: "You", text: "I swear I just saw the kid!" },
-        { speaker: "You", text: "Hmm, it's locked, let me go through the back." }
+        { speaker: 'Kid', text: "Looks like mom is coming. Let's go hide!" },
+        { speaker: 'You', text: 'I swear I just saw the kid!' },
+        { speaker: 'You', text: "Hmm, it's locked, let me go through the back." },
     ],
     victoryDialogue: [
-        { speaker: "You", text: "All three keys fit perfectly into the lock!" },
-        { speaker: "You", text: "The secret door is slowly opening... I'm finally free!" }
+        { speaker: 'You', text: 'All three keys fit perfectly into the lock!' },
+        { speaker: 'You', text: "The secret door is slowly opening... I'm finally free!" },
     ],
     finalRoom: [
-        { speaker: "You", text: "So this is the hidden room..." },
-        { speaker: "Kid", text: "You found us! We knew you could solve every clue." },
-        { speaker: "You", text: "Three keys, three trials, and one very strange house." },
-        { speaker: "Kid", text: "The game is over now. Thank you for playing with us." },
-        { speaker: "You", text: "Let's go home." }
-    ]
+        { speaker: 'You', text: 'So this is the hidden room...' },
+        { speaker: 'Kid', text: 'You found us! We knew you could solve every clue.' },
+        { speaker: 'You', text: 'Three keys, three trials, and one very strange house.' },
+        { speaker: 'Kid', text: 'The game is over now. Thank you for playing with us.' },
+        { speaker: 'You', text: "Let's go home." },
+    ],
 };
 
-export const DIALOGUES = (typeof window !== 'undefined' && window.customGameDialogues)
-    ? window.customGameDialogues
-    : DEFAULT_DIALOGUES;
+export const DIALOGUES =
+    typeof window !== 'undefined' && window.customGameDialogues
+        ? { ...DEFAULT_DIALOGUES, ...window.customGameDialogues }
+        : DEFAULT_DIALOGUES;
 
 function getDialogueMeta() {
     if (typeof window === 'undefined') return {};
@@ -75,7 +105,7 @@ function mapDialogueSpeaker(speaker) {
         kid: meta.kidName,
         child: meta.kidName,
         admin: meta.adminName,
-        guide: meta.adminName
+        guide: meta.adminName,
     };
 
     return speakerMap[key] || originalSpeaker;
@@ -92,18 +122,28 @@ export default class DialogueBox {
         this.keyE = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
         // Vẽ hộp thoại thô nằm ở nửa dưới màn hình
-        this.box = scene.add.rectangle(480, 500, 900, 140, 0x000000, 0.8)
-            .setOrigin(0.5).setStrokeStyle(2, 0xffffff).setDepth(1000);
+        this.box = scene.add
+            .rectangle(480, 500, 900, 140, 0x000000, 0.8)
+            .setOrigin(0.5)
+            .setStrokeStyle(2, 0xffffff)
+            .setDepth(1000);
 
-        this.text = scene.add.text(60, 450, '', {
-            fontSize: '30px',
-            color: '#ffffff',
-            wordWrap: { width: 680 },
-            fontFamily: 'monospace'
-        }).setDepth(1001);
+        this.text = scene.add
+            .text(60, 450, '', {
+                fontSize: '30px',
+                color: '#ffffff',
+                wordWrap: { width: 680 },
+                fontFamily: 'monospace',
+            })
+            .setDepth(1001);
 
         // TỰ ĐỘNG LẮNG NGHE VÒNG LẶP UPDATE CỦA SCENE
         this.scene.events.on('update', this.update, this);
+        this.scene.events.once('shutdown', () => {
+            this.scene.events.off('update', this.update, this);
+            this.scene.input.off('pointerdown', this.nextNode, this);
+            this.onComplete = null;
+        });
 
         this.hide();
     }
@@ -112,12 +152,16 @@ export default class DialogueBox {
         if (this.isShowing) return; // Tránh mở chồng chéo khi bấm phím nhanh
 
         if (typeof key === 'object' && Array.isArray(key)) {
-            this.dialogues = key;
+            this.dialogues = normalizeDialogueSequence(key);
         } else {
-            this.dialogues = DIALOGUES[key];
+            this.dialogues = normalizeDialogueSequence(
+                DIALOGUES[key],
+                DEFAULT_DIALOGUES[key] || [],
+            );
         }
 
-        this.onComplete = onComplete;
+        this.onComplete = typeof onComplete === 'function' ? onComplete : null;
+        this.lastAdvanceFrame = this.scene.game.loop.frame;
         this.index = 0;
         this.isShowing = true;
         this.visible = true;
@@ -136,12 +180,15 @@ export default class DialogueBox {
             let node = this.dialogues[this.index];
             this.text.setText(`${mapDialogueSpeaker(node.speaker)}: ${node.text}`);
         } else {
+            const onComplete = this.onComplete;
+            this.onComplete = null;
             this.hide();
-            if (this.onComplete) this.onComplete();
+            if (onComplete) onComplete();
         }
     }
 
     nextNode() {
+        if (!this.isShowing) return;
         const currentFrame = this.scene.game.loop.frame;
         if (this.lastAdvanceFrame === currentFrame) return;
         this.lastAdvanceFrame = currentFrame;
@@ -163,7 +210,6 @@ export default class DialogueBox {
         this.scene.actionBlockedUntil = this.scene.time.now + 250;
         this.unlockPlayer();
         joypad.actionA = false;
-
     }
 
     lockPlayer() {
@@ -189,8 +235,7 @@ export default class DialogueBox {
         if (!this.isShowing) return;
 
         // Bắt sự kiện nút A hoặc phím E
-        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) ||
-            joypad.actionA;
+        const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || joypad.actionA;
 
         if (isActionA) {
             this.nextNode(); // Chuyển câu

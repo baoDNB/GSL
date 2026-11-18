@@ -11,7 +11,7 @@ export default class KitchenScene extends Phaser.Scene {
 
     init(data) {
         // Nhận dữ liệu từ Phòng Khách truyền sang
-        this.spawnDirection = data.fromScene || 'default';
+        this.spawnDirection = data?.fromScene || 'default';
     }
 
     create() {
@@ -28,25 +28,39 @@ export default class KitchenScene extends Phaser.Scene {
         // ==========================================
         this.obstacles = this.physics.add.staticGroup();
 
-        this.fridgeZone = this.add.zone(screenWidth * 0.15, screenHeight * 0.12, screenWidth * 0.1, screenHeight * 0.2).setOrigin(0);
+        this.fridgeZone = this.add
+            .zone(screenWidth * 0.15, screenHeight * 0.12, screenWidth * 0.1, screenHeight * 0.2)
+            .setOrigin(0);
         this.obstacles.add(this.fridgeZone);
 
-        let microwaveObstacle = this.add.zone(screenWidth * 0.25, screenHeight * 0.17, screenWidth * 0.15, screenHeight * 0.15).setOrigin(0);
+        let microwaveObstacle = this.add
+            .zone(screenWidth * 0.25, screenHeight * 0.17, screenWidth * 0.15, screenHeight * 0.15)
+            .setOrigin(0);
         this.obstacles.add(microwaveObstacle);
 
-        this.toasterZone = this.add.zone(screenWidth * 0.4, screenHeight * 0.17, screenWidth * 0.4, screenHeight * 0.2).setOrigin(0);
+        this.toasterZone = this.add
+            .zone(screenWidth * 0.4, screenHeight * 0.17, screenWidth * 0.4, screenHeight * 0.2)
+            .setOrigin(0);
         this.obstacles.add(this.toasterZone);
 
-        let cabinetObstacle = this.add.zone(screenWidth * 0.09, screenHeight * 0.35, screenWidth * 0.08, screenHeight * 0.28).setOrigin(0);
+        let cabinetObstacle = this.add
+            .zone(screenWidth * 0.09, screenHeight * 0.35, screenWidth * 0.08, screenHeight * 0.28)
+            .setOrigin(0);
         this.obstacles.add(cabinetObstacle);
 
         // BÀN ĂN (Vùng cản vật lý gốc của bạn)
-        this.tableZone = this.add.zone(screenWidth * 0.36, screenHeight * 0.5, screenWidth * 0.25, screenHeight * 0.2).setOrigin(0);
+        this.tableZone = this.add
+            .zone(screenWidth * 0.36, screenHeight * 0.5, screenWidth * 0.25, screenHeight * 0.2)
+            .setOrigin(0);
         this.obstacles.add(this.tableZone);
 
-        this.wall1 = this.add.zone(screenWidth * 0.1, screenHeight * 0.85, screenWidth * 0.34, screenHeight * 0.5).setOrigin(0);
+        this.wall1 = this.add
+            .zone(screenWidth * 0.1, screenHeight * 0.85, screenWidth * 0.34, screenHeight * 0.5)
+            .setOrigin(0);
         this.obstacles.add(this.wall1);
-        this.wall2 = this.add.zone(screenWidth * 0.56, screenHeight * 0.85, screenWidth * 0.34, screenHeight * 0.5).setOrigin(0);
+        this.wall2 = this.add
+            .zone(screenWidth * 0.56, screenHeight * 0.85, screenWidth * 0.34, screenHeight * 0.5)
+            .setOrigin(0);
         this.obstacles.add(this.wall2);
 
         // Khởi tạo Dialogue Box và phím tương tác
@@ -60,13 +74,16 @@ export default class KitchenScene extends Phaser.Scene {
         this.fridgeX = screenWidth * 0.2;
         this.fridgeY = screenHeight * 0.18;
 
-        this.exclamationFridge = this.add.text(this.fridgeX, this.fridgeY, '!', {
-            fontSize: '28px',
-            fill: '#ffcc00',
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 4
-        }).setOrigin(0.5).setDepth(1005);
+        this.exclamationFridge = this.add
+            .text(this.fridgeX, this.fridgeY, '!', {
+                fontSize: '28px',
+                fill: '#ffcc00',
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 4,
+            })
+            .setOrigin(0.5)
+            .setDepth(1005);
 
         this.tweens.add({
             targets: this.exclamationFridge,
@@ -74,7 +91,7 @@ export default class KitchenScene extends Phaser.Scene {
             duration: 600,
             yoyo: true,
             repeat: -1,
-            ease: 'Sine.easeInOut'
+            ease: 'Sine.easeInOut',
         });
 
         // ==========================================
@@ -83,13 +100,16 @@ export default class KitchenScene extends Phaser.Scene {
         this.tableX = screenWidth * 0.485;
         this.tableY = screenHeight * 0.52;
 
-        this.exclamationTable = this.add.text(this.tableX, this.tableY, '!', {
-            fontSize: '28px',
-            fill: '#ffcc00',
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 4
-        }).setOrigin(0.5).setDepth(1005);
+        this.exclamationTable = this.add
+            .text(this.tableX, this.tableY, '!', {
+                fontSize: '28px',
+                fill: '#ffcc00',
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 4,
+            })
+            .setOrigin(0.5)
+            .setDepth(1005);
 
         this.tweens.add({
             targets: this.exclamationTable,
@@ -97,17 +117,21 @@ export default class KitchenScene extends Phaser.Scene {
             duration: 600,
             yoyo: true,
             repeat: -1,
-            ease: 'Sine.easeInOut'
+            ease: 'Sine.easeInOut',
         });
 
         // Mũi tên hướng xuống đi ra phòng khách
-        this.arrowLivingRoom = ArrowGraphic.createArrowDown(this, screenWidth * 0.5, screenHeight * 0.8);
+        this.arrowLivingRoom = ArrowGraphic.createArrowDown(
+            this,
+            screenWidth * 0.5,
+            screenHeight * 0.8,
+        );
         this.tweens.add({
             targets: this.arrowLivingRoom,
             y: '+=10',
             duration: 500,
             yoyo: true,
-            repeat: -1
+            repeat: -1,
         });
 
         // ==========================================
@@ -129,7 +153,9 @@ export default class KitchenScene extends Phaser.Scene {
             }
         }
 
-        this.toLivingroomZone = this.add.zone(screenWidth * 0.5, screenHeight * 0.95, screenWidth * 0.1, 40).setOrigin(0.5);
+        this.toLivingroomZone = this.add
+            .zone(screenWidth * 0.5, screenHeight * 0.95, screenWidth * 0.1, 40)
+            .setOrigin(0.5);
         this.physics.add.existing(this.toLivingroomZone, true);
 
         // Xử lý dẫm chân vào vùng cửa phụ -> Chuyển Scene sang LivingRoomScene
@@ -148,7 +174,6 @@ export default class KitchenScene extends Phaser.Scene {
             this.player.setCollideWorldBounds(true);
         }
         this.cameras.main.fadeIn(2000, 0, 0, 0);
-
     }
 
     update() {
@@ -157,8 +182,7 @@ export default class KitchenScene extends Phaser.Scene {
 
         const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || joypad.actionA;
 
-        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
-            joypad.actionB;
+        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) || joypad.actionB;
 
         // XỬ LÝ KHI ẤN NÚT HÀNH ĐỘNG A
         if (isActionA) {
@@ -173,7 +197,12 @@ export default class KitchenScene extends Phaser.Scene {
             // ƯU TIÊN 2: Nếu hộp thoại ĐANG ĐÓNG -> Kiểm tra khoảng cách vật thể để kích hoạt thoại mới
             // Kiểm tra tủ lạnh
             if (this.exclamationFridge && this.exclamationFridge.active) {
-                let distFridge = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.fridgeX, this.fridgeY);
+                let distFridge = Phaser.Math.Distance.Between(
+                    this.player.x,
+                    this.player.y,
+                    this.fridgeX,
+                    this.fridgeY,
+                );
                 if (distFridge < 80) {
                     this.handleInteraction('openFridge');
                     return;
@@ -182,7 +211,12 @@ export default class KitchenScene extends Phaser.Scene {
 
             // Kiểm tra bàn ăn
             if (this.exclamationTable && this.exclamationTable.active) {
-                let distTable = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.tableX, this.tableY);
+                let distTable = Phaser.Math.Distance.Between(
+                    this.player.x,
+                    this.player.y,
+                    this.tableX,
+                    this.tableY,
+                );
                 if (distTable < 95) {
                     this.handleInteraction('inspectTable');
                     return;
@@ -192,20 +226,34 @@ export default class KitchenScene extends Phaser.Scene {
 
         // ĐỔI MÀU DẤU CHẤM THAN DỰA TRÊN KHOẢNG CÁCH (Không phụ thuộc vào việc nhấn nút)
         if (this.exclamationFridge && this.exclamationFridge.active) {
-            let distFridge = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.fridgeX, this.fridgeY);
+            let distFridge = Phaser.Math.Distance.Between(
+                this.player.x,
+                this.player.y,
+                this.fridgeX,
+                this.fridgeY,
+            );
             if (distFridge < 80) {
-                this.exclamationFridge.setFill('#00ff00');
+                if (this.exclamationFridge.style.color !== '#00ff00')
+                    this.exclamationFridge.setFill('#00ff00');
             } else {
-                this.exclamationFridge.setFill('#ffcc00');
+                if (this.exclamationFridge.style.color !== '#ffcc00')
+                    this.exclamationFridge.setFill('#ffcc00');
             }
         }
 
         if (this.exclamationTable && this.exclamationTable.active) {
-            let distTable = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.tableX, this.tableY);
+            let distTable = Phaser.Math.Distance.Between(
+                this.player.x,
+                this.player.y,
+                this.tableX,
+                this.tableY,
+            );
             if (distTable < 95) {
-                this.exclamationTable.setFill('#00ff00');
+                if (this.exclamationTable.style.color !== '#00ff00')
+                    this.exclamationTable.setFill('#00ff00');
             } else {
-                this.exclamationTable.setFill('#ffcc00');
+                if (this.exclamationTable.style.color !== '#ffcc00')
+                    this.exclamationTable.setFill('#ffcc00');
             }
         }
     }

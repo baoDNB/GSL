@@ -5,16 +5,22 @@ import ArrowGraphic from '../assets/ArrowGraphic.js';
 import { joypad } from '../assets/VirtualJoypad.js'; // 1. IMPORT JOYPAD
 
 export default class HallwayScene extends Phaser.Scene {
-    constructor() { super('HallwayScene'); }
+    constructor() {
+        super('HallwayScene');
+    }
 
     init(data) {
-        this.spawnDirection = (data && data.fromScene) ? data.fromScene : 'default';
+        this.spawnDirection = data && data.fromScene ? data.fromScene : 'default';
 
         // Bảo toàn trạng thái visitedMaster, không bị reset về false
-        let isMasterVisited = (this.spawnDirection === 'fromMasterRoom' || this.spawnDirection === 'MemoryGameScene' || this.registry.get('visitedMaster') === true);
+        let isMasterVisited =
+            this.spawnDirection === 'fromMasterRoom' ||
+            this.spawnDirection === 'MemoryGameScene' ||
+            this.registry.get('visitedMaster') === true;
         this.registry.set('visitedMaster', isMasterVisited);
 
-        let isChildVisited = (this.spawnDirection === 'fromChildRoom' || this.registry.get('visitedChild') === true);
+        let isChildVisited =
+            this.spawnDirection === 'fromChildRoom' || this.registry.get('visitedChild') === true;
         this.registry.set('visitedChild', isChildVisited);
 
         if (!this.registry.has('keysFound')) this.registry.set('keysFound', 0);
@@ -22,7 +28,8 @@ export default class HallwayScene extends Phaser.Scene {
         if (!this.registry.has('puzzyRoomWon')) this.registry.set('puzzyRoomWon', false);
         if (!this.registry.has('talkedToFish')) this.registry.set('talkedToFish', false);
         if (!this.registry.has('masterGameWon')) this.registry.set('masterGameWon', false);
-        if (!this.registry.has('talkedToMasterEvent')) this.registry.set('talkedToMasterEvent', false);
+        if (!this.registry.has('talkedToMasterEvent'))
+            this.registry.set('talkedToMasterEvent', false);
     }
 
     create() {
@@ -65,20 +72,33 @@ export default class HallwayScene extends Phaser.Scene {
         }
 
         if (hasVisitedMaster && hasVisitedChild && keysFound < 3) {
-            this.exclamation = this.add.text(this.bookX, this.bookY, '!', {
-                fontSize: '28px', fill: '#ffcc00', fontStyle: 'bold', stroke: '#000000', strokeThickness: 4
-            }).setOrigin(0.5).setDepth(1005);
+            this.exclamation = this.add
+                .text(this.bookX, this.bookY, '!', {
+                    fontSize: '28px',
+                    fill: '#ffcc00',
+                    fontStyle: 'bold',
+                    stroke: '#000000',
+                    strokeThickness: 4,
+                })
+                .setOrigin(0.5)
+                .setDepth(1005);
 
-            this.tweens.add({ targets: this.exclamation, y: this.bookY - 12, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
-        }
-        else if (keysFound >= 3) {
+            this.tweens.add({
+                targets: this.exclamation,
+                y: this.bookY - 12,
+                duration: 600,
+                yoyo: true,
+                repeat: -1,
+                ease: 'Sine.easeInOut',
+            });
+        } else if (keysFound >= 3) {
             this.arrowExit = ArrowGraphic.createArrow(this, this.bookX, this.bookY - 40, 0x00ff00);
             this.tweens.add({
                 targets: this.arrowExit,
                 y: this.arrowExit.y - 10,
                 duration: 500,
                 yoyo: true,
-                repeat: -1
+                repeat: -1,
             });
         }
 
@@ -91,12 +111,13 @@ export default class HallwayScene extends Phaser.Scene {
         if (this.spawnDirection === 'LivingRoomScene') {
             spawnX = sw * 0.1;
             spawnY = sh * 0.78;
-        }
-        else if (this.spawnDirection === 'fromChildRoom') {
+        } else if (this.spawnDirection === 'fromChildRoom') {
             spawnX = sw * 0.47;
             spawnY = sh * 0.35;
-        }
-        else if (this.spawnDirection === 'fromMasterRoom' || this.spawnDirection === 'MemoryGameScene') {
+        } else if (
+            this.spawnDirection === 'fromMasterRoom' ||
+            this.spawnDirection === 'MemoryGameScene'
+        ) {
             spawnX = sw * 0.75;
             spawnY = sh * 0.35;
         }
@@ -109,8 +130,6 @@ export default class HallwayScene extends Phaser.Scene {
                 this.player.anims.stop();
             }
         }
-
-
 
         this.obstacles = this.physics.add.staticGroup();
 
@@ -131,8 +150,10 @@ export default class HallwayScene extends Phaser.Scene {
             }
 
             if (this.registry.get('talkedToFish')) {
-                this.sound.play('doorOpenSfx', { volume: 0.25 }); // <--- THÊM VÀO ĐÂY
-                this.scene.start('LavaGameScene', { fromScene: 'fromHallway' });
+                this.dialogueBox.startSequence('lavaIntro', () => {
+                    this.sound.play('doorOpenSfx', { volume: 0.25 }); // <--- THÊM VÀO ĐÂY
+                    this.scene.start('LavaGameScene', { fromScene: 'fromHallway' });
+                });
             } else {
                 this.dialogueBox.startSequence('mustTalkToFishFirst', () => {
                     this.sound.play('doorOpenSfx', { volume: 0.25 }); // <--- THÊM VÀO ĐÂY
@@ -159,8 +180,7 @@ export default class HallwayScene extends Phaser.Scene {
             if (keysFound >= 3) {
                 if (this.toSecretRoomZone.body) this.toSecretRoomZone.body.enable = false;
                 this.handleEscape();
-            }
-            else {
+            } else {
                 this.player.y += 15;
                 if (!this.player.isTalking) {
                     this.handleInteraction();
@@ -183,7 +203,6 @@ export default class HallwayScene extends Phaser.Scene {
         }
         this.physics.add.collider(this.player, this.obstacles);
         this.cameras.main.fadeIn(2000, 0, 0, 0);
-
     }
 
     update() {
@@ -191,21 +210,25 @@ export default class HallwayScene extends Phaser.Scene {
         this.player.update();
         const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || joypad.actionA;
 
-        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
-            joypad.actionB;
+        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) || joypad.actionB;
 
         // [ĐÃ XÓA ĐOẠN CẬP NHẬT REALTIME TEXT CŨ TẠI ĐÂY]
 
         // Xử lý tương tác ! tại cửa
         if (this.exclamation && this.exclamation.active && !this.dialogueBox.isShowing) {
-            let dist = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.bookX, this.bookY);
+            let dist = Phaser.Math.Distance.Between(
+                this.player.x,
+                this.player.y,
+                this.bookX,
+                this.bookY,
+            );
             if (dist < 80) {
-                this.exclamation.setFill('#00ff00');
+                if (this.exclamation.style.color !== '#00ff00') this.exclamation.setFill('#00ff00');
                 if (isActionA) {
                     this.handleInteraction();
                 }
             } else {
-                this.exclamation.setFill('#ffcc00');
+                if (this.exclamation.style.color !== '#ffcc00') this.exclamation.setFill('#ffcc00');
             }
         }
         if (!this.dialogueBox.isShowing) {
@@ -213,7 +236,9 @@ export default class HallwayScene extends Phaser.Scene {
                 if (this.registry.get('lavaGameWon')) {
                     this.scene.start('LivingRoomScene', { fromScene: 'fromHallway' });
                 } else if (this.registry.get('talkedToFish')) {
-                    this.scene.start('LavaGameScene', { fromScene: 'fromHallway' });
+                    this.dialogueBox.startSequence('lavaIntro', () => {
+                        this.scene.start('LavaGameScene', { fromScene: 'fromHallway' });
+                    });
                 } else {
                     this.dialogueBox.startSequence('mustTalkToFishFirst', () => {
                         this.scene.start('LivingRoomScene', { fromScene: 'fromHallway' });
@@ -258,7 +283,7 @@ export default class HallwayScene extends Phaser.Scene {
         }
 
         let keys = canStartKeyQuest ? this.getEffectiveKeysFound() : 0;
-        let msg = (keys === 0) ? 'caConLockedDoor' : `need_${3 - keys}_keys`;
+        let msg = keys === 0 ? 'caConLockedDoor' : `need_${3 - keys}_keys`;
 
         this.dialogueBox.startSequence(msg, () => {
             this.player.isTalking = false;
@@ -288,7 +313,7 @@ export default class HallwayScene extends Phaser.Scene {
         const wonKeys = [
             this.registry.get('puzzyRoomWon'),
             this.registry.get('lavaGameWon'),
-            this.registry.get('masterGameWon')
+            this.registry.get('masterGameWon'),
         ].filter(Boolean).length;
         const effectiveKeys = Math.max(storedKeys, wonKeys);
 
@@ -300,7 +325,10 @@ export default class HallwayScene extends Phaser.Scene {
     }
 
     canStartKeyQuest() {
-        return this.registry.get('visitedMaster') === true && this.registry.get('visitedChild') === true;
+        return (
+            this.registry.get('visitedMaster') === true &&
+            this.registry.get('visitedChild') === true
+        );
     }
 
     createKeyQuestArrows(sw, sh) {
@@ -318,7 +346,7 @@ export default class HallwayScene extends Phaser.Scene {
             y: this.arrowMaster.y - 10,
             duration: 500,
             yoyo: true,
-            repeat: -1
+            repeat: -1,
         });
     }
 
@@ -331,7 +359,7 @@ export default class HallwayScene extends Phaser.Scene {
             y: this.arrowChild.y - 10,
             duration: 500,
             yoyo: true,
-            repeat: -1
+            repeat: -1,
         });
     }
 
@@ -344,7 +372,7 @@ export default class HallwayScene extends Phaser.Scene {
             y: this.arrowLivingRoom.y - 10,
             duration: 500,
             yoyo: true,
-            repeat: -1
+            repeat: -1,
         });
     }
 }

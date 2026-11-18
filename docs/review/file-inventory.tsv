@@ -1,0 +1,570 @@
+path	classification	bytes
+.editorconfig	documentation/other	243
+.github/workflows/verify.yml	source/config	383
+.gitignore	documentation/other	54
+.prettierignore	documentation/other	129
+.prettierrc.json	source/config	101
+CHRISTMAS.md	documentation/other	17281
+art/christmas/AI-ART-BRIEF.md	documentation/other	7067
+art/christmas/SOURCES.md	documentation/other	10197
+art/christmas/__pycache__/detail-art.cpython-312.pyc	binary-asset	11076
+art/christmas/__pycache__/pixel_details.cpython-312.pyc	binary-asset	100300
+art/christmas/__pycache__/pixel_details.cpython-315.pyc	binary-asset	142232
+art/christmas/bake-assets.py	source/config	13128
+art/christmas/bake-character-assets.py	source/config	7775
+art/christmas/bake-pixel-backgrounds.py	source/config	58020
+art/christmas/check-campaign.mjs	source/config	9721
+art/christmas/check-routes.mjs	source/config	3547
+art/christmas/detail-art.py	source/config	6877
+art/christmas/giftroom-prompt.txt	documentation/other	1173
+art/christmas/house-original-v2-prompt.txt	documentation/other	1525
+art/christmas/house-prompt.txt	documentation/other	1319
+art/christmas/kitchen-prompt.txt	documentation/other	1127
+art/christmas/livingroom-prompt.txt	documentation/other	1164
+art/christmas/pixel_details.py	source/config	104978
+art/christmas/playtest.html	source/config	23853
+art/christmas/playtest.js	source/config	5847
+art/christmas/process-backgrounds.py	source/config	3144
+art/christmas/review.html	source/config	4941
+art/christmas/review.js	source/config	3165
+art/christmas/studio-server.cjs	source/config	2104
+art/christmas/studio.html	source/config	3366
+art/christmas/studio.js	source/config	55968
+art/christmas/vendor/kenney_holiday-kit.zip	binary-asset	4482244
+artifacts/antigravity-cli-consensus.txt	prior-artifact	6376
+artifacts/antigravity-cli-followup.txt	prior-artifact	12478
+artifacts/antigravity-cli-response.txt	prior-artifact	2042
+artifacts/antigravity-code-review.txt	prior-artifact	8838
+artifacts/antigravity-game-decision.md	prior-artifact	3798
+artifacts/antigravity-game-discussion.md	prior-artifact	6101
+artifacts/antigravity-game-followup.md	prior-artifact	2676
+artifacts/antigravity-game-response.md	prior-artifact	11858
+artifacts/antigravity-implementation-brief.md	prior-artifact	1942
+artifacts/antigravity-implementation-review.txt	prior-artifact	7810
+artifacts/antigravity-implementation-transcript.md	prior-artifact	9907
+artifacts/background-pixel-audit.json	prior-artifact	171505
+artifacts/backgrounds-first-pass.jpg	prior-artifact	242920
+artifacts/bedroom-before24.png	prior-artifact	13304
+artifacts/bedroom-wall20.png	prior-artifact	4594
+artifacts/character-source-study.png	prior-artifact	22200
+artifacts/christmas-preview.png	prior-artifact	182273
+artifacts/gsl-side-stair-detail.png	prior-artifact	3911
+artifacts/gsl-side-stair-livingroom.png	prior-artifact	24610
+artifacts/gsl-source-rooms.jpg	prior-artifact	241192
+artifacts/hallway-before23.png	prior-artifact	7623
+artifacts/hallway-before9.png	prior-artifact	14919
+artifacts/hallway-detail.png	prior-artifact	373268
+artifacts/hallway-flush16.png	prior-artifact	4399
+artifacts/hallway-redesign9-compare.png	prior-artifact	19546
+artifacts/hallway-redesign9.png	prior-artifact	11216
+artifacts/hallway-stairs-before21.png	prior-artifact	10297
+artifacts/hallway-stairs-compare21.png	prior-artifact	4020
+artifacts/hallway-stairs-compare23.png	prior-artifact	6489
+artifacts/hallway-stairs21-detail.png	prior-artifact	4180
+artifacts/hallway-stairs21.png	prior-artifact	2297
+artifacts/hallway-wallfit11-detail.png	prior-artifact	4456
+artifacts/hallway-wallfit11.png	prior-artifact	11316
+artifacts/holiday-assets.jpg	prior-artifact	14454
+artifacts/house-detail.png	prior-artifact	246213
+artifacts/kids-before-redesign.png	prior-artifact	18680
+artifacts/kids-before17.png	prior-artifact	14367
+artifacts/kids-cabinet-spacing19.png	prior-artifact	2043
+artifacts/kids-cabinets-fit12.png	prior-artifact	3073
+artifacts/kids-pixel6-closeup.png	prior-artifact	8856
+artifacts/kids-room-pixel6.png	prior-artifact	15472
+artifacts/kids-room-redesign.png	prior-artifact	25255
+artifacts/kids-window-cabinets17.png	prior-artifact	2984
+artifacts/kitchen-before15.png	prior-artifact	12792
+artifacts/kitchen-before24.png	prior-artifact	9805
+artifacts/kitchen-detail.png	prior-artifact	357087
+artifacts/kitchen-door-before22.png	prior-artifact	9388
+artifacts/kitchen-door-compare22.png	prior-artifact	3501
+artifacts/kitchen-door22.png	prior-artifact	2528
+artifacts/kitchen-fridge15.png	prior-artifact	3056
+artifacts/living-before24.png	prior-artifact	18704
+artifacts/living-stairs-before14.png	prior-artifact	23330
+artifacts/living-stairs-compare14.png	prior-artifact	6496
+artifacts/living-stairs-detail14.png	prior-artifact	3665
+artifacts/livingroom-detail.png	prior-artifact	778959
+artifacts/noel-anti-keepsakes.png	prior-artifact	128051
+artifacts/noel-anti-local-ready.png	prior-artifact	83504
+artifacts/noel-anti-mobile-memory.png	prior-artifact	47665
+artifacts/noel-anti-mobile-stage.png	prior-artifact	40591
+artifacts/noel-antigravity-before.json	prior-artifact	901
+artifacts/noel-antigravity-implementation.md	prior-artifact	5470
+artifacts/noel-antigravity-original-check.json	prior-artifact	71
+artifacts/noel-background-comparison.png	prior-artifact	46249
+artifacts/noel-background-review-20261026.md	prior-artifact	3385
+artifacts/noel-backgrounds-before.png	prior-artifact	103690
+artifacts/noel-character-customizer.png	prior-artifact	70887
+artifacts/noel-ending-updated.png	prior-artifact	120290
+artifacts/noel-final-preview.png	prior-artifact	157737
+artifacts/noel-font-customizer-after.png	prior-artifact	81756
+artifacts/noel-font-dialogue-after.png	prior-artifact	119610
+artifacts/noel-font-menu-after.png	prior-artifact	107800
+artifacts/noel-font-menu-before.png	prior-artifact	109071
+artifacts/noel-font-mobile-after.png	prior-artifact	52614
+artifacts/noel-font-review-20261027.md	prior-artifact	1926
+artifacts/noel-frame-aligned.png	prior-artifact	149943
+artifacts/noel-frame-alignment-review.md	prior-artifact	1150
+artifacts/noel-hat-in-game-back.png	prior-artifact	131718
+artifacts/noel-hat-in-game.png	prior-artifact	132854
+artifacts/noel-introduction.png	prior-artifact	131854
+artifacts/noel-journey-ending.png	prior-artifact	169798
+artifacts/noel-journey-living.png	prior-artifact	164029
+artifacts/noel-journey-mobile.png	prior-artifact	40982
+artifacts/noel-journey-review.md	prior-artifact	2816
+artifacts/noel-original-background-game.png	prior-artifact	105562
+artifacts/noel-original-backgrounds.jpg	prior-artifact	695300
+artifacts/noel-pixel-backgrounds.png	prior-artifact	101310
+artifacts/noel-pixel-display-sample.png	prior-artifact	4861
+artifacts/noel-pixel-game.png	prior-artifact	124792
+artifacts/noel-pixel-house-game.png	prior-artifact	114024
+artifacts/noel-pixel-props.png	prior-artifact	9575
+artifacts/noel-pixel-v2-hallway-game.png	prior-artifact	117125
+artifacts/noel-review-before.png	prior-artifact	114360
+artifacts/noel-review-contact.png	prior-artifact	553103
+artifacts/noel-review-hallway-after.png	prior-artifact	87524
+artifacts/noel-review-kids-after.png	prior-artifact	97548
+artifacts/noel-review-kitchen-after.png	prior-artifact	96199
+artifacts/noel-review-living-after.png	prior-artifact	120579
+artifacts/noel-review-mobile-after.png	prior-artifact	44110
+artifacts/noel-review-parents-after.png	prior-artifact	110317
+artifacts/noel-review-reunion-after.png	prior-artifact	77849
+artifacts/noel-review-yard-after.png	prior-artifact	110720
+artifacts/noel-seating-before-after-20261027.png	prior-artifact	35111
+artifacts/noel-seating-game-after-20261027.png	prior-artifact	147485
+artifacts/noel-seating-tv-facing-20261027.png	prior-artifact	135538
+artifacts/noel-stairs-hallway-game.jpg	prior-artifact	119781
+artifacts/noel-stairs-hallway-game.png	prior-artifact	119889
+artifacts/noel-stairs-hallway-v4.png	prior-artifact	35081
+artifacts/noel-stairs-living-game.png	prior-artifact	128589
+artifacts/noel-stairs-living-v4.png	prior-artifact	38350
+artifacts/noel-stairs-pixel-detail.png	prior-artifact	16859
+artifacts/noel-stairs-review.md	prior-artifact	1409
+artifacts/noel-stairs-review.png	prior-artifact	291380
+artifacts/noel-wardrobe-sprites.png	prior-artifact	18537
+artifacts/noel-wardrobe-updated.png	prior-artifact	91007
+artifacts/original-game-baseline.json	prior-artifact	46169
+artifacts/original-game-font-review-baseline.json	prior-artifact	46169
+artifacts/original-stairs-reference.png	prior-artifact	35575
+artifacts/parents-low-dresser.png	prior-artifact	18458
+artifacts/parents-nightstands-fit13.png	prior-artifact	3786
+artifacts/pixel-background-audit.json	prior-artifact	2012
+artifacts/review-performance.md	prior-artifact	3246
+artifacts/review-preexisting-untracked.txt	prior-artifact	10534
+artifacts/review-preexisting.patch	prior-artifact	319373
+artifacts/review-security.md	prior-artifact	3241
+artifacts/review-tests.md	prior-artifact	3099
+artifacts/roomchild-detail.png	prior-artifact	634447
+artifacts/roommaster-detail.png	prior-artifact	509237
+artifacts/rooms-review.jpg	prior-artifact	425069
+artifacts/roomsecret-detail.png	prior-artifact	779311
+artifacts/seating-before10.png	prior-artifact	23662
+artifacts/seating-before18.png	prior-artifact	23756
+artifacts/seating-facing18.png	prior-artifact	9222
+artifacts/seating-redesign10-compare.png	prior-artifact	28402
+artifacts/seating-redesign10.png	prior-artifact	24204
+artifacts/side-stairs-draft.png	prior-artifact	3484
+artifacts/sofa-direction-compare18.png	prior-artifact	6228
+artifacts/stairs-before.png	prior-artifact	24404
+artifacts/stairs-fit8-detail.png	prior-artifact	3634
+artifacts/stairs-fit8-room.png	prior-artifact	24563
+artifacts/stairs-v4-comparison.png	prior-artifact	9281
+artifacts/stairs-v4-detail.png	prior-artifact	8105
+artifacts/winter-art-review.jpg	prior-artifact	186226
+christmas.html	source/config	23971
+docs/review/PR.md	documentation/other	2301
+docs/review/README.md	documentation/other	3731
+docs/review/file-inventory.tsv	documentation/other	46588
+docs/review/performance.md	documentation/other	3246
+docs/review/security.md	documentation/other	3241
+docs/review/tests.md	documentation/other	3372
+docs/review/visual.md	documentation/other	1202
+game.html	source/config	8197
+index.html	source/config	94146
+output/backgrounds-3d/hallway.png	prior-artifact	2006084
+output/backgrounds-3d/house.png	prior-artifact	1679148
+output/backgrounds-3d/kitchen.png	prior-artifact	2020875
+output/backgrounds-3d/livingroom.png	prior-artifact	3264868
+output/backgrounds-3d/roomchild.png	prior-artifact	2708559
+output/backgrounds-3d/roommaster.png	prior-artifact	2464687
+output/backgrounds-3d/roomsecret.png	prior-artifact	3280732
+package-lock.json	source/config	35652
+package.json	source/config	1232
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/16x16/Accessory_Bamboo_Hat_Brown.png	binary-asset	29166
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/16x16/Accessory_Bamboo_Hat_Brown_Dull.png	binary-asset	27835
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/16x16/Accessory_Gas_Mask.png	binary-asset	28006
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/16x16/Accessory_Straw_Hat_Black.png	binary-asset	18712
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/16x16/Accessory_Straw_Hat_Cyan.png	binary-asset	18598
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/16x16/Accessory_Straw_Hat_Green.png	binary-asset	19171
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/16x16/Accessory_Straw_Hat_Red.png	binary-asset	18312
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/16x16/Accessory_Straw_Hat_Violet.png	binary-asset	18702
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/32x32/Accessory_Bamboo_Hat_Brown.png	binary-asset	33739
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/32x32/Accessory_Bamboo_Hat_Brown_Dull.png	binary-asset	32001
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/32x32/Accessory_Gas_Mask.png	binary-asset	35066
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/32x32/Accessory_Straw_Hat_Black.png	binary-asset	24920
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/32x32/Accessory_Straw_Hat_Cyan.png	binary-asset	25201
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/32x32/Accessory_Straw_Hat_Green.png	binary-asset	25669
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/32x32/Accessory_Straw_Hat_Red.png	binary-asset	24391
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/32x32/Accessory_Straw_Hat_Violet.png	binary-asset	25106
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/48x48/Accessory_Bamboo_Hat_Brown.png	binary-asset	44273
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/48x48/Accessory_Bamboo_Hat_Brown_Dull.png	binary-asset	42647
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/48x48/Accessory_Gas_Mask.png	binary-asset	45528
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/48x48/Accessory_Straw_Hat_Black.png	binary-asset	34687
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/48x48/Accessory_Straw_Hat_Cyan.png	binary-asset	34916
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/48x48/Accessory_Straw_Hat_Green.png	binary-asset	35213
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/48x48/Accessory_Straw_Hat_Red.png	binary-asset	34054
+public/assets/Farmer_Generator_Pieces/Character Pieces/Accessories/48x48/Accessory_Straw_Hat_Violet.png	binary-asset	35305
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/16x16/Body_1.png	binary-asset	24581
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/16x16/Body_2.png	binary-asset	24248
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/16x16/Body_3.png	binary-asset	10321
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/16x16/Body_4.png	binary-asset	10433
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/16x16/Body_5.png	binary-asset	10432
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/16x16/Body_6.png	binary-asset	10440
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/16x16/Body_7.png	binary-asset	10438
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/16x16/Body_8.png	binary-asset	10438
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/16x16/Body_9.png	binary-asset	23989
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/32x32/Body_1.png	binary-asset	31285
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/32x32/Body_2.png	binary-asset	30697
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/32x32/Body_3.png	binary-asset	17590
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/32x32/Body_4.png	binary-asset	17694
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/32x32/Body_5.png	binary-asset	17697
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/32x32/Body_6.png	binary-asset	17698
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/32x32/Body_7.png	binary-asset	17705
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/32x32/Body_8.png	binary-asset	17705
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/32x32/Body_9.png	binary-asset	17705
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/48x48/Body_1.png	binary-asset	42876
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/48x48/Body_2.png	binary-asset	42371
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/48x48/Body_3.png	binary-asset	28926
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/48x48/Body_4.png	binary-asset	29027
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/48x48/Body_5.png	binary-asset	29028
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/48x48/Body_6.png	binary-asset	29026
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/48x48/Body_7.png	binary-asset	29038
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/48x48/Body_8.png	binary-asset	29037
+public/assets/Farmer_Generator_Pieces/Character Pieces/Bodies/48x48/Body_9.png	binary-asset	29038
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/16x16/Eyes_Blue.png	binary-asset	1757
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/16x16/Eyes_Brown.png	binary-asset	1758
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/16x16/Eyes_Gray.png	binary-asset	1759
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/16x16/Eyes_Green.png	binary-asset	1757
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/16x16/Eyes_Orange.png	binary-asset	755
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/32x32/Eyes_Blue.png	binary-asset	5693
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/32x32/Eyes_Brown.png	binary-asset	5694
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/32x32/Eyes_Gray.png	binary-asset	5696
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/32x32/Eyes_Green.png	binary-asset	5693
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/32x32/Eyes_Orange.png	binary-asset	5693
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/48x48/Eyes_Blue.png	binary-asset	12126
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/48x48/Eyes_Brown.png	binary-asset	12130
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/48x48/Eyes_Gray.png	binary-asset	12133
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/48x48/Eyes_Green.png	binary-asset	12133
+public/assets/Farmer_Generator_Pieces/Character Pieces/Eyes/48x48/Eyes_Orange.png	binary-asset	12125
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Balding_Blonde.png	binary-asset	13719
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Balding_Blonde_Ash.png	binary-asset	13761
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Balding_Blue.png	binary-asset	13623
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Balding_Brown_Ash.png	binary-asset	13652
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Balding_Brown_Dark.png	binary-asset	13500
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Balding_Brown_Hazel.png	binary-asset	13664
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Balding_Brown_Light.png	binary-asset	13875
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Balding_Gray.png	binary-asset	13367
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Balding_Orange.png	binary-asset	13800
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Long_Blonde.png	binary-asset	16264
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Long_Blonde_Ash.png	binary-asset	16149
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Long_Blue.png	binary-asset	15933
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Long_Brown_Ash.png	binary-asset	16010
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Long_Brown_Dark.png	binary-asset	15866
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Long_Brown_Hazel.png	binary-asset	16057
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Long_Brown_Light.png	binary-asset	16184
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Long_Gray.png	binary-asset	16145
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Long_Orange.png	binary-asset	17876
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Short_Blonde.png	binary-asset	13318
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Short_Blonde_Ash.png	binary-asset	13178
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Short_Blue.png	binary-asset	13316
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Short_Brown_Ash.png	binary-asset	13062
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Short_Brown_Dark.png	binary-asset	13083
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Short_Brown_Hazel.png	binary-asset	13420
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Short_Brown_Light.png	binary-asset	13315
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Short_Gray.png	binary-asset	13128
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Short_Orange.png	binary-asset	13648
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Tuft_Blonde.png	binary-asset	14869
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Tuft_Blonde_Ash.png	binary-asset	15254
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Tuft_Blue.png	binary-asset	14862
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Tuft_Brown_Ash.png	binary-asset	15222
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Tuft_Brown_Dark.png	binary-asset	14811
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Tuft_Brown_Hazel.png	binary-asset	16243
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Tuft_Brown_Light.png	binary-asset	15165
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Tuft_Gray.png	binary-asset	14801
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Tuft_Orange.png	binary-asset	15024
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Unkept_Blonde.png	binary-asset	15211
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Unkept_Blonde_Ash.png	binary-asset	15260
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Unkept_Blue.png	binary-asset	14910
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Unkept_Brown_Ash.png	binary-asset	15100
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Unkept_Brown_Dark.png	binary-asset	14704
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Unkept_Brown_Hazel.png	binary-asset	16229
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Unkept_Brown_Light.png	binary-asset	15285
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Unkept_Gray.png	binary-asset	15013
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/16x16/Hairstyle_Unkept_Orange.png	binary-asset	15327
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Balding_Blonde.png	binary-asset	18494
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Balding_Blonde_Ash.png	binary-asset	18757
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Balding_Blue.png	binary-asset	18907
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Balding_Brown_Ash.png	binary-asset	18759
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Balding_Brown_Dark.png	binary-asset	18698
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Balding_Brown_Hazel.png	binary-asset	18770
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Balding_Brown_Light.png	binary-asset	18679
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Balding_Gray.png	binary-asset	18182
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Balding_Orange.png	binary-asset	18905
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Long_Blonde.png	binary-asset	21964
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Long_Blonde_Ash.png	binary-asset	21728
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Long_Blue.png	binary-asset	21485
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Long_Brown_Ash.png	binary-asset	21631
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Long_Brown_Dark.png	binary-asset	21530
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Long_Brown_Hazel.png	binary-asset	21851
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Long_Brown_Light.png	binary-asset	21939
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Long_Gray.png	binary-asset	21629
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Long_Orange.png	binary-asset	23936
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Short_Blonde.png	binary-asset	18730
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Short_Blonde_Ash.png	binary-asset	19034
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Short_Blue.png	binary-asset	19347
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Short_Brown_Ash.png	binary-asset	19015
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Short_Brown_Dark.png	binary-asset	19013
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Short_Brown_Hazel.png	binary-asset	19710
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Short_Brown_Light.png	binary-asset	19154
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Short_Gray.png	binary-asset	18560
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Short_Orange.png	binary-asset	19110
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Tuft_Blonde.png	binary-asset	20333
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Tuft_Blonde_Ash.png	binary-asset	20588
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Tuft_Blue.png	binary-asset	20528
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Tuft_Brown_Ash.png	binary-asset	20580
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Tuft_Brown_Dark.png	binary-asset	20495
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Tuft_Brown_Hazel.png	binary-asset	22702
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Tuft_Brown_Light.png	binary-asset	20527
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Tuft_Gray.png	binary-asset	19932
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Tuft_Orange.png	binary-asset	20752
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Unkept_Blonde.png	binary-asset	21736
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Unkept_Blonde_Ash.png	binary-asset	21566
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Unkept_Blue.png	binary-asset	21030
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Unkept_Brown_Ash.png	binary-asset	21489
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Unkept_Brown_Dark.png	binary-asset	21146
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Unkept_Brown_Hazel.png	binary-asset	23239
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Unkept_Brown_Light.png	binary-asset	21791
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Unkept_Gray.png	binary-asset	21198
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/32x32/Hairstyle_Unkept_Orange.png	binary-asset	21872
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Balding_Blonde.png	binary-asset	27755
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Balding_Blonde_Ash.png	binary-asset	28115
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Balding_Blue.png	binary-asset	28437
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Balding_Brown_Ash.png	binary-asset	28128
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Balding_Brown_Dark.png	binary-asset	28150
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Balding_Brown_Hazel.png	binary-asset	28064
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Balding_Brown_Light.png	binary-asset	28013
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Balding_Gray.png	binary-asset	27407
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Balding_Orange.png	binary-asset	28212
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Long_Blonde.png	binary-asset	31792
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Long_Blonde_Ash.png	binary-asset	31447
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Long_Blue.png	binary-asset	31156
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Long_Brown_Ash.png	binary-asset	31439
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Long_Brown_Dark.png	binary-asset	31251
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Long_Brown_Hazel.png	binary-asset	31620
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Long_Brown_Light.png	binary-asset	31750
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Long_Gray.png	binary-asset	31320
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Long_Orange.png	binary-asset	33652
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Short_Blonde.png	binary-asset	28130
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Short_Blonde_Ash.png	binary-asset	28437
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Short_Blue.png	binary-asset	28912
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Short_Brown_Ash.png	binary-asset	28409
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Short_Brown_Dark.png	binary-asset	28515
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Short_Brown_Hazel.png	binary-asset	29196
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Short_Brown_Light.png	binary-asset	28565
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Short_Gray.png	binary-asset	27975
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Short_Orange.png	binary-asset	28485
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Tuft_Blonde.png	binary-asset	29862
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Tuft_Blonde_Ash.png	binary-asset	30108
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Tuft_Blue.png	binary-asset	30187
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Tuft_Brown_Ash.png	binary-asset	30120
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Tuft_Brown_Dark.png	binary-asset	30135
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Tuft_Brown_Hazel.png	binary-asset	32688
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Tuft_Brown_Light.png	binary-asset	30054
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Tuft_Gray.png	binary-asset	29344
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Tuft_Orange.png	binary-asset	30315
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Unkept_Blonde.png	binary-asset	31830
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Unkept_Blonde_Ash.png	binary-asset	31716
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Unkept_Blue.png	binary-asset	31140
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Unkept_Brown_Ash.png	binary-asset	31696
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Unkept_Brown_Dark.png	binary-asset	31298
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Unkept_Brown_Hazel.png	binary-asset	33099
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Unkept_Brown_Light.png	binary-asset	31772
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Unkept_Gray.png	binary-asset	31393
+public/assets/Farmer_Generator_Pieces/Character Pieces/Hairstyles/48x48/Hairstyle_Unkept_Orange.png	binary-asset	32084
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/16x16/Outfit_Braces_Brown.png	binary-asset	18882
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/16x16/Outfit_Braces_Green.png	binary-asset	19615
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/16x16/Outfit_Braces_Orange.png	binary-asset	20267
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/16x16/Outfit_Dungarees_Black.png	binary-asset	20381
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/16x16/Outfit_Dungarees_Green.png	binary-asset	22201
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/16x16/Outfit_Dungarees_Red.png	binary-asset	21428
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/16x16/Outfit_Dungarees_Violet.png	binary-asset	21301
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/16x16/Outfit_Laborer_Blue.png	binary-asset	21162
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/16x16/Outfit_Laborer_Red.png	binary-asset	21092
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/16x16/Outfit_Laborer_Violet.png	binary-asset	20912
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/16x16/Outfit_Vest_Brown.png	binary-asset	20347
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/16x16/Outfit_Vest_Brown_Light.png	binary-asset	19700
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/16x16/Outfit_Vest_Yellow.png	binary-asset	19204
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/32x32/Outfit_Braces_Brown.png	binary-asset	23924
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/32x32/Outfit_Braces_Green.png	binary-asset	24970
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/32x32/Outfit_Braces_Orange.png	binary-asset	25594
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/32x32/Outfit_Dungarees_Black.png	binary-asset	25239
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/32x32/Outfit_Dungarees_Green.png	binary-asset	27694
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/32x32/Outfit_Dungarees_Red.png	binary-asset	26640
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/32x32/Outfit_Dungarees_Violet.png	binary-asset	26675
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/32x32/Outfit_Laborer_Blue.png	binary-asset	26446
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/32x32/Outfit_Laborer_Red.png	binary-asset	26526
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/32x32/Outfit_Laborer_Violet.png	binary-asset	26073
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/32x32/Outfit_Vest_Brown.png	binary-asset	25482
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/32x32/Outfit_Vest_Brown_Light.png	binary-asset	24649
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/32x32/Outfit_Vest_Yellow.png	binary-asset	24028
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/48x48/Outfit_Braces_Brown.png	binary-asset	33150
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/48x48/Outfit_Braces_Green.png	binary-asset	34464
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/48x48/Outfit_Braces_Orange.png	binary-asset	35066
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/48x48/Outfit_Dungarees_Black.png	binary-asset	34811
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/48x48/Outfit_Dungarees_Green.png	binary-asset	37422
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/48x48/Outfit_Dungarees_Red.png	binary-asset	36253
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/48x48/Outfit_Dungarees_Violet.png	binary-asset	36396
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/48x48/Outfit_Laborer_Blue.png	binary-asset	35879
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/48x48/Outfit_Laborer_Red.png	binary-asset	35967
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/48x48/Outfit_Laborer_Violet.png	binary-asset	35523
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/48x48/Outfit_Vest_Brown.png	binary-asset	34805
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/48x48/Outfit_Vest_Brown_Light.png	binary-asset	34020
+public/assets/Farmer_Generator_Pieces/Character Pieces/Outfits/48x48/Outfit_Vest_Yellow.png	binary-asset	33434
+public/assets/bed.png	binary-asset	120092
+public/assets/christmas/KENNEY-LICENSE.txt	documentation/other	713
+public/assets/christmas/characters/Accessory_Noel_Blue.png	binary-asset	8723
+public/assets/christmas/characters/Accessory_Noel_Green.png	binary-asset	8484
+public/assets/christmas/characters/Accessory_Noel_Red.png	binary-asset	8495
+public/assets/christmas/characters/Accessory_Noel_Wine.png	binary-asset	8551
+public/assets/christmas/characters/Outfit_Noel_Cocoa.png	binary-asset	18047
+public/assets/christmas/characters/Outfit_Noel_Elf.png	binary-asset	20424
+public/assets/christmas/characters/Outfit_Noel_Frost.png	binary-asset	20261
+public/assets/christmas/characters/Outfit_Noel_Holly.png	binary-asset	20743
+public/assets/christmas/characters/Outfit_Noel_Knit.png	binary-asset	20866
+public/assets/christmas/characters/Outfit_Noel_Santa.png	binary-asset	21016
+public/assets/christmas/fonts/be-vietnam-pro-400-latin-ext.woff2	binary-asset	13056
+public/assets/christmas/fonts/be-vietnam-pro-400-latin.woff2	binary-asset	21168
+public/assets/christmas/fonts/be-vietnam-pro-400-vietnamese.woff2	binary-asset	11532
+public/assets/christmas/fonts/be-vietnam-pro-500-latin-ext.woff2	binary-asset	13548
+public/assets/christmas/fonts/be-vietnam-pro-500-latin.woff2	binary-asset	21892
+public/assets/christmas/fonts/be-vietnam-pro-500-vietnamese.woff2	binary-asset	12172
+public/assets/christmas/fonts/be-vietnam-pro-600-latin-ext.woff2	binary-asset	13608
+public/assets/christmas/fonts/be-vietnam-pro-600-latin.woff2	binary-asset	22032
+public/assets/christmas/fonts/be-vietnam-pro-600-vietnamese.woff2	binary-asset	12176
+public/assets/christmas/fonts/be-vietnam-pro-700-latin-ext.woff2	binary-asset	13852
+public/assets/christmas/fonts/be-vietnam-pro-700-latin.woff2	binary-asset	22152
+public/assets/christmas/fonts/be-vietnam-pro-700-vietnamese.woff2	binary-asset	12468
+public/assets/christmas/fonts/be-vietnam-pro-800-latin-ext.woff2	binary-asset	13752
+public/assets/christmas/fonts/be-vietnam-pro-800-latin.woff2	binary-asset	22320
+public/assets/christmas/fonts/be-vietnam-pro-800-vietnamese.woff2	binary-asset	12404
+public/assets/christmas/fonts/bevietnampro-OFL.txt	documentation/other	4397
+public/assets/christmas/fonts/fonts.css	source/config	7036
+public/assets/christmas/fonts/vt323-400-latin-ext.woff2	binary-asset	16372
+public/assets/christmas/fonts/vt323-400-latin.woff2	binary-asset	17936
+public/assets/christmas/fonts/vt323-400-vietnamese.woff2	binary-asset	7932
+public/assets/christmas/fonts/vt323-OFL.txt	documentation/other	4367
+public/assets/christmas/gingerbread-man.png	binary-asset	9371
+public/assets/christmas/hallway-winter.webp	documentation/other	101252
+public/assets/christmas/house-winter.webp	documentation/other	136612
+public/assets/christmas/kitchen-winter.webp	documentation/other	82558
+public/assets/christmas/lantern.png	binary-asset	5617
+public/assets/christmas/livingroom-winter.webp	documentation/other	158504
+public/assets/christmas/original/hallway.webp	documentation/other	151192
+public/assets/christmas/original/house.webp	documentation/other	164758
+public/assets/christmas/original/kitchen.webp	documentation/other	150884
+public/assets/christmas/original/livingroom.webp	documentation/other	291256
+public/assets/christmas/original/roomchild.webp	documentation/other	237468
+public/assets/christmas/original/roommaster.webp	documentation/other	167872
+public/assets/christmas/original/roomsecret.webp	documentation/other	289032
+public/assets/christmas/pixel/hallway-fg.png	binary-asset	3775
+public/assets/christmas/pixel/hallway-native.png	binary-asset	7827
+public/assets/christmas/pixel/hallway.png	binary-asset	10597
+public/assets/christmas/pixel/house-fg.png	binary-asset	8468
+public/assets/christmas/pixel/house-native.png	binary-asset	15455
+public/assets/christmas/pixel/house.png	binary-asset	20216
+public/assets/christmas/pixel/kitchen-fg.png	binary-asset	4670
+public/assets/christmas/pixel/kitchen-native.png	binary-asset	8955
+public/assets/christmas/pixel/kitchen.png	binary-asset	11697
+public/assets/christmas/pixel/livingroom-fg.png	binary-asset	11002
+public/assets/christmas/pixel/livingroom-native.png	binary-asset	16564
+public/assets/christmas/pixel/livingroom.png	binary-asset	21261
+public/assets/christmas/pixel/roomchild-fg.png	binary-asset	8209
+public/assets/christmas/pixel/roomchild-native.png	binary-asset	10404
+public/assets/christmas/pixel/roomchild.png	binary-asset	14000
+public/assets/christmas/pixel/roommaster-fg.png	binary-asset	9067
+public/assets/christmas/pixel/roommaster-native.png	binary-asset	13577
+public/assets/christmas/pixel/roommaster.png	binary-asset	17791
+public/assets/christmas/pixel/roomsecret-fg.png	binary-asset	11674
+public/assets/christmas/pixel/roomsecret-native.png	binary-asset	17887
+public/assets/christmas/pixel/roomsecret.png	binary-asset	22889
+public/assets/christmas/present-a-cube.png	binary-asset	9187
+public/assets/christmas/present-b-rectangle.png	binary-asset	8857
+public/assets/christmas/refreshments.png	binary-asset	3791
+public/assets/christmas/roomchild-winter.webp	documentation/other	254368
+public/assets/christmas/roommaster-winter.webp	documentation/other	247262
+public/assets/christmas/roomsecret-winter.webp	documentation/other	165254
+public/assets/christmas/sled.png	binary-asset	10610
+public/assets/christmas/snowman-hat.png	binary-asset	12435
+public/assets/christmas/sock-red-cane.png	binary-asset	9494
+public/assets/christmas/tree-decorated-snow.png	binary-asset	98449
+public/assets/christmas/tree-decorated.png	binary-asset	97623
+public/assets/christmas/wreath-decorated.png	binary-asset	19314
+public/assets/hallway.png	binary-asset	362718
+public/assets/house.png	binary-asset	591854
+public/assets/intro-step-customize.png	binary-asset	1358519
+public/assets/intro-step-keep.png	binary-asset	1732806
+public/assets/intro-step-play.png	binary-asset	1576113
+public/assets/key_icon.png	binary-asset	231572
+public/assets/kitchen.png	binary-asset	1421887
+public/assets/lavagame.png	binary-asset	2022880
+public/assets/livingroom.png	binary-asset	405564
+public/assets/player.png	binary-asset	3836
+public/assets/puzzyroom.png	binary-asset	1917146
+public/assets/roomchild.png	binary-asset	2712399
+public/assets/roommaster.png	binary-asset	2777892
+public/assets/roomsecret.png	binary-asset	7480814
+public/soundEffects/open_door.mp3	binary-asset	16371
+readme.md	documentation/other	0
+src/ScenesGame/LavaGameScene.js	source/config	11909
+src/ScenesGame/MemoryGameScene.js	source/config	12618
+src/ScenesGame/PuzzyRoomScene.js	source/config	20198
+src/assets/ArrowGraphic.js	source/config	1949
+src/assets/UIHelper.js	source/config	878
+src/assets/UIScene.js	source/config	1807
+src/assets/VirtualJoypad.js	source/config	3303
+src/christmas/art.js	source/config	5421
+src/christmas/campaign.js	source/config	5059
+src/christmas/controls.js	source/config	3901
+src/christmas/fonts.js	source/config	800
+src/christmas/main.js	source/config	60411
+src/christmas/maps.js	source/config	9755
+src/christmas/profile.js	source/config	6428
+src/christmas/room-feedback.js	source/config	9497
+src/christmas/setup.js	source/config	14805
+src/christmas/state.js	source/config	4427
+src/christmas/story-spec.json	source/config	10854
+src/christmas/style.css	source/config	35884
+src/christmas/trial-overlay.js	source/config	2250
+src/customization.js	source/config	2870
+src/game.js	source/config	2258
+src/main.js	source/config	18
+src/objects/DialogueBox.js	source/config	8635
+src/objects/Player.js	source/config	5081
+src/scenes/BootScene.js	source/config	11840
+src/scenes/HallwayScene.js	source/config	15274
+src/scenes/HouseScene.js	source/config	14792
+src/scenes/KitchenScene.js	source/config	10794
+src/scenes/LivingRoomScene.js	source/config	8952
+src/scenes/RoomChildScene.js	source/config	5918
+src/scenes/RoomMasterScene.js	source/config	6160
+src/scenes/RoomSecretScene.js	source/config	3556
+src/scenes/UIScene.js	source/config	1351
+style.css	source/config	19108
+tests/controls-dialogue.test.mjs	source/config	8570
+tests/customization.test.mjs	source/config	4403
+tests/module-loader.mjs	source/config	3397
+tests/original-games.test.mjs	source/config	12270
+tests/state-profile.test.mjs	source/config	7145
+vite.config.mjs	source/config	433

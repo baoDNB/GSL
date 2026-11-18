@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.codex-deps/
+tmp/
+public/
+output/
+artifacts/
+art/christmas/vendor/
+**/__pycache__/
+package-lock.json
+**/*.md

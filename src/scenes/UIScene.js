@@ -8,9 +8,7 @@ export default class UIScene extends Phaser.Scene {
     create() {
         const { width, height } = this.scale;
 
-        const consoleFrame = this.add
-            .image(width / 2, height / 2, 'retroconsole')
-            .setDepth(100);
+        const consoleFrame = this.add.image(width / 2, height / 2, 'retroconsole').setDepth(100);
 
         consoleFrame.setDisplaySize(width, height);
 
@@ -24,17 +22,11 @@ export default class UIScene extends Phaser.Scene {
     }
 
     createZoneBtn(x, y, radius, actionName) {
-
-        const btn = this.add.zone(
-            x,
-            y,
-            radius * 2,
-            radius * 2
-        );
+        const btn = this.add.zone(x, y, radius * 2, radius * 2);
 
         btn.setInteractive(
             new Phaser.Geom.Circle(radius, radius, radius),
-            Phaser.Geom.Circle.Contains
+            Phaser.Geom.Circle.Contains,
         );
 
         btn.setDepth(101);

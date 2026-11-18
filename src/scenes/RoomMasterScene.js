@@ -12,7 +12,7 @@ export default class RoomMasterScene extends Phaser.Scene {
     }
 
     init(data) {
-        this.fromScene = data.fromScene || '';
+        this.fromScene = data?.fromScene || '';
     }
 
     create() {
@@ -53,13 +53,14 @@ export default class RoomMasterScene extends Phaser.Scene {
         this.physics.add.existing(this.bedZone, true);
 
         // --- KHỞI TẠO DẤU CHẤM THAN TƯƠNG TÁC (HIỆN LUỒN KHI VÀO PHÒNG) ---
-        this.exclamation = this.add.text(this.bedX, this.bedY - 60, '!', {
-            fontSize: '35px',
-            fill: '#ffcc00', // Mặc định là màu vàng
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 5
-        })
+        this.exclamation = this.add
+            .text(this.bedX, this.bedY - 60, '!', {
+                fontSize: '35px',
+                fill: '#ffcc00', // Mặc định là màu vàng
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 5,
+            })
             .setOrigin(0.5)
             .setDepth(2000);
 
@@ -75,7 +76,7 @@ export default class RoomMasterScene extends Phaser.Scene {
             duration: 500,
             yoyo: true,
             repeat: -1,
-            ease: 'Sine.easeInOut'
+            ease: 'Sine.easeInOut',
         });
 
         this.ArrowHallway = ArrowGraphic.createArrowDown(this, sw * 0.49, sh * 0.9);
@@ -84,7 +85,7 @@ export default class RoomMasterScene extends Phaser.Scene {
             y: '+=10',
             duration: 500,
             yoyo: true,
-            repeat: -1
+            repeat: -1,
         });
 
         // Đăng ký các phím vật lý
@@ -99,7 +100,6 @@ export default class RoomMasterScene extends Phaser.Scene {
             this.scene.start('HallwayScene', { fromScene: 'fromMasterRoom' });
         });
         this.cameras.main.fadeIn(1200, 0, 0, 0);
-
     }
 
     update() {
@@ -112,8 +112,7 @@ export default class RoomMasterScene extends Phaser.Scene {
         // GỘP PHÍM BÀN PHÍM VÀ NÚT ẢO
         const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || joypad.actionA;
 
-        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
-            joypad.actionB;
+        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) || joypad.actionB;
 
         // ƯU TIÊN CHẶN ĐẦU KHI ĐANG THOẠI: Tua đoạn thoại
         if (this.dialogueBox && this.dialogueBox.visible) {
@@ -127,7 +126,7 @@ export default class RoomMasterScene extends Phaser.Scene {
         // XỬ LÝ ĐỔI MÀU DẤU CHẤM THAN THEO KHOẢNG CÁCH VA CHẠM
         if (this.isPlayerAtBed) {
             if (this.exclamation && this.exclamation.active) {
-                this.exclamation.setFill('#00ff00'); // Đổi sang màu xanh lá báo hiệu tương tác được
+                if (this.exclamation.style.color !== '#00ff00') this.exclamation.setFill('#00ff00'); // Đổi sang màu xanh lá báo hiệu tương tác được
             }
 
             // LOGIC NÚT A: Tương tác mở thoại / vào game
@@ -143,20 +142,22 @@ export default class RoomMasterScene extends Phaser.Scene {
                 this.input.keyboard.resetKeys(); // Tránh kẹt nút phím cứng vào thoại
 
                 if (this.registry.get('talkedToFish')) {
-                    this.scene.start('MemoryGameScene', { level: 1 });
+                    this.dialogueBox.startSequence('memoryIntro', () => {
+                        this.scene.start('MemoryGameScene', { level: 1 });
+                    });
                 } else {
                     this.dialogueBox.startSequence('roomMaster');
                 }
             }
         } else {
             if (this.exclamation && this.exclamation.active && !isWon) {
-                this.exclamation.setFill('#ffcc00'); // Đứng xa trả về màu vàng
+                if (this.exclamation.style.color !== '#ffcc00') this.exclamation.setFill('#ffcc00'); // Đứng xa trả về màu vàng
             }
         }
 
         // // LOGIC NÚT B: Quay lại sảnh
         // if (isActionB) {
-        //     joypad.actionB = false; 
+        //     joypad.actionB = false;
         //     this.scene.start('HallwayScene', { fromScene: 'fromMasterRoom' });
         // }
     }
