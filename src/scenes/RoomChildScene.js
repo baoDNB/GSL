@@ -7,10 +7,12 @@ import ArrowGraphic from '../assets/ArrowGraphic.js';
 import { joypad } from '../assets/VirtualJoypad.js';
 
 export default class RoomChildScene extends Phaser.Scene {
-    constructor() { super('RoomChildScene'); }
+    constructor() {
+        super('RoomChildScene');
+    }
 
     init(data) {
-        this.spawnDirection = data.fromScene || 'default';
+        this.spawnDirection = data?.fromScene || 'default';
     }
 
     create() {
@@ -27,13 +29,14 @@ export default class RoomChildScene extends Phaser.Scene {
         this.puzzyY = sh * 0.5;
 
         // --- KHỞI TẠO DẤU CHẤM THAN TƯƠNG TÁC ---
-        this.exclamation = this.add.text(this.puzzyX, this.puzzyY - 60, '!', {
-            fontSize: '35px',
-            fill: '#ffcc00', // Mặc định vào phòng sẽ là màu vàng
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 5
-        })
+        this.exclamation = this.add
+            .text(this.puzzyX, this.puzzyY - 60, '!', {
+                fontSize: '35px',
+                fill: '#ffcc00', // Mặc định vào phòng sẽ là màu vàng
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 5,
+            })
             .setOrigin(0.5)
             .setDepth(2000);
 
@@ -49,7 +52,7 @@ export default class RoomChildScene extends Phaser.Scene {
             duration: 500,
             yoyo: true,
             repeat: -1,
-            ease: 'Sine.easeInOut'
+            ease: 'Sine.easeInOut',
         });
 
         let spawnX = sw * 0.53;
@@ -74,7 +77,7 @@ export default class RoomChildScene extends Phaser.Scene {
             y: '+=10',
             duration: 500,
             yoyo: true,
-            repeat: -1
+            repeat: -1,
         });
 
         this.physics.world.setBounds(20, 180, sw - 50, sh - 190);
@@ -97,7 +100,6 @@ export default class RoomChildScene extends Phaser.Scene {
         this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
         this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
         this.cameras.main.fadeIn(1200, 0, 0, 0);
-
     }
 
     update() {
@@ -111,8 +113,7 @@ export default class RoomChildScene extends Phaser.Scene {
 
         const isActionA = Phaser.Input.Keyboard.JustDown(this.keyE) || joypad.actionA;
 
-        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) ||
-            joypad.actionB;
+        const isActionB = Phaser.Input.Keyboard.JustDown(this.keyEsc) || joypad.actionB;
 
         // CHẶN HỘI THOẠI
         if (this.dialogueBox && this.dialogueBox.visible) {
@@ -126,7 +127,7 @@ export default class RoomChildScene extends Phaser.Scene {
         // XỬ LÝ ĐỔI MÀU DẤU CHẤM THAN THEO KHOẢNG CÁCH (CHỈ XỬ LÝ KHI CHƯA THẮNG)
         if (isNearPuzzy) {
             if (this.exclamation && this.exclamation.active && !isWon) {
-                this.exclamation.setFill('#00ff00'); // Đứng gần thì chuyển sang màu xanh lá
+                if (this.exclamation.style.color !== '#00ff00') this.exclamation.setFill('#00ff00'); // Đứng gần thì chuyển sang màu xanh lá
             }
 
             if (isActionA) {
@@ -147,7 +148,7 @@ export default class RoomChildScene extends Phaser.Scene {
             }
         } else {
             if (this.exclamation && this.exclamation.active && !isWon) {
-                this.exclamation.setFill('#ffcc00'); // Đứng xa thì trả lại màu vàng
+                if (this.exclamation.style.color !== '#ffcc00') this.exclamation.setFill('#ffcc00'); // Đứng xa thì trả lại màu vàng
             }
         }
 

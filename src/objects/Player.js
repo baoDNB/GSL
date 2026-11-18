@@ -2,7 +2,6 @@ import Phaser from 'phaser';
 import { joypad } from '../assets/VirtualJoypad.js';
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
-
     constructor(scene, x, y) {
         super(scene, x, y, 'player', 74);
 
@@ -17,13 +16,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
         this.cursors = scene.input.keyboard.createCursorKeys();
 
+        this.movement = new Phaser.Math.Vector2();
         this.lastDirection = 'down';
         this.isHarvesting = false;
         this.isTalking = false;
     }
 
     update() {
-
         if (this.isTalking) {
             this.setVelocity(0);
 
@@ -76,12 +75,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             } else {
                 this.lastDirection = stickY > 0 ? 'down' : 'up';
             }
-        }
-        else if (isLeft) {
+        } else if (isLeft) {
             vx = -speed;
             this.lastDirection = 'left';
-        }
-        else if (isRight) {
+        } else if (isRight) {
             vx = speed;
             this.lastDirection = 'right';
         }
@@ -89,13 +86,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if (isUp) {
             vy = -speed;
             this.lastDirection = 'up';
-        }
-        else if (isDown) {
+        } else if (isDown) {
             vy = speed;
             this.lastDirection = 'down';
         }
 
-        const vec = new Phaser.Math.Vector2(vx, vy);
+        const vec = this.movement.set(vx, vy);
 
         if (!isUsingStick && vec.length() > 0) {
             vec.normalize().scale(speed);
@@ -108,9 +104,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         // ======================
 
         if (vec.length() > 0) {
-
             switch (this.lastDirection) {
-
                 case 'right':
                     this.anims.play('walk-right', true);
                     break;
@@ -127,11 +121,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                     this.anims.play('walk-down', true);
                     break;
             }
-
         } else {
-
             switch (this.lastDirection) {
-
                 case 'right':
                     this.anims.play('idle-right', true);
                     break;
@@ -149,11 +140,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
                     break;
             }
         }
-
     }
 
     startHarvest() {
-
         this.isHarvesting = true;
 
         this.setVelocity(0);
@@ -161,7 +150,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         let animKey = 'harvest-down';
 
         switch (this.lastDirection) {
-
             case 'right':
                 animKey = 'harvest-right';
                 break;
@@ -185,11 +173,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.isHarvesting = false;
         });
 
-        this.once(
-            Phaser.Animations.Events.ANIMATION_COMPLETE,
-            () => {
-                this.isHarvesting = false;
-            }
-        );
+        this.once(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+            this.isHarvesting = false;
+        });
     }
 }

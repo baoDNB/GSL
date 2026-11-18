@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <meta name="theme-color" content="#122d28" />
+        <meta
+            name="description"
+            content="Một chuyến phiêu lưu Giáng sinh theo phong cách GSL. Khám phá ngôi nhà, tìm ba điều ước và mở căn phòng Giáng sinh."
+        />
+        <title>Noel: Đường Về Nhà · GSL</title>
+        <link rel="stylesheet" href="/src/christmas/style.css" />
+    </head>
+    <body>
+        <div class="page-shell">
+            <header class="masthead">
+                <a class="brand" href="./index.html" aria-label="Về GSL"
+                    ><span class="brand-mark">G</span
+                    ><span>GSL <small>CHRISTMAS STORIES</small></span></a
+                >
+                <span class="edition">MỘT CUỘC PHIÊU LƯU MÙA LỄ HỘI <span>✦</span> 2026</span>
+                <nav class="setup-nav" id="setup-nav" aria-label="Điều hướng trang giới thiệu">
+                    <a href="#introduction">Giới thiệu</a
+                    ><a href="#customize">Tạo nhân vật <span>↗</span></a>
+                </nav>
+                <div class="header-actions" id="game-actions" hidden>
+                    <a
+                        class="edit-character-link"
+                        href="./christmas.html#customize"
+                        aria-label="Chỉnh nhân vật"
+                        >♙ <span>Nhân vật</span></a
+                    ><button id="sound" aria-label="Bật nhạc" aria-pressed="false">
+                        ♪ <span>Nhạc: tắt</span></button
+                    ><button
+                        id="journal-toggle"
+                        aria-label="Nhật ký nhiệm vụ"
+                        aria-expanded="false"
+                        aria-controls="winter-journal"
+                    >
+                        ☷ <span>Nhật ký</span></button
+                    ><button id="fullscreen" aria-label="Toàn màn hình">⛶</button>
+                </div>
+            </header>
+            <main>
+                <div id="intro-screen">
+                    <section class="winter-intro" id="introduction" aria-labelledby="intro-title">
+                        <div class="intro-art">
+                            <img
+                                src="./assets/christmas/pixel/house.png?v=20261028-3items-v1"
+                                alt="Ngôi nhà phủ tuyết với vòng nguyệt quế, cây thông và người tuyết"
+                                width="950"
+                                height="680"
+                            />
+                            <div class="postcard-note">
+                                <span>✦ MỘT LỜI MỜI TỪ BẮC CỰC</span><strong>24.12</strong
+                                ><small>Gửi người mang phép màu về nhà</small>
+                            </div>
+                        </div>
+                        <div class="winter-intro-copy">
+                            <p class="eyebrow"><span></span> MỘT CHUYẾN PHIÊU LƯU DO BẠN TẠO NÊN</p>
+                            <h1 id="intro-title">Noel: <br /><em>Đường Về Nhà</em></h1>
+                            <p class="intro-lead">
+                                Một nhân vật của riêng bạn.<br />Một Giáng sinh để cùng nhớ.
+                            </p>
+                            <p class="intro-description">
+                                Lá thư của ông già Noel đang chờ trước cửa. Khám phá ngôi nhà quen,
+                                tìm sáu món đồ chuẩn bị, vượt qua chín chặng thử thách và thắp sáng
+                                cây thông để mang những điều ước về bên gia đình.
+                            </p>
+                            <div class="intro-tags">
+                                <span>6 món đồ chuẩn bị</span><span>9 chặng thử thách</span
+                                ><span>1 căn phòng bí mật</span>
+                            </div>
+                            <div class="intro-cta">
+                                <a class="winter-primary" href="#customize"
+                                    >Tạo nhân vật của bạn <span>→</span></a
+                                ><button class="winter-secondary" id="play-demo">Chơi ngay</button>
+                            </div>
+                            <p class="intro-footnote">
+                                Chơi trên trình duyệt · Có điều khiển cảm ứng · Tự động lưu
+                            </p>
+                        </div>
+                    </section>
+                    <section class="inside-section" aria-labelledby="inside-title">
+                        <div class="section-intro">
+                            <p class="eyebrow"><span></span> BÊN TRONG CHUYẾN ĐI</p>
+                            <h2 id="inside-title">Một ngôi nhà, nhiều điều bất ngờ.</h2>
+                        </div>
+                        <div class="winter-features">
+                            <article>
+                                <img
+                                    src="./assets/christmas/pixel/livingroom.png?v=20261028-3items-v1"
+                                    alt="Phòng khách Noel ấm áp"
+                                    loading="lazy"
+                                />
+                                <div>
+                                    <span>01 / KHÁM PHÁ</span>
+                                    <h3>Đi theo sự tò mò</h3>
+                                    <p>
+                                        Mở từng cánh cửa, tìm dấu ! và đọc những lời nhắn trong căn
+                                        nhà.
+                                    </p>
+                                </div>
+                            </article>
+                            <article>
+                                <img
+                                    src="./assets/christmas/pixel/kitchen.png?v=20261028-3items-v1"
+                                    alt="Căn bếp nướng bánh Giáng sinh"
+                                    loading="lazy"
+                                />
+                                <div>
+                                    <span>02 / THỬ THÁCH</span>
+                                    <h3>Góp nhặt ba điều ước</h3>
+                                    <p>
+                                        Ba chặng nướng bánh, ba vòng ghép quà và ba lối đi qua
+                                        tuyết. Mỗi chặng hoàn thành đều được tự động lưu.
+                                    </p>
+                                </div>
+                            </article>
+                            <article>
+                                <img
+                                    src="./assets/christmas/pixel/roomchild.png?v=20261028-3items-v1"
+                                    alt="Phòng hai anh em với những món quà Noel"
+                                    loading="lazy"
+                                />
+                                <div>
+                                    <span>03 / CÁ NHÂN HÓA</span>
+                                    <h3>Chuyến đi mang tên bạn</h3>
+                                    <p>
+                                        Chọn ngoại hình, đặt tên nhân vật và để lại lời chúc ở đoạn
+                                        kết.
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                    </section>
+                    <section class="winter-how" aria-label="Cách bắt đầu">
+                        <div>
+                            <span>01</span>
+                            <h3>Tạo</h3>
+                            <p>Chọn diện mạo và lời chúc riêng.</p>
+                        </div>
+                        <div>
+                            <span>02</span>
+                            <h3>Chơi</h3>
+                            <p>Khám phá, giải đố, thu thập điều ước.</p>
+                        </div>
+                        <div>
+                            <span>03</span>
+                            <h3>Đoàn viên</h3>
+                            <p>Thắp sáng cây thông, mở căn phòng Giáng sinh của bạn.</p>
+                        </div>
+                    </section>
+                    <section
+                        class="customize-section"
+                        id="customize"
+                        aria-labelledby="customize-title"
+                    >
+                        <div class="section-intro">
+                            <p class="eyebrow"><span></span> TRƯỚC KHI LÊN ĐƯỜNG</p>
+                            <h2 id="customize-title">Bạn sẽ là ai trong đêm Noel?</h2>
+                            <p>
+                                Tạo nhân vật như trong GSL. Xem trước, xoay thử rồi mang diện mạo đó
+                                vào game.
+                            </p>
+                        </div>
+                        <form id="noel-setup-form">
+                            <div class="character-workbench">
+                                <div class="character-stage">
+                                    <span class="look-kicker">NHÂN VẬT CỦA BẠN</span>
+                                    <div class="preview-snow">✦</div>
+                                    <button
+                                        id="rotate-character"
+                                        type="button"
+                                        aria-label="Xoay nhân vật"
+                                    >
+                                        <canvas
+                                            id="noel-character-preview"
+                                            width="16"
+                                            height="32"
+                                            aria-label="Xem trước nhân vật đã chọn"
+                                        ></canvas>
+                                    </button>
+                                    <div class="character-plinth"></div>
+                                    <p id="preview-facing">Hướng trước</p>
+                                    <small>Bấm nhân vật để xoay 4 hướng ↻</small
+                                    ><label class="santa-hat-toggle"
+                                        ><input type="checkbox" id="santa-hat" checked /> Đội mũ
+                                        Noel</label
+                                    ><button type="button" class="reset-look" id="reset-character">
+                                        Về diện mạo mặc định
+                                    </button>
+                                </div>
+                                <div class="character-wardrobe">
+                                    <div class="look-section-heading">
+                                        <span>01 / CHỌN DIỆN MẠO</span>
+                                        <p>Từ màu da đến món phụ kiện cuối cùng.</p>
+                                    </div>
+                                    <div class="preset-heading">
+                                        <h4>Phối nhanh cho đêm Noel</h4>
+                                        <span>Giữ màu da, tóc và mắt của bạn</span>
+                                    </div>
+                                    <div
+                                        id="noel-presets"
+                                        class="preset-grid"
+                                        role="group"
+                                        aria-label="Các bộ phối Noel"
+                                    ></div>
+                                    <div class="wardrobe-status">
+                                        <p id="wardrobe-load-state" role="status"></p>
+                                        <button type="button" id="retry-wardrobe" hidden>
+                                            Tải lại ảnh
+                                        </button>
+                                    </div>
+                                    <div
+                                        id="noel-character-tabs"
+                                        class="look-tabs"
+                                        role="tablist"
+                                        aria-label="Các phần nhân vật"
+                                    ></div>
+                                    <div
+                                        id="noel-character-options"
+                                        class="look-options"
+                                        role="tabpanel"
+                                    ></div>
+                                </div>
+                            </div>
+                            <div class="personal-note">
+                                <div>
+                                    <span class="look-kicker">02 / VIẾT CÂU CHUYỆN CỦA BẠN</span>
+                                    <h3>Một chút riêng, một chút thương.</h3>
+                                    <p>
+                                        Tên bạn sẽ xuất hiện trong lời thoại. Lời chúc được gửi ở
+                                        căn phòng cuối cùng.
+                                    </p>
+                                </div>
+                                <div class="personal-fields">
+                                    <label for="noel-title"
+                                        >Tên game<input
+                                            id="noel-title"
+                                            name="gameTitle"
+                                            required
+                                            maxlength="40"
+                                            autocomplete="off" /></label
+                                    ><label for="noel-name"
+                                        >Tên nhân vật<input
+                                            id="noel-name"
+                                            name="playerName"
+                                            required
+                                            maxlength="24"
+                                            autocomplete="off" /></label
+                                    ><label class="full-field" for="noel-message"
+                                        >Lời chúc cuối game<textarea
+                                            id="noel-message"
+                                            name="message"
+                                            required
+                                            maxlength="180"
+                                            rows="3"
+                                        ></textarea>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="setup-submit">
+                                <p id="setup-status" role="status">
+                                    Ngoại hình được lưu cho lần chơi sau. Tiến độ hiện tại của bạn
+                                    được giữ lại.
+                                </p>
+                                <button type="submit" class="winter-primary">
+                                    Lưu nhân vật & vào game <span>→</span>
+                                </button>
+                            </div>
+                        </form>
+                    </section>
+                </div>
+                <div id="play-screen" hidden>
+                    <div class="page-heading">
+                        <div>
+                            <p class="eyebrow"><span></span> GSL · PHIÊN BẢN GIÁNG SINH</p>
+                            <h1 id="game-heading">Noel: <em>Đường Về Nhà</em></h1>
+                            <p>Ba điều ước nhỏ. Một mùa Giáng sinh thật lớn.</p>
+                        </div>
+                        <div class="heading-stamp">
+                            24<span>THÁNG 12</span><small>NORTH POLE POST</small>
+                        </div>
+                    </div>
+                    <div class="adventure-layout">
+                        <section class="console" aria-label="Game Giáng sinh">
+                            <div class="console-bar">
+                                <span
+                                    ><i></i>
+                                    <span id="location-label">NGÔI NHÀ MÙA ĐÔNG</span></span
+                                ><span id="save-label">ĐI THEO MŨI TÊN · TÌM DẤU !</span>
+                            </div>
+                            <div
+                                id="game"
+                                role="application"
+                                aria-label="Game Noel: Đường Về Nhà. Dùng WASD hoặc phím mũi tên để di chuyển, E để tương tác."
+                            >
+                                <div class="wish-hud" aria-label="Điều ước đã thu thập">
+                                    ✦ <span id="wish-count">0 / 3</span>
+                                </div>
+                                <div id="loading">Đang chuẩn bị một chút phép màu…</div>
+                            </div>
+                            <div class="console-footer">
+                                <span
+                                    ><span class="key">W A S D</span> /
+                                    <span class="key">↑ ↓ ← →</span> Di chuyển</span
+                                ><span
+                                    ><span class="key">E</span> Tương tác
+                                    <span class="divider">/</span> <span class="key">ESC</span> Trở
+                                    về</span
+                                ><button id="exit-fullscreen" aria-label="Thoát toàn màn hình">
+                                    ⛶ Thu nhỏ</button
+                                ><button id="home">⌂ <span>Menu</span></button>
+                            </div>
+                            <div class="touch-controls" aria-label="Điều khiển cảm ứng">
+                                <div class="dpad">
+                                    <button data-input="up" aria-label="Lên">↑</button
+                                    ><button data-input="left" aria-label="Trái">←</button
+                                    ><button data-input="down" aria-label="Xuống">↓</button
+                                    ><button data-input="right" aria-label="Phải">→</button>
+                                </div>
+                                <span>Chạm vào lời thoại để tiếp tục</span
+                                ><button
+                                    class="action-button"
+                                    data-input="action"
+                                    aria-label="Tương tác"
+                                >
+                                    E</button
+                                ><button
+                                    class="back-button"
+                                    data-input="back"
+                                    aria-label="Quay lại"
+                                >
+                                    ↶
+                                </button>
+                            </div>
+                        </section>
+                        <aside class="journal" id="winter-journal" hidden>
+                            <div class="journal-heading">
+                                <span>✧</span>
+                                <p>NHẬT KÝ MÙA ĐÔNG<small>Những điều ước đang chờ bạn</small></p>
+                            </div>
+                            <div class="progress-label">
+                                <span>PHÉP MÀU ĐÃ TÌM THẤY</span
+                                ><strong id="progress-count">0 / 3</strong>
+                            </div>
+                            <div class="progress-track"><div id="progress-fill"></div></div>
+                            <ol class="quest-list">
+                                <li data-quest="baking">
+                                    <span class="quest-icon">♨</span>
+                                    <div>
+                                        <h2>Hơi ấm sẻ chia</h2>
+                                        <p>Nướng bánh trong căn bếp nhỏ.</p>
+                                        <small>01 · CĂN BẾP</small>
+                                    </div>
+                                    <span class="quest-check">○</span>
+                                </li>
+                                <li data-quest="memory">
+                                    <span class="quest-icon">▧</span>
+                                    <div>
+                                        <h2>Món quà ký ức</h2>
+                                        <p>Tầng trên · cửa giữa hành lang.</p>
+                                        <small>02 · PHÒNG HAI ANH EM</small>
+                                    </div>
+                                    <span class="quest-check">○</span>
+                                </li>
+                                <li data-quest="crossing">
+                                    <span class="quest-icon">❄</span>
+                                    <div>
+                                        <h2>Ánh sao dẫn đường</h2>
+                                        <p>Gặp người tuyết ngoài sân nhà.</p>
+                                        <small>03 · SÂN NHÀ</small>
+                                    </div>
+                                    <span class="quest-check">○</span>
+                                </li>
+                            </ol>
+                            <div class="journal-note">
+                                <span>✉</span>
+                                <p id="objective">
+                                    “Giáng sinh sẽ sáng lên khi chúng ta cùng mang những điều tốt
+                                    lành về nhà.”
+                                </p>
+                                <small>— MỘT LỜI NHẮN TỪ ÔNG GIÀ NOEL</small>
+                            </div>
+                            <div class="autosave"><i></i> Tự động lưu sau mỗi điều ước</div>
+                        </aside>
+                    </div>
+                </div>
+                <footer class="page-footer">
+                    <span
+                        >Nhân vật từ <a href="./index.html">GSL</a> · Bối cảnh 2D pixel vẽ riêng cho
+                        mùa Noel</span
+                    ><span>Một chút tuyết. Một chút ấm áp. Rất nhiều phép màu. <b>✦</b></span>
+                </footer>
+            </main>
+        </div>
+        <script type="module" src="/src/christmas/setup.js"></script>
+    </body>
+</html>

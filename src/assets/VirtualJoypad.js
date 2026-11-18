@@ -8,8 +8,11 @@ export const joypad = {
     axisX: 0,
     axisY: 0,
     actionA: false,
-    actionB: false
+    actionB: false,
 };
+
+let disposeJoypad;
+const pulseTimers = new Map();
 
 export function pulseActionButton(buttonId = 'btn-a') {
     const btn = document.getElementById(buttonId);
@@ -19,12 +22,23 @@ export function pulseActionButton(buttonId = 'btn-a') {
     void btn.offsetWidth;
     btn.classList.add('is-pressed');
 
-    window.setTimeout(() => {
-        btn.classList.remove('is-pressed');
-    }, 120);
+    window.clearTimeout(pulseTimers.get(btn));
+    pulseTimers.set(
+        btn,
+        window.setTimeout(() => {
+            btn.classList.remove('is-pressed');
+            pulseTimers.delete(btn);
+        }, 120),
+    );
 }
 
 export function initVirtualJoypad() {
+    disposeJoypad?.();
+    const handlers = [];
+    const listen = (target, event, handler) => {
+        target.addEventListener(event, handler);
+        handlers.push([target, event, handler]);
+    };
     const resetDirections = () => {
         joypad.up = false;
         joypad.down = false;
@@ -32,31 +46,36 @@ export function initVirtualJoypad() {
         joypad.right = false;
         joypad.axisX = 0;
         joypad.axisY = 0;
+        joypad.actionA = false;
+        joypad.actionB = false;
+        document.querySelectorAll('.is-pressed').forEach((btn) => {
+            btn.classList.remove('is-pressed');
+        });
     };
 
     const bindButton = (htmlId, keyName) => {
         const btn = document.getElementById(htmlId);
         if (!btn) return;
 
-        btn.addEventListener('pointerdown', (e) => {
-            e.preventDefault();    
+        listen(btn, 'pointerdown', (e) => {
+            e.preventDefault();
             joypad[keyName] = true;
             btn.classList.add('is-pressed');
         });
 
-        btn.addEventListener('pointerup', (e) => {
+        listen(btn, 'pointerup', (e) => {
             e.preventDefault();
             joypad[keyName] = false;
             btn.classList.remove('is-pressed');
         });
 
-        btn.addEventListener('pointerout', (e) => {
+        listen(btn, 'pointerout', (e) => {
             e.preventDefault();
             joypad[keyName] = false;
             btn.classList.remove('is-pressed');
         });
 
-        btn.addEventListener('pointercancel', (e) => {
+        listen(btn, 'pointercancel', (e) => {
             e.preventDefault();
             joypad[keyName] = false;
             btn.classList.remove('is-pressed');
@@ -72,9 +91,26 @@ export function initVirtualJoypad() {
 
     resetDirections();
 
-    window.addEventListener('keydown', (event) => {
+    listen(window, 'keydown', (event) => {
         if (!event.repeat && event.key?.toLowerCase() === 'e') {
             pulseActionButton('btn-a');
         }
     });
+    listen(window, 'blur', resetDirections);
+    listen(document, 'visibilitychange', () => {
+        if (document.hidden) resetDirections();
+    });
+
+    let disposed = false;
+    const dispose = () => {
+        if (disposed) return;
+        disposed = true;
+        handlers.forEach(([target, event, handler]) => target.removeEventListener(event, handler));
+        pulseTimers.forEach((timer) => window.clearTimeout(timer));
+        pulseTimers.clear();
+        resetDirections();
+        if (disposeJoypad === dispose) disposeJoypad = undefined;
+    };
+    disposeJoypad = dispose;
+    return dispose;
 }

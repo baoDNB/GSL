@@ -9,7 +9,7 @@ export default class PuzzyRoomScene extends Phaser.Scene {
     }
 
     init(data) {
-        this.spawnDirection = data.fromScene || 'default';
+        this.spawnDirection = data?.fromScene || 'default';
     }
 
     create() {
@@ -32,13 +32,16 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         this.bookX = screenWidth * 0.43;
         this.bookY = screenHeight * 0.5;
 
-        this.exclamation = this.add.text(this.bookX, this.bookY, '!', {
-            fontSize: '28px',
-            fill: '#ffcc00',
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 4
-        }).setOrigin(0.5).setDepth(1005);
+        this.exclamation = this.add
+            .text(this.bookX, this.bookY, '!', {
+                fontSize: '28px',
+                fill: '#ffcc00',
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 4,
+            })
+            .setOrigin(0.5)
+            .setDepth(1005);
 
         // Hiệu ứng nhấp nhô cho dấu !
         this.tweens.add({
@@ -47,7 +50,7 @@ export default class PuzzyRoomScene extends Phaser.Scene {
             duration: 600,
             yoyo: true,
             repeat: -1,
-            ease: 'Sine.easeInOut'
+            ease: 'Sine.easeInOut',
         });
 
         // 5. Đăng ký phím cứng hành động
@@ -60,7 +63,6 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-
     }
 
     startPuzzleGame() {
@@ -76,10 +78,30 @@ export default class PuzzyRoomScene extends Phaser.Scene {
 
         this.puzzleContainer = this.add.container(0, 0).setDepth(2000);
 
-        const puzzleBg = this.add.rectangle(centerX, centerY, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.85);
-        const puzzleBoard = this.add.rectangle(centerX, centerY, 310, 310, 0x2c3e50).setStrokeStyle(4, 0xf1c40f);
-        const puzzleTitle = this.add.text(centerX, centerY - 220, 'IMAGE SLIDING PUZZLE', { fontSize: '22px', color: '#f1c40f', fontWeight: 'bold' }).setOrigin(0.5);
-        const puzzleGuide = this.add.text(centerX, centerY + 220, 'Use Mouse, WASD, Arrow Keys, or Joypad to move!', { fontSize: '14px', color: '#ffffff' }).setOrigin(0.5);
+        const puzzleBg = this.add.rectangle(
+            centerX,
+            centerY,
+            this.cameras.main.width,
+            this.cameras.main.height,
+            0x000000,
+            0.85,
+        );
+        const puzzleBoard = this.add
+            .rectangle(centerX, centerY, 310, 310, 0x2c3e50)
+            .setStrokeStyle(4, 0xf1c40f);
+        const puzzleTitle = this.add
+            .text(centerX, centerY - 220, 'IMAGE SLIDING PUZZLE', {
+                fontSize: '22px',
+                color: '#f1c40f',
+                fontWeight: 'bold',
+            })
+            .setOrigin(0.5);
+        const puzzleGuide = this.add
+            .text(centerX, centerY + 220, 'Use Mouse, WASD, Arrow Keys, or Joypad to move!', {
+                fontSize: '14px',
+                color: '#ffffff',
+            })
+            .setOrigin(0.5);
         this.puzzleContainer.add([puzzleBg, puzzleBoard, puzzleTitle, puzzleGuide]);
 
         const puzzleUrl = this.getCustomPuzzleUrl();
@@ -92,7 +114,7 @@ export default class PuzzyRoomScene extends Phaser.Scene {
                 () => {
                     puzzleTitle.setText('NUMBER MATRIX PUZZLE');
                     this.createPuzzleTiles(tileSize, false);
-                }
+                },
             );
         } else {
             puzzleTitle.setText('NUMBER MATRIX PUZZLE');
@@ -143,9 +165,14 @@ export default class PuzzyRoomScene extends Phaser.Scene {
 
         for (let i = 0; i < 9; i++) {
             const val = i;
-            const tile = useImageTiles ? this.createImagePuzzleTile(val, tileSize) : this.createNumberPuzzleTile(val, tileSize);
+            const tile = useImageTiles
+                ? this.createImagePuzzleTile(val, tileSize)
+                : this.createNumberPuzzleTile(val, tileSize);
 
-            tile.setInteractive(new Phaser.Geom.Rectangle(-tileSize / 2, -tileSize / 2, tileSize, tileSize), Phaser.Geom.Rectangle.Contains);
+            tile.setInteractive(
+                new Phaser.Geom.Rectangle(-tileSize / 2, -tileSize / 2, tileSize, tileSize),
+                Phaser.Geom.Rectangle.Contains,
+            );
             tile.tileValue = val;
 
             tile.on('pointerdown', () => {
@@ -166,11 +193,13 @@ export default class PuzzyRoomScene extends Phaser.Scene {
     createNumberPuzzleTile(val, tileSize) {
         const tile = this.add.container(0, 0);
         const bgRect = this.add.rectangle(0, 0, tileSize - 6, tileSize - 6, 0xd35400);
-        const textNum = this.add.text(0, 0, (val + 1).toString(), {
-            fontSize: '24px',
-            color: '#ffffff',
-            fontWeight: 'bold'
-        }).setOrigin(0.5);
+        const textNum = this.add
+            .text(0, 0, (val + 1).toString(), {
+                fontSize: '24px',
+                color: '#ffffff',
+                fontWeight: 'bold',
+            })
+            .setOrigin(0.5);
 
         tile.add([bgRect, textNum]);
         return tile;
@@ -178,7 +207,9 @@ export default class PuzzyRoomScene extends Phaser.Scene {
 
     createImagePuzzleTile(val, tileSize) {
         const tile = this.add.container(0, 0);
-        const frame = this.add.rectangle(0, 0, tileSize - 4, tileSize - 4, 0x111827).setStrokeStyle(2, 0xf1c40f);
+        const frame = this.add
+            .rectangle(0, 0, tileSize - 4, tileSize - 4, 0x111827)
+            .setStrokeStyle(2, 0xf1c40f);
         const texture = this.textures.get(this.customPuzzleTextureKey);
         const source = texture.getSourceImage();
         const sourceWidth = source.width || source.naturalWidth;
@@ -198,11 +229,12 @@ export default class PuzzyRoomScene extends Phaser.Scene {
                 Math.round(cropX + col * pieceSize),
                 Math.round(cropY + row * pieceSize),
                 Math.round(pieceSize),
-                Math.round(pieceSize)
+                Math.round(pieceSize),
             );
         }
 
-        const image = this.add.image(0, 0, this.customPuzzleTextureKey, frameName)
+        const image = this.add
+            .image(0, 0, this.customPuzzleTextureKey, frameName)
             .setDisplaySize(tileSize - 8, tileSize - 8);
         tile.add([frame, image]);
         return tile;
@@ -227,7 +259,8 @@ export default class PuzzyRoomScene extends Phaser.Scene {
     }
 
     onTileClicked(gameObject) {
-        if (!this.gameActive || gameObject.tileValue === undefined || gameObject.tileValue === 8) return;
+        if (!this.gameActive || gameObject.tileValue === undefined || gameObject.tileValue === 8)
+            return;
 
         let clickedValue = gameObject.tileValue;
         let clickedIndex = this.boardState.indexOf(clickedValue);
@@ -236,7 +269,7 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         let eRow = Math.floor(this.emptyIndex / 3);
         let eCol = this.emptyIndex % 3;
 
-        if ((Math.abs(cRow - eRow) + Math.abs(cCol - eCol)) === 1) {
+        if (Math.abs(cRow - eRow) + Math.abs(cCol - eCol) === 1) {
             this.moveTile(clickedIndex);
         }
     }
@@ -249,24 +282,33 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         let targetIndex = -1;
 
         // --- ĐỒNG BỘ ĐIỀU HƯỚNG MA TRẬN SỐ (Bàn phím + Joypad ảo) ---
-        const moveUp = Phaser.Input.Keyboard.JustDown(this.cursors.up) || Phaser.Input.Keyboard.JustDown(this.keyW) || joypad.up;
-        const moveDown = Phaser.Input.Keyboard.JustDown(this.cursors.down) || Phaser.Input.Keyboard.JustDown(this.keyS) || joypad.down;
-        const moveLeft = Phaser.Input.Keyboard.JustDown(this.cursors.left) || Phaser.Input.Keyboard.JustDown(this.keyA) || joypad.left;
-        const moveRight = Phaser.Input.Keyboard.JustDown(this.cursors.right) || Phaser.Input.Keyboard.JustDown(this.keyD) || joypad.right;
+        const moveUp =
+            Phaser.Input.Keyboard.JustDown(this.cursors.up) ||
+            Phaser.Input.Keyboard.JustDown(this.keyW) ||
+            joypad.up;
+        const moveDown =
+            Phaser.Input.Keyboard.JustDown(this.cursors.down) ||
+            Phaser.Input.Keyboard.JustDown(this.keyS) ||
+            joypad.down;
+        const moveLeft =
+            Phaser.Input.Keyboard.JustDown(this.cursors.left) ||
+            Phaser.Input.Keyboard.JustDown(this.keyA) ||
+            joypad.left;
+        const moveRight =
+            Phaser.Input.Keyboard.JustDown(this.cursors.right) ||
+            Phaser.Input.Keyboard.JustDown(this.keyD) ||
+            joypad.right;
 
         if (moveUp) {
             if (eRow < 2) targetIndex = this.emptyIndex + 3;
             joypad.up = false; // Reset trạng thái nút ảo
-        }
-        else if (moveDown) {
+        } else if (moveDown) {
             if (eRow > 0) targetIndex = this.emptyIndex - 3;
             joypad.down = false;
-        }
-        else if (moveLeft) {
+        } else if (moveLeft) {
             if (eCol < 2) targetIndex = this.emptyIndex + 1;
             joypad.left = false;
-        }
-        else if (moveRight) {
+        } else if (moveRight) {
             if (eCol > 0) targetIndex = this.emptyIndex - 1;
             joypad.right = false;
         }
@@ -306,7 +348,7 @@ export default class PuzzyRoomScene extends Phaser.Scene {
                     x: targetX,
                     y: targetY,
                     duration: 120,
-                    ease: 'Cubic.easeOut'
+                    ease: 'Cubic.easeOut',
                 });
             }
         }
@@ -348,23 +390,38 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         const centerX = this.cameras.main.width / 2;
         const centerY = this.cameras.main.height / 2;
         const rewardContainer = this.add.container(centerX, centerY).setDepth(2600);
-        const overlay = this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000000, 0.55);
+        const overlay = this.add.rectangle(
+            0,
+            0,
+            this.cameras.main.width,
+            this.cameras.main.height,
+            0x000000,
+            0.55,
+        );
         const glow = this.add.circle(0, -16, 58, 0xf1c40f, 0.28);
         const ring = this.add.circle(0, -16, 72, 0xf1c40f, 0).setStrokeStyle(3, 0xf1c40f, 0.9);
         const key = this.add.image(0, -18, 'key_icon_bg').setScale(0.18).setAngle(-18);
-        const title = this.add.text(0, 70, 'KEY ACQUIRED', {
-            fontSize: '22px',
-            color: '#ffe066',
-            fontStyle: 'bold',
-            stroke: '#000000',
-            strokeThickness: 5
-        }).setOrigin(0.5);
+        const title = this.add
+            .text(0, 70, 'KEY ACQUIRED', {
+                fontSize: '22px',
+                color: '#ffe066',
+                fontStyle: 'bold',
+                stroke: '#000000',
+                strokeThickness: 5,
+            })
+            .setOrigin(0.5);
 
         const sparklePoints = [
-            [-84, -58], [82, -62], [-70, 38], [76, 34], [0, -96], [0, 26]
+            [-84, -58],
+            [82, -62],
+            [-70, 38],
+            [76, 34],
+            [0, -96],
+            [0, 26],
         ];
         const sparkles = sparklePoints.map(([x, y], index) => {
-            const sparkle = this.add.star(x, y, 5, 4, 11, 0xffffff, 0.95)
+            const sparkle = this.add
+                .star(x, y, 5, 4, 11, 0xffffff, 0.95)
                 .setScale(0)
                 .setAngle(index * 24);
             rewardContainer.add(sparkle);
@@ -376,7 +433,7 @@ export default class PuzzyRoomScene extends Phaser.Scene {
                 angle: sparkle.angle + 120,
                 duration: 650,
                 delay: index * 80,
-                ease: 'Sine.easeOut'
+                ease: 'Sine.easeOut',
             });
 
             return sparkle;
@@ -391,7 +448,7 @@ export default class PuzzyRoomScene extends Phaser.Scene {
             alpha: 1,
             scale: 1,
             duration: 260,
-            ease: 'Back.easeOut'
+            ease: 'Back.easeOut',
         });
 
         this.tweens.add({
@@ -402,7 +459,7 @@ export default class PuzzyRoomScene extends Phaser.Scene {
             duration: 620,
             yoyo: true,
             repeat: 1,
-            ease: 'Sine.easeInOut'
+            ease: 'Sine.easeInOut',
         });
 
         this.tweens.add({
@@ -411,7 +468,7 @@ export default class PuzzyRoomScene extends Phaser.Scene {
             alpha: { from: 1, to: 0 },
             duration: 900,
             repeat: 1,
-            ease: 'Sine.easeOut'
+            ease: 'Sine.easeOut',
         });
 
         this.tweens.add({
@@ -421,7 +478,7 @@ export default class PuzzyRoomScene extends Phaser.Scene {
             duration: 520,
             yoyo: true,
             repeat: 2,
-            ease: 'Sine.easeInOut'
+            ease: 'Sine.easeInOut',
         });
 
         this.time.delayedCall(1650, () => {
@@ -435,7 +492,7 @@ export default class PuzzyRoomScene extends Phaser.Scene {
                     sparkles.forEach((sparkle) => sparkle.destroy());
                     rewardContainer.destroy();
                     if (onComplete) onComplete();
-                }
+                },
             });
         });
     }
@@ -470,11 +527,17 @@ export default class PuzzyRoomScene extends Phaser.Scene {
         if (this.player) {
             this.player.update();
 
-            let distance = Phaser.Math.Distance.Between(this.player.x, this.player.y, this.bookX, this.bookY);
+            let distance = Phaser.Math.Distance.Between(
+                this.player.x,
+                this.player.y,
+                this.bookX,
+                this.bookY,
+            );
 
             if (distance < 80 && !this.hasInteracted) {
                 if (this.exclamation && this.exclamation.active) {
-                    this.exclamation.setFill('#00ff00'); // Đổi màu xanh báo hiệu
+                    if (this.exclamation.style.color !== '#00ff00')
+                        this.exclamation.setFill('#00ff00'); // Đổi màu xanh báo hiệu
                 }
 
                 // Nhấn nút hành động để bắt đầu kích hoạt mở màn
@@ -499,7 +562,8 @@ export default class PuzzyRoomScene extends Phaser.Scene {
                 }
             } else {
                 if (this.exclamation && this.exclamation.active) {
-                    this.exclamation.setFill('#ffcc00'); // Trở lại màu vàng
+                    if (this.exclamation.style.color !== '#ffcc00')
+                        this.exclamation.setFill('#ffcc00'); // Trở lại màu vàng
                 }
             }
         }

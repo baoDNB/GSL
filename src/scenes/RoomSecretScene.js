@@ -41,7 +41,6 @@ export default class RoomSecretScene extends Phaser.Scene {
                 if (this.player) this.player.isTalking = false;
             });
         });
-
     }
 
     // Hàm xử lý chuỗi di chuyển tự động sau khi đọc thoại xong
@@ -57,11 +56,15 @@ export default class RoomSecretScene extends Phaser.Scene {
                 const y = Phaser.Math.Between(70, 220);
                 const color = Phaser.Utils.Array.GetRandom(colors);
                 this.createFirework(x, y, color);
-            }
+            },
         });
 
-        this.time.delayedCall(250, () => this.createFirework(this.cameras.main.width * 0.3, 130, 0xffd166));
-        this.time.delayedCall(650, () => this.createFirework(this.cameras.main.width * 0.7, 110, 0x4cc9f0));
+        this.time.delayedCall(250, () =>
+            this.createFirework(this.cameras.main.width * 0.3, 130, 0xffd166),
+        );
+        this.time.delayedCall(650, () =>
+            this.createFirework(this.cameras.main.width * 0.7, 110, 0x4cc9f0),
+        );
     }
 
     createFirework(x, y, color) {
@@ -70,8 +73,7 @@ export default class RoomSecretScene extends Phaser.Scene {
         for (let i = 0; i < sparkCount; i++) {
             const angle = (Math.PI * 2 * i) / sparkCount;
             const distance = Phaser.Math.Between(45, 95);
-            const spark = this.add.circle(x, y, Phaser.Math.Between(2, 4), color, 1)
-                .setDepth(900);
+            const spark = this.add.circle(x, y, Phaser.Math.Between(2, 4), color, 1).setDepth(900);
 
             this.tweens.add({
                 targets: spark,
@@ -81,7 +83,7 @@ export default class RoomSecretScene extends Phaser.Scene {
                 scale: 0.2,
                 duration: Phaser.Math.Between(650, 950),
                 ease: 'Cubic.easeOut',
-                onComplete: () => spark.destroy()
+                onComplete: () => spark.destroy(),
             });
         }
 
@@ -92,13 +94,11 @@ export default class RoomSecretScene extends Phaser.Scene {
             alpha: 0,
             duration: 320,
             ease: 'Sine.easeOut',
-            onComplete: () => flash.destroy()
+            onComplete: () => flash.destroy(),
         });
     }
 
     update() {
-
-
         if (this.player) this.player.update();
     }
 }
